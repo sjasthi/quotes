@@ -30,7 +30,7 @@
             <a href="index.php">
               <li class="horozontal-li-logo">
               <img src ="./images/main_logo.png">
-              <br/>A Basic Composer</li>
+              <br/>DropQuote</li>
             </a>
 
             <a href="index.php">
@@ -45,53 +45,7 @@
                 <br/>List</li>
             </a>
 
-            <a href="timeline.php">
-              <li <?php if($nav_selected == "TIMELINE"){ echo 'class="current-page"'; } ?>>
-              <img src="./images/gantt.png">
-              <br/>Timeline</li>
-            </a>
-
-            <a href="reports.php">
-              <li <?php if($nav_selected == "REPORTS"){ echo 'class="current-page"'; } ?>>
-              <img src="./images/reports.png">
-              <br/>Reports</li>
-            </a>
-
-            <a href="scanner.php">
-              <li <?php if($nav_selected == "SCANNER"){ echo 'class="current-page"'; } ?>>
-                <img src="./images/scanner.png">
-                <br/>Scanner</li>
-            </a>
-
-            <a href="history.php">
-              <li <?php if($nav_selected == "HISTORY"){ echo 'class="current-page"'; } ?>>
-                <img src="./images/history.png">
-                <br/>History</li>
-            </a>
-
-            <a href="trend.php">
-              <li <?php if($nav_selected == "TREND"){ echo 'class="current-page"'; } ?>>
-                <img src="./images/trend.png">
-                <br/>Trend</li>
-            </a>
-
-
-        <a href="setup.php">
-          <li <?php if($nav_selected == "SETUP"){ echo 'class="current-page"'; } ?>>
-            <img src="./images/setup.png">
-            <br/>Setup</li>
-        </a>
-
-        <a href="about.php">
-          <li <?php if($nav_selected == "ABOUT"){ echo 'class="current-page"'; } ?>>
-            <img src="./images/about.png">
-            <br/>About</li>
-        </a>
-
-        <a href="help.php">
-          <li <?php if($nav_selected == "HELP"){ echo 'class="current-page"'; } ?>>
-            <img src="./images/help.png">
-            <br/>help</li>
+           
         </a>
 
       </ul>
@@ -111,22 +65,6 @@
                 include("./index.php");
             } elseif ($nav_selected == "LIST") {
                 include("./left_menu_list.php");
-            } elseif ($nav_selected == "TIMELINE") {
-                include("./left_menu_timeline.php");
-            } elseif ($nav_selected == "REPORTS") {
-                include("./left_menu_reports.php");
-            } elseif ($nav_selected == "SCANNER") {
-                include("./left_menu_scanner.php");
-            } elseif ($nav_selected == "HISTORY") {
-                include("./left_menu_history.php");
-            } elseif ($nav_selected == "TREND") {
-              include("./left_menu_trend.php");
-           } elseif ($nav_selected == "SETUP") {
-            include("./left_menu_setup.php");
-          } elseif ($nav_selected == "ABOUT") {
-          include("./left_menu_about.php");
-          }elseif ($nav_selected == "HELP") {
-                include("./left_menu_help.php");
             } else {
                 include("./left_menu.php");
             }
