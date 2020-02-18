@@ -13,7 +13,15 @@ $query = "SELECT * FROM quote_table";
 
  <div class="right-content">
     <div class="container-fluid">
+   <?php
 
+ if(isset($_GET['create'])){
+            if($_GET["create"] == "Success"){
+                echo '<br><h3>Success! Your quote has been added!</h3>';
+            }
+        }
+
+?>
      
 	     <h2 id="title">Quotelist</h2><br>
 		  <button><a class="btn btn-sm" href="createQuote.php">Create a Quote</a></button>
