@@ -21,6 +21,16 @@ $query = "SELECT * FROM quote_table";
             }
         }
 
+ if(isset($_GET['deleted'])){
+            if($_GET["deleted"] == "Success"){
+                echo '<br><h3>We deleted that quote, do not worry</h3>';
+            }
+        }
+ if(isset($_GET['updated'])){
+            if($_GET["updated"] == "Success"){
+                echo '<br><h3>yes yes, we changed it no worries </h3>';
+            }
+        }
 ?>
      
 	     <h2 id="title">Quotelist</h2><br>
@@ -47,6 +57,8 @@ $query = "SELECT * FROM quote_table";
                                 <td>'.$row["topic"].'</td>
                          
                                 <td>'.$row["quote"].' </span> </td>
+								<td><a class="btn btn-warning btn-sm" href="modifyQuote.php?id='.$row["id"].'">Modify</a></td>
+                                <td><a class="btn btn-danger btn-sm" href="deleteQuote.php?id='.$row["id"].'">Delete</a></td>
                             
                             </tr>';
 					 }
