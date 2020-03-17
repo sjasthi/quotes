@@ -65,6 +65,7 @@ $query = "SELECT * FROM quote_table";
 				<th>Quote</th>
 				<th>Modify</th>
 				<th>Delete</th>
+				<th>Puzzle</th>
 				</tr>
                 </thead>
 				  <tbody>
@@ -81,6 +82,7 @@ $query = "SELECT * FROM quote_table";
                                 <td>'.$row["quote"].' </span> </td>
 								<td><a class="btn btn-warning btn-sm" href="modifyQuote.php?id='.$row["id"].'">Modify</a></td>
                                 <td><a class="btn btn-danger btn-sm" href="deleteQuote.php?id='.$row["id"].'">Delete</a></td>
+									<td><a class="btn btn-warning btn-sm" href="DropQuote.php?id='.$row["id"].'">DropQuote</a></td>
                             
                             </tr>';
 					 }

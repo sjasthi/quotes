@@ -1,7 +1,7 @@
 <?php $page_title = 'The Cow Layer'; ?>
 <?php 
  require 'db_credentials.php'; 
- 
+   include("./nav.php");
  ?>
 
 <?php 
