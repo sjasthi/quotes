@@ -1,5 +1,9 @@
 <?php $page_title = 'The Cow Layer'; ?>
 <?php 
+  $nav_selected = "LIST";
+  $left_buttons = "NO";
+  $left_selected = "";
+
  require 'db_credentials.php'; 
    include("./nav.php");
  ?>

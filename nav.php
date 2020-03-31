@@ -44,7 +44,18 @@
                 <img src="./images/list.png">
                 <br/>List</li>
             </a>
+			
+			  <a href="report.php">
+              <li <?php if($nav_selected == "REPORT"){ echo 'class="current-page"'; } ?>>
+              <img src="./images/report.png">
+              <br/>Reports</li>
+            </a>
 
+  <a href="preferences.php">
+              <li <?php if($nav_selected == "PREF"){ echo 'class="current-page"'; } ?>>
+              <img src="./images/report.png">
+              <br/>Preferences</li>
+            </a>
            
         </a>
 
