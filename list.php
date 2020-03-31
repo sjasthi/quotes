@@ -8,7 +8,7 @@
   
 
 $query = "SELECT * FROM quote_table";
-  $GLOBALS['data'] = mysqli_query($db, $query);
+
  ?>
  
  <style>
@@ -50,8 +50,14 @@ $query = "SELECT * FROM quote_table";
                 echo '<br><h3>yes yes, we changed it no worries </h3>';
             }
         }
+		if (isset($_GET['id'])) {
+			$a =$_GET['id'];
+			$query="SELECT * FROM quote_table WHERE author = '$a'";
+		}
+		
+		   $data = mysqli_query($db, $query);
 ?>
-     
+ 
 	     <h2 id="title">Quotelist</h2><br>
 		  <button><a class="btn btn-sm" href="createQuote.php">Create a Quote</a></button>
 		    <div id="customerTableView">
