@@ -21,7 +21,9 @@ if (isset($_GET['id'])){
 
     $id = $_GET['id'];
     
-1
+    $sql = "SELECT * FROM quote_table
+            WHERE id = '$id'";
+
 
     if (!$result = $db->query($sql)) {
         die ('There was an error running query[' . $connection->error . ']');
