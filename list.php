@@ -56,22 +56,29 @@ $query = "SELECT * FROM quote_table";
 		}
 		
 		   $data = mysqli_query($db, $query);
+		   $inform = array(-1);
 ?>
- 
+<form action=modifyQuote.php method ="post">
 	     <h2 id="title">Quotelist</h2><br>
+		  
 		  <button><a class="btn btn-sm" href="createQuote.php">Create a Quote</a></button>
+		 <button type = "submit">Modify</button>
+		 <button type = "submit" formaction ="deleteQuote.php">Delete</button>
+		 <button type = "submit"formaction ="DropQuote.php">Drop Quote</button>
+		 	 <button type = "submit"formaction ="Scramble.php">Scramble Quote</button>
+	
+			
 		    <div id="customerTableView">
 			  <table class="display" id="ceremoniesTable" style="width:100%">
                  <div class="table responsive">
                 <thead>
                 <tr>
+				<th></th>
 				<th>ID</th>
 				<th>Author</th>
 				<th>Topic</th>
 				<th>Quote</th>
-				<th>Modify</th>
-				<th>Delete</th>
-				<th>Puzzle</th>
+				
 				</tr>
                 </thead>
 				  <tbody>
@@ -81,14 +88,13 @@ $query = "SELECT * FROM quote_table";
 					
 					 while($row = $data->fetch_assoc()) {
 						        echo '<tr>
+								<td><input type ="radio" name ="ident" value ='.$row["id"].'></td>
                                 <td>'.$row["id"].'</td>
                                 <td>'.$row["author"].' </span> </td>
                                 <td>'.$row["topic"].'</td>
                          
                                 <td>'.$row["quote"].' </span> </td>
-								<td><a class="btn btn-warning btn-sm" href="modifyQuote.php?id='.$row["id"].'">Modify</a></td>
-                                <td><a class="btn btn-danger btn-sm" href="deleteQuote.php?id='.$row["id"].'">Delete</a></td>
-									<td><a class="btn btn-warning btn-sm" href="DropQuote.php?id='.$row["id"].'">DropQuote</a></td>
+								
                             
                             </tr>';
 					 }
@@ -100,9 +106,12 @@ $query = "SELECT * FROM quote_table";
 				   </tbody>
             </div>
         </table>
+		</form>							
+
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+
 
 <!--Data Table-->
 <script type="text/javascript" charset="utf8"
