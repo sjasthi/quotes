@@ -17,19 +17,29 @@
 <?php
 include_once 'db_credentials.php'; 
 
-if (isset($_GET['id'])){
+$sql = "SELECT * FROM quote_table
+            WHERE id = '-1'";
 
-    $id = $_GET['id'];
+$touched=isset($_POST['ident']);
+if (!$touched) {
+	echo 'You need to select an entry. Go back and try again. <br>';
+} else {     $id = $_POST['ident'];
+    $sql = "SELECT * FROM quote_table
+            WHERE id = '$id'";
     
-1
+
+	
+}
 
     if (!$result = $db->query($sql)) {
         die ('There was an error running query[' . $connection->error . ']');
     }//end if
-}//end if
+//end if
 
-if ($result->num_rows > 0) {
+if ($result->num_rows > 0 && $touched) {
     // output data of each row
+	
+
     while($row = $result->fetch_assoc()) {
 
     

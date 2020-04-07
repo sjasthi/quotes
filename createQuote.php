@@ -21,16 +21,16 @@
           
             <tr>
                 <td style="width:100px">Author:</td>
-                <td><input type="text"  name="man" maxlength="50" size="50" required title="Please enter an author."></td>
+                <td><input type="text"  name="man" class="form-control" maxlength="50" size="50" required title="Please enter an author."></td>
             </tr>
             <tr>
                 <td style="width:100px">Topic:</td>
-                <td><input type="text"  name="subject" maxlength="50" size="50" required title="Please enter a topic."></td>
+                <td><input type="text"  name="subject" class="form-control" maxlength="50" size="50" required title="Please enter a topic."></td>
             </tr>
            
             <tr>
                 <td style="width:100px">Quotation:</td>
-                <td><input type="text"  name="quoted" maxlength="300" size="200" required title="Please enter a quote."></td>
+                <td><input type="text"  name="quoted" class="form-control" maxlength="300" size="200" required title="Please enter a quote."></td>
             </tr>
          
           

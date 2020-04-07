@@ -17,7 +17,7 @@ $id=1;
                  $sql = "UPDATE pref
                   
 				  SET 
-				   RowNum = '$colnum',
+				   COLUMNS = '$colnum',
                     Language = '$language'
                   WHERE id = '$id'"
 				 ;
