@@ -10,6 +10,7 @@
 
 <?php
 include_once 'db_credentials.php'; 
+  echo '<h2 id="title">Scramble Quote</h2><br>';
 
   $sql = "SELECT * FROM quote_table
             WHERE id = '-1'";
@@ -17,6 +18,10 @@ include_once 'db_credentials.php';
 $touched=isset($_POST['ident']);
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
+	
+	?>
+		  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<?php
 } else {     $id = $_POST['ident'];
     $sql = "SELECT * FROM quote_table
             WHERE id = '$id'";

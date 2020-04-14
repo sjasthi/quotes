@@ -22,8 +22,10 @@ include_once 'db_credentials.php';
 			$sleep=true;
 $touched=isset($_POST['ident']);
 if (!$touched) {
-      header ("Location:http://localhost/quotes/list.php/",FALSE);
-	
+	echo "You need to select an entry.";
+      ?>
+		  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<?php
 		
 		
 } else {     $id = $_POST['ident'];
@@ -49,32 +51,33 @@ if ($result->num_rows > 0) {
     
       
 
-      echo '<h2 id="title">Modify Quote</h2><br>';
+
       echo '<form action="modifyTheQuote.php" method="POST" enctype="multipart/form-data">
       <br>
-      <h3>'.$row["quote"].' </h3> <br>
+     <h2 id="title">Modify Quote</h2><br>
       
-      <div>
-        <label for="id">Id</label>
-        <input type="text" class="form-control" name="id" value="'.$row["id"].'"  maxlength="5" style=width:400px readonly><br>
-      </div>
+           <table>
+		   <tr>
+       <td style="width:100px>   <label for="ida">Id</label> </td>
+       <td> <input type="text" class="form-control" name="id" value="'.$row["id"].'"  maxlength="255" readonly></td>
+      </tr>
       
-      <div>
-        <label for="topic">Topic</label>
-        <input type="text" class="form-control" name="topic" value="'.$row["topic"].'"  maxlength="255" style=width:400px required><br>
-      </div>
+    <tr>
+        <td style="width:100px>  <label for="topic">Topic</label></td>
+     <td>    <input type="text" class="form-control" name="topic" value="'.$row["topic"].'"  maxlength="255"  required></td>
+  </tr>
       
-      <div>
-        <label for="author">author</label>
-        <input type="text" class="form-control" name="author" value="'.$row["author"].'"  maxlength="255" style=width:400px required><br>
-      </div>
+      <tr>
+        <td style="width:100px>  <label for="author">author</label></td>
+    <td>     <input type="text" class="form-control" name="author" value="'.$row["author"].'"  maxlength="255" required></td>
+     </tr>
           
-      <div>
-        <label for="quote">quote</label>
-        <input type="text" class="form-control" name="quote" value="'.$row["quote"].'"  maxlength="255" style=width:400px required><br>
-      </div>
+   <tr>
+       <td style="width:100px>   <label for="quote">quote</label></td>
+   <td>      <input type="text" class="form-control" name="quote" value="'.$row["quote"].'"  maxlength="255" size="200"  required></td>
+     </tr>
           
-    
+    </table>
 
       <br>
       <div class="text-left">

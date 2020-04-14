@@ -20,6 +20,10 @@ include_once 'db_credentials.php';
 $touched=isset($_POST['ident']);
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
+	
+	?>
+		  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<?php
 } else {     $id = $_POST['ident'];
     $sql = "SELECT * FROM quote_table
             WHERE id = '$id'";
@@ -43,9 +47,16 @@ if ($result->num_rows > 0) {
     
        
      
-     
+      
+        
+    
+      
+      
         <table>
-		 <input type="hidden" class="form-control" name="id" value="'.$row["id"].'"  maxlength="5" readonly>
+			<tr>
+		<td style="width:100px> <label for="categoryx">ID</label> </td>
+		 <td><input type="text" class="form-control" name="id" value="'.$row["id"].'"  maxlength="5" readonly> </td>
+		    </tr>
 		<tr>
      <td style="width:100px> <label for="category">Author</label> </td>
       <td><input type="text" class="form-control" name="author" value="'.$row["author"].'"  maxlength="50" size="50" readonly></td>

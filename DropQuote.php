@@ -54,6 +54,9 @@ $flagged=true;
 $touched=isset($_POST['ident']);
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
+	?>
+		  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<?php
 } else {     $id = $_POST['ident'];
     $sql = "SELECT * FROM quote_table
             WHERE id = '$id'";
