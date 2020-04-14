@@ -37,6 +37,12 @@ $sql = "SELECT * FROM pref WHERE  ID = '1'";
 		<label for "e"> English</label><br>
 		<input type ="radio" id="t" name="omega" value ="Telugu"> 
 		<label for "t"> Telugu</label><br>      
+		<input type ="radio" id="a1" name="quote" value ="Puzzles"> 
+		<label for "a1"> Display Puzzles</label><br>    
+		<input type ="radio" id="a2" name="quote" value ="Quotes"> 
+		<label for "a2"> Display Quotes</label><br>    
+		<input type ="radio" id="a3" name="quote" value ="Both"> 
+		<label for "a3"> Display Both</label><br>    
 <input type="submit" value="submit">
 		</form>';
 	}

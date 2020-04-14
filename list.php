@@ -66,7 +66,7 @@ $query = "SELECT * FROM quote_table";
 		 <button type = "submit" formaction ="deleteQuote.php">Delete</button>
 		 <button type = "submit"formaction ="DropQuote.php">Drop Quote</button>
 		 	 <button type = "submit"formaction ="Scramble.php">Scramble Quote</button>
-	
+	 <button type = "submit"formaction ="Split.php">Split Quote</button>
 			
 		    <div id="customerTableView">
 			  <table class="display" id="ceremoniesTable" style="width:100%">

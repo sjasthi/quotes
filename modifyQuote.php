@@ -17,12 +17,15 @@
 <?php
 include_once 'db_credentials.php'; 
 
-$sql = "SELECT * FROM quote_table
-            WHERE id = '-1'";
-
+  $sql = "SELECT * FROM quote_table
+            WHERE id = -1";
+			$sleep=true;
 $touched=isset($_POST['ident']);
 if (!$touched) {
-	echo 'You need to select an entry. Go back and try again. <br>';
+      header ("Location:http://localhost/quotes/list.php/",FALSE);
+	
+		
+		
 } else {     $id = $_POST['ident'];
     $sql = "SELECT * FROM quote_table
             WHERE id = '$id'";
@@ -30,13 +33,13 @@ if (!$touched) {
 
 	
 }
-
+if ($touched) {
     if (!$result = $db->query($sql)) {
         die ('There was an error running query[' . $connection->error . ']');
     }//end if
 //end if
 
-if ($result->num_rows > 0 && $touched) {
+if ($result->num_rows > 0) {
     // output data of each row
 	
 
@@ -83,6 +86,7 @@ if ($result->num_rows > 0 && $touched) {
     
     }//end while
 }//end if
+}
 else {
     echo "0 results";
 }//end else
@@ -90,5 +94,7 @@ else {
 ?>
 
 </div>
+
+
 
 
