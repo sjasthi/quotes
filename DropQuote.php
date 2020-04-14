@@ -7,7 +7,8 @@
     include("./nav.php");
 	include ("telugu_parser.php");
 ?>
-
+<div class="container">
+<style>#title {text-align: center; color: darkgoldenrod;}</style>
 <?php
 include_once 'db_credentials.php'; 
 
@@ -35,14 +36,14 @@ if (!$touched) {
 	
 	
 }	$norows = 16; //later i'll update this to take from preferences
-
+  echo '<h2 id="title">Drop Quote</h2><br>';
 
 	$uninpo=1;
 	$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
 	$result2 = mysqli_query($db,$sqx);
 	while ($row2 =mysqli_fetch_array($result2))
 	{
-		$norows=$row2["COLUMNS"];
+		$norows=$row2["value"];
 		$lang=$row2["Language"];
 	}
 	
