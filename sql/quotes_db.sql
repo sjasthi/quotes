@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2020 at 01:03 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Generation Time: Apr 14, 2020 at 05:22 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `quotes_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pref`
+--
+
+CREATE TABLE `pref` (
+  `value` int(10) NOT NULL COMMENT 'How many rows we can have',
+  `Language` varchar(15) NOT NULL COMMENT 'What language we should assume a quote is in.',
+  `display` varchar(12) NOT NULL COMMENT 'puzzles, quotes or both for main page dispaly',
+  `ID` int(1) NOT NULL DEFAULT 1,
+  `NAME` varchar(30) NOT NULL,
+  `COMMENTS` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pref`
+--
+
+INSERT INTO `pref` (`value`, `Language`, `display`, `ID`, `NAME`, `COMMENTS`) VALUES
+(4, 'English', 'Puzzles', 1, '', '');
 
 -- --------------------------------------------------------
 
@@ -47,10 +69,10 @@ INSERT INTO `preferences` (`id`, `name`, `value`, `comments`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quotes_table`
+-- Table structure for table `quote_table`
 --
 
-CREATE TABLE `quotes_table` (
+CREATE TABLE `quote_table` (
   `id` int(5) NOT NULL,
   `author` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `topic` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -58,10 +80,10 @@ CREATE TABLE `quotes_table` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `quotes_table`
+-- Dumping data for table `quote_table`
 --
 
-INSERT INTO `quotes_table` (`id`, `author`, `topic`, `quote`) VALUES
+INSERT INTO `quote_table` (`id`, `author`, `topic`, `quote`) VALUES
 (1, 'అబ్దుల్ కలాం', 'general', 'మన జననం ఓ సాధారణమైనది కావచ్చు. కానీ మన మరణం మాత్రం ఒక చరిత్ర సృష్టించేదిగా ఉండాలి'),
 (2, 'మహత్మా గాంధీ', 'general', 'అహింసకు మించిన ఆయుధం లేదు.'),
 (3, 'మహత్మా గాంధీ', 'general', 'ఆత్మాభిమానం, గౌరవాల్ని వేరెవరో పరిరక్షించరు, మనకు మనమే వాటిని కాపాడుకోవాలి.'),
@@ -136,7 +158,8 @@ INSERT INTO `quotes_table` (`id`, `author`, `topic`, `quote`) VALUES
 (72, 'సోమిశెట్టి వేణుగోపాల్ ', 'general', 'పిచ్చి మొక్కలు కూడా \nపచ్చదనాన్నే పరుస్తాయి\nమేధస్సునే మదించిన మనిషి మాత్రం \nఅమృతాన్ని తాను సేవించి\nహాలాహలాన్ని భవిష్యత్తు తరాలకు \nపంచుతున్నాడు.  \n'),
 (73, 'మంత్రి లక్ష్మీనారాయణ ', 'general', 'పచ్చదనంతోనే ప్రగతి విరాజిల్లుతుంది \nపచ్చదనం లోపిస్తే పుడమి విలవిలలాడుతుంది\nప్రతి వ్యక్తి తోటమాలియై \nపుడమిని బృందానంలా తీర్చాలి.\n'),
 (74, 'ఎస్. అరుణ ', 'general', 'చెట్టు మరకతం \nచెట్టు హరితగీతం \nచెట్టు ఒక భావన\nచెట్టు ఒక దీవెన\n'),
-(75, 'జయంపు క్రిష్ణ\n', 'general', 'మనం పది కాలాల పాటు\nపదిలంగా ప్రశాంతంగా ఉండాలన్నా \nప్రకృతిలో సహజత్వం నిండాలన్నా \nచెట్లు పచ్చగా ఎదగాలి \nనేస్తాల్లా నేత్రాల్లో మెదగాలి\nఅందుకే నేను \nచెట్లకు నమస్కరిస్తాను. \n');
+(75, 'జయంపు క్రిష్ణ\n', 'general', 'మనం పది కాలాల పాటు\nపదిలంగా ప్రశాంతంగా ఉండాలన్నా \nప్రకృతిలో సహజత్వం నిండాలన్నా \nచెట్లు పచ్చగా ఎదగాలి \nనేస్తాల్లా నేత్రాల్లో మెదగాలి\nఅందుకే నేను \nచెట్లకు నమస్కరిస్తాను. \n'),
+(76, 'test', 'test', 'test test test ');
 
 --
 -- Indexes for dumped tables
@@ -149,9 +172,9 @@ ALTER TABLE `preferences`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `quotes_table`
+-- Indexes for table `quote_table`
 --
-ALTER TABLE `quotes_table`
+ALTER TABLE `quote_table`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -159,10 +182,10 @@ ALTER TABLE `quotes_table`
 --
 
 --
--- AUTO_INCREMENT for table `quotes_table`
+-- AUTO_INCREMENT for table `quote_table`
 --
-ALTER TABLE `quotes_table`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+ALTER TABLE `quote_table`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
