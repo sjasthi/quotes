@@ -9,6 +9,8 @@
  ?>
 
 <?php 
+
+  echo '<h2 id="title">Preferences</h2><br>';
  if(isset($_GET['updated'])){
             if($_GET["updated"] == "Success"){
                 echo '<br><h3>yes yes, we changed it no worries </h3>';

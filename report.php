@@ -12,6 +12,7 @@ include_once 'db_credentials.php';
 
        $wheel=array();
    $samp = array();
+     echo '<h2 id="title">Reports</h2><br>';
 
 
 	if ($data->num_rows > 0) {
