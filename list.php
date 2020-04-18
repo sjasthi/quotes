@@ -33,7 +33,7 @@ $query = "SELECT * FROM quote_table";
  <div class="right-content">
     <div class="container-fluid">
    <?php
-
+header('Content-type: text/html; charset=utf-8');
  if(isset($_GET['create'])){
             if($_GET["create"] == "Success"){
                 echo '<br><h3>Success! Your quote has been added!</h3>';
