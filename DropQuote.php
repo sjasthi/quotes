@@ -152,7 +152,7 @@ else {
 	for ($arrayfod2=0;$arrayfod2<$fodder+1;$arrayfod2++)
 	{array_push($arrayfod, $trash);
 	}
-	
+	$nohope=$noletters;
 		$noletters=$noletters+$fodder;
 	}
 	
@@ -160,13 +160,13 @@ else {
 	$wheeloffortune =array_fill(0,$norows,$sample);
 	
 
-	for ($x = 0;$x <= $noletters;$x++)
+	for ($x = 0;$x < $noletters;$x++)
 	{
 		
 	$tested =parseToCharacter($arrayfod[$x]);
 	
 	
-	if (ctype_space($tested)==false && ctype_punct($tested)==false)
+	if (ctype_space($tested)==false && ctype_punct($tested)==false&&$x<$nohope)
 	{ $t= $x%$norows;
 		array_push($wheeloffortune[$t],$tested);
 	
@@ -216,7 +216,7 @@ if ($y%$norows==0)
 }	
 $alpha =$wheeloffortune[$y%$norows][$y/$norows];
 
-echo "<td>.$alpha.</td>";
+echo "<td>$alpha</td>";
 
 if ($y%$norows==$norows-1) 
 { echo "</tr>";
