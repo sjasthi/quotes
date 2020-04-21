@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2020 at 05:22 AM
+-- Generation Time: Apr 21, 2020 at 07:31 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+-- PHP Version: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,6 +31,7 @@ CREATE TABLE `pref` (
   `value` int(10) NOT NULL COMMENT 'How many rows we can have',
   `Language` varchar(15) NOT NULL COMMENT 'What language we should assume a quote is in.',
   `display` varchar(12) NOT NULL COMMENT 'puzzles, quotes or both for main page dispaly',
+  `Chunks` int(1) NOT NULL DEFAULT 3,
   `ID` int(1) NOT NULL DEFAULT 1,
   `NAME` varchar(30) NOT NULL,
   `COMMENTS` varchar(50) NOT NULL
@@ -41,8 +41,8 @@ CREATE TABLE `pref` (
 -- Dumping data for table `pref`
 --
 
-INSERT INTO `pref` (`value`, `Language`, `display`, `ID`, `NAME`, `COMMENTS`) VALUES
-(4, 'English', 'Puzzles', 1, '', '');
+INSERT INTO `pref` (`value`, `Language`, `display`, `Chunks`, `ID`, `NAME`, `COMMENTS`) VALUES
+(15, 'Telugu', 'Both', 3, 1, '', '');
 
 -- --------------------------------------------------------
 

@@ -57,6 +57,14 @@
               <br/>Preferences</li>
             </a>
            
+		    <a href="combo.php">
+              <li <?php if($nav_selected == "PREF"){ echo 'class="current-page"'; } ?>>
+              <img src="./images/puzzlelist.png">
+              <br/>MultiPuzzle</li>
+            </a>
+		   
+		   
+		   
         </a>
 
       </ul>

@@ -5,10 +5,10 @@ include_once 'db_credentials.php';
 
 
 $id=1;
-    $language= mysqli_real_escape_string($db, $_POST['omega']);
+
     $colnum = mysqli_real_escape_string($db, $_POST['alpha']);
 	  $display =mysqli_real_escape_string($db, $_POST['quote']);
-    
+    $chunk =mysqli_real_escape_string($db, $_POST['hippo']);
    
     
     
@@ -20,7 +20,8 @@ $id=1;
                   
 				  SET 
 				   value = '$colnum',
-                    Language = '$language',
+                
+					Chunks = '$chunk',
 					display ='$display'
                   WHERE id = '$id'"
 				 ;

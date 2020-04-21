@@ -69,6 +69,7 @@ header('Content-type: text/html; charset=utf-8');
 		 	 <button type = "submit"formaction ="Scramble.php">Scramble Quote</button>
 	 <button type = "submit"formaction ="Split.php">Split Quote</button>
 	 <button type ="submit" formaction="FloatList.php">DropFloat</button>
+	 
 			
 		    <div id="customerTableView">
 			  <table class="display" id="ceremoniesTable" style="width:100%">

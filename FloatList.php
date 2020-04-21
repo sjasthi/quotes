@@ -1,6 +1,6 @@
 
 
-<?php $page_title = ' Modify Quote'; ?>
+<?php $page_title = ' Float and Drop Quote'; ?>
 <?php 
   $nav_selected = "LIST";
   $left_buttons = "NO";
@@ -31,14 +31,22 @@ if (!$touched) {
 		
 		
 } else {     $id = $_POST['ident'];
-  
+
+    $sql = "SELECT * FROM quote_table
+            WHERE id = '$id'";
+  $sleeper=mysqli_query($db,$sql);
+  while ($row2 =mysqli_fetch_array($sleeper))
+  {
+	  $awake=$row2['id'];
+	  
+  }
        $data = mysqli_query($db, $query);
 
 	
 } ?>
 		
-		<form action=FloatDrop.php method ="post">
-		 <input type="hidden" id="first" name="first" value=$fodder>
+		<form action=FloatDrop.php method ="post"> <?php
+		echo ' <input type="hidden" id="first" name="first" value='.$awake.'> '?>
 		 <button type = "submit">Continue</button>
 		    <div id="customerTableView">
 			  <table class="display" id="ceremoniesTable" style="width:100%">

@@ -86,66 +86,10 @@ if (!$touched) {
 	while ($row2 =mysqli_fetch_array($result2))
 	{
 		$norows=$row2["value"];
-		$lang=$row2["Language"];
-	}
-	
-	if  (strcmp($lang, "English")==0){
-if ($result->num_rows > 0) {
-	while($row = $result->fetch_assoc()){
-	
-	$quoteline = $row["quote"];
-
-
-	$noletters=strlen($quoteline);
-	if (($noletters%$norows) !=0)
-	{ 
-
-       $fodder=($norows-($noletters%$norows));
-		$nohope=$noletters;
-		$noletters=$noletters+$fodder;
-	}
-	$sample=array();
-	$wheeloffortune =array_fill(0,$norows,$sample);
-	
-
-	for ($x = 0;$x <= $noletters;$x++)
-	{
 		
-	$tested =substr($quoteline,$x,1);
-	
-if (ctype_alnum($tested) &&$x<$nohope)
-	{ $t= $x%$norows;
-		array_push($wheeloffortune[$t],$tested);
-	
-	}else { $t= $x%$norows;
-	
-		array_push($spaces,$x);
-	}
-	}
-	}
-
-
-for ($r=0;$r<$norows;$r++)
-{
-	shuffle($wheeloffortune[$r]);
-}
-
-
-
-
-
-
-	
 	}
 	
-	
 
-
-else {
-    echo "0 results";
-	$flagged=false;
-}
-	}else {
 		if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()){
 	
@@ -161,7 +105,7 @@ else {
 	for ($arrayfod2=0;$arrayfod2<$fodder+1;$arrayfod2++)
 	{array_push($arrayfod, $trash);
 	}
-	
+	$nohope=$noletters;
 		$noletters=$noletters+$fodder;
 	}
 	
@@ -169,12 +113,12 @@ else {
 	$wheeloffortune =array_fill(0,$norows,$sample);
 	
 
-	for ($x = 0;$x <= $noletters;$x++)
+	for ($x = 0;$x < $noletters;$x++)
 	{
 		
 	$tested =parseToCharacter($arrayfod[$x]);
 	
-if (ctype_space($tested)==false && ctype_punct($tested)==false)
+if (ctype_space($tested)==false && ctype_punct($tested)==false&&$x<$nohope)
 	{ $t= $x%$norows;
 		array_push($wheeloffortune[$t],$tested);
 	
@@ -200,7 +144,7 @@ else {
     echo "0 results";
 	$flagged=false;
 }
-	}	if ($flagged==true)
+		if ($flagged==true)
 	{
 		
 		
@@ -247,7 +191,7 @@ if ($y%$norows==0)
 }	
 $alpha =$wheeloffortune[$y%$norows][$y/$norows];
 
-echo "<td>.$alpha.</td>";
+echo "<td>$alpha</td>";
 
 if ($y%$norows==$norows-1) 
 { echo "</tr>";

@@ -6,7 +6,7 @@
   require 'db_credentials.php'; 
     include("./nav.php");
 	include ("telugu_parser.php");
-	error_reporting(0);
+error_reporting(0);
 ?>
 <head>
 <div class="container">
@@ -83,60 +83,10 @@ if (!$touched) {
 	while ($row2 =mysqli_fetch_array($result2))
 	{
 		$norows=$row2["value"];
-		$lang=$row2["Language"];
-	}
-	
-	if  (strcmp($lang, "English")==0){
-if ($result->num_rows > 0) {
-	while($row = $result->fetch_assoc()){
-	
-	$quoteline = $row["quote"];
-
-
-	$noletters=strlen($quoteline);
-	if (($noletters%$norows) !=0)
-	{ 
-
-       $fodder=($norows-($noletters%$norows));
-	$nohope=$noletters;
-		$noletters=$noletters+$fodder;
-	}
-	$sample=array();
-	$wheeloffortune =array_fill(0,$norows,$sample);
-	
-
-	for ($x = 0;$x <= $noletters;$x++)
-	{
 		
-	$tested =substr($quoteline,$x,1);
+	}
 	
 	
-	if (ctype_alnum($tested) &&$x<$nohope)
-	{ $t= $x%$norows;
-		array_push($wheeloffortune[$t],$tested);
-	
-	} else { $t= $x%$norows;
-	//	array_push($wheeloffortune[$t],"-");
-		array_push($spaces,$x);
-	}
-	}
-	}
-
-
-for ($r=0;$r<$norows;$r++)
-{
-	shuffle($wheeloffortune[$r]);
-}
-
-
-
-}
-
-else {
-    echo "0 results";
-	$flagged=false;
-}
-	}else {
 		if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()){
 	
@@ -144,8 +94,8 @@ else {
 	//makes an array from the line
 	$arrayfod=parsetoCodePoints($quoteline);
 	$noletters=count($arrayfod);
-	if (($noletters%$norows) !=0)
-	{ 
+	
+	 
 
        $fodder=($norows-($noletters%$norows));
 	   $trash=array(" ");
@@ -154,7 +104,7 @@ else {
 	}
 	$nohope=$noletters;
 		$noletters=$noletters+$fodder;
-	}
+	
 	
 	$sample=array();
 	$wheeloffortune =array_fill(0,$norows,$sample);
@@ -166,8 +116,9 @@ else {
 	$tested =parseToCharacter($arrayfod[$x]);
 	
 	
-	if (ctype_space($tested)==false && ctype_punct($tested)==false&&$x<$nohope)
+	if (ctype_space($tested)==false and ctype_punct($tested)==false and ($x<$nohope))
 	{ $t= $x%$norows;
+
 		array_push($wheeloffortune[$t],$tested);
 	
 	} else { $t= $x%$norows;
@@ -196,7 +147,7 @@ else {
     echo "0 results";
 		$flagged=false;
 }
-	}
+	
 	
 	if ($flagged==true)
 	{

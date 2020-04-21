@@ -47,36 +47,11 @@ $uninpo=1;
 	
 	while ($row2 =mysqli_fetch_array($result2))
 	{ 
+	$nochars=$row2["Chunks"];
 		
-		$lang=$row2["Language"];
 	}
 	
-if (strcmp ($lang, "English") ==0){
-if ($result->num_rows > 0) {
-	while($row = $result->fetch_assoc()){
-	
-	$quoteline = $row["quote"];
-	
-	$noletters=strlen($quoteline);
-	
-	if ($noletters%$nochars ==0)
-	{ $fodder=0;
-	} else $fodder=1;
-	$fodder2= ($noletters/$nochars)+$fodder;
-	
-	$sample=array();
-	$wheeloffortune =array_fill(0,$fodder2,$sample);
-	
-	for ($x=0;$x<$noletters;$x++)
-	{ $tested =substr($quoteline,$x,1);
 
-array_push($wheeloffortune[$x/3],$tested);
-	}
-	shuffle($wheeloffortune);
-	}
-}
-}
-else {
 	
 	
 	if ($result->num_rows > 0) {
@@ -104,19 +79,22 @@ array_push($wheeloffortune[$x/3],$tested);
 	shuffle($wheeloffortune);
 	}
 }
-}
+
 
 	$counter=0;
+		echo '<font size="18">';
+
 	foreach($wheeloffortune as $value)
+	
 	{ foreach ($value as $value2)
 		{ echo $value2;
 		
-		}echo " _  " ;
-		$counter++;
-		if ($counter%4==0)
-		{ echo "<br>";
 		}
-	}
+		
+	
+		 echo "<br>";
+		
+	}echo '</font>';
 	
 
 ?>
