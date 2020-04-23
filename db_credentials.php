@@ -8,11 +8,12 @@ DEFINE('DB_PASS', '');
 
 
 $db = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-$db->set_charset("utf8");
+
 function run_sql($sql_script)
 {
     global $db;
     // check connection
+	$db->set_charset("utf8");
     if ($db->connect_error)
     {
         trigger_error(print_r(debug_backtrace()).'.Database connection failed: '  . $db->connect_error, E_USER_ERROR);
