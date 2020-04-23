@@ -15,7 +15,10 @@
 	
 	//we go over all entries that have the topic in the database, and push them to an array
 $sql =  "SELECT * FROM quote_table
-          WHERE topic = '$topic'";
+		  WHERE topic = '$topic'";
+		  
+		  $db->set_charset("utf8");
+
 $quotecol=array();
 
 

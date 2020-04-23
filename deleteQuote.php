@@ -17,6 +17,8 @@ include_once 'db_credentials.php';
   $sql = "SELECT * FROM quote_table
             WHERE id = '-1'";
 
+$db->set_charset("utf8");
+
 $touched=isset($_POST['ident']);
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';

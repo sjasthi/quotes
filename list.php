@@ -54,7 +54,8 @@ header('Content-type: text/html; charset=utf-8');
 			$a =$_GET['id'];
 			$query="SELECT * FROM quote_table WHERE author = '$a'";
 		}
-		
+        
+    $db->set_charset("utf8");
 		   $data = mysqli_query($db, $query);
 		   $inform = array(-1);
 ?>

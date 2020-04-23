@@ -47,6 +47,7 @@ error_reporting(0);
 </head>
 <?php
 include_once 'db_credentials.php'; 
+$db->set_charset("utf8");
 $spaces=array();
   $sql = "SELECT * FROM quote_table
             WHERE id = '-1'";

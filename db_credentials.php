@@ -8,6 +8,7 @@ DEFINE('DB_PASS', '');
 
 
 $db = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+$db->set_charset("utf8");
 
 function run_sql($sql_script)
 {

@@ -5,6 +5,7 @@
  require 'db_credentials.php'; 
   include("./nav.php");
   $query = "SELECT * FROM quote_table";
+  $db->set_charset("utf8");
   $GLOBALS['data'] = mysqli_query($db, $query);
  ?>
 <?php

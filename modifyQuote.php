@@ -11,12 +11,13 @@
 
 ?>
 
+
 <div class="container">
 <style>#title {text-align: center; color: darkgoldenrod;}</style>
 
 <?php
 include_once 'db_credentials.php'; 
-
+$db->set_charset("utf8");
   $sql = "SELECT * FROM quote_table
             WHERE id = -1";
 			$sleep=true;

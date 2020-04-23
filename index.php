@@ -35,6 +35,7 @@ table.center {
 </body>
 <?php 
 header('Content-type: text/html; charset=utf-8');
+$db->set_charset("utf8");
    $data = mysqli_query($db, $query);
    
    if ($data->num_rows > 0) {
