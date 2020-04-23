@@ -5,8 +5,9 @@
   $left_selected = "";
   require 'db_credentials.php'; 
     include("./nav.php");
-	include ("telugu_parser.php");
-error_reporting(0);
+	
+	include ("puzzlemaker.php");
+//error_reporting(0);
 ?>
 <head>
 <div class="container">
@@ -91,119 +92,8 @@ if (!$touched) {
 	while($row = $result->fetch_assoc()){
 	
 	$quoteline = $row["quote"];
-	//makes an array from the line
-	$arrayfod=parsetoCodePoints($quoteline);
-	$noletters=count($arrayfod);
-	
-	 
-
-       $fodder=($norows-($noletters%$norows));
-	   $trash=array(" ");
-	for ($arrayfod2=0;$arrayfod2<$fodder+1;$arrayfod2++)
-	{array_push($arrayfod, $trash);
 	}
-	$nohope=$noletters;
-		$noletters=$noletters+$fodder;
 	
-	
-	$sample=array();
-	$wheeloffortune =array_fill(0,$norows,$sample);
-	
-
-	for ($x = 0;$x < $noletters;$x++)
-	{
-		
-	$tested =parseToCharacter($arrayfod[$x]);
-	
-	
-	if (ctype_space($tested)==false and ctype_punct($tested)==false and ($x<$nohope))
-	{ $t= $x%$norows;
-
-		array_push($wheeloffortune[$t],$tested);
-	
-	} else { $t= $x%$norows;
-		array_push($wheeloffortune[$t],"-");
-		array_push($spaces,$x);
-	}
-	}
-	}
-
-
-for ($r=0;$r<$norows;$r++)
-{
-	shuffle($wheeloffortune[$r]);
-}
-
-
-
-
-
-
-	
-	} 
-
-
-else {
-    echo "0 results";
-		$flagged=false;
-}
-	
-	
-	if ($flagged==true)
-	{
-		
-		
-		
-?>
-<body>
-<table border="1" style="width:100%">
-<tbody>
-
-<?php
-for ($y=0;$y<$noletters;$y++)
-{
-if ($y%$norows==0)
-{ echo "<tr>";
-}	
-$alpha =$wheeloffortune[$y%$norows][$y/$norows];
-
-echo "<td>$alpha</td>";
-
-if ($y%$norows==$norows-1) 
-{ echo "</tr>";
-}
-}
-	}
-
-	
-
- 
-		
-?>
-  <table border="1" style="width:100%">
-        <tbody>
-            <tr>
-		<?php	
-			for ($y=0;$y<$noletters;$y++)
-{
-if ($y%$norows==0)
-{ echo "<tr>";
-}	
-$alpha =$wheeloffortune[$y%$norows][$y/$norows];
-if (in_array($y,$spaces)==false){
-echo "<td></td>";}
-else {
-	echo "<td style=\"background-color:#000000;\"> 
-	
-	</td>";}
-
-if ($y%$norows==$norows-1) 
-{ echo "</tr>";
-}
-}
-echo "  </tbody>
-    </table>
-	</body> <br> <h1> Solution:";
-echo $quoteline;
-echo "</h1>";
+		}
+DropM($quoteline,$norows);
 	 ?>

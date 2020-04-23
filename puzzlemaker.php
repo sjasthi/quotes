@@ -112,7 +112,7 @@ Function DropM($quote , $col)
        $fodder=($col-($noletters%$col));
 	   $trash=array("-");
 	for ($arrayfod2=0;$arrayfod2<$fodder;$arrayfod2++)
-	{ array_push($t, $trash);
+	{ 
 	}
 	$nohope=$noletters;
 		$noletters=$noletters+$fodder;
@@ -129,17 +129,20 @@ Function DropM($quote , $col)
 	$tested =parseToCharacter($axe);
 	
 	
-	if (ctype_space($tested)==false && ctype_punct($tested)==false &&$x<$nohope)
+	if (ctype_space($tested)==false && ctype_punct($tested)==false &&ctype_cntrl($tested)==false&& $x<$nohope)
 	{ $t= $x%$col;
 		array_push($wheeloffortune[$t],$tested);
 	
 	} else { $t= $x%$col;
-		array_push($wheeloffortune[$t],"-");
+		
 		array_push($spaces,$x);
 	}
 	$x++;
 	}
-	
+	for($x=$nohope;$x<$noletters;$x++)
+	{
+		array_push($spaces,$x);
+	}
 	
 for ($r=0;$r<$col;$r++)
 {
@@ -152,16 +155,19 @@ for ($r=0;$r<$col;$r++)
 <tbody>
 
 <?php
-for ($y=0;$y<$noletters;$y++)
+for ($y=$noletters-1;$y>-1;$y--)
 {
-if ($y%$col==0)
+if ($y%$col==$col-1)
 { echo "<tr>";
 }	
-$alpha =$wheeloffortune[$y%$col][$y/$col];
 
-echo "<td>$alpha</td>";
+if (isset($wheeloffortune[$col-1-$y%$col][$y/$col]))
+{ 
+$alpha =$wheeloffortune[$col-1- $y%$col][$y/$col];
+echo "<td>$alpha</td>";}
+else {echo "<td></td>";}
 
-if ($y%$col==$col-1) 
+if ($y%$col==0) 
 { echo "</tr>";
 }
 }
@@ -172,7 +178,7 @@ if ($y%$col==$col-1)
  
 		
 ?>
-  <table border="1" style="width:100%">
+  <table border="1" style="width:100%""height:100px">
         <tbody>
             <tr>
 		<?php	
@@ -181,7 +187,7 @@ if ($y%$col==$col-1)
 if ($y%$col==0)
 { echo "<tr>";
 }	
-$alpha =$wheeloffortune[$y%$col][$y/$col];
+
 if (in_array($y,$spaces)==false){
 echo "<td></td>";}
 else {
