@@ -34,7 +34,7 @@ $sql = "SELECT * FROM pref WHERE  ID = '1'";
     while($row = $result->fetch_assoc()) {
 		
 	echo '<form action="presub.php" method="post">
-		Number of Rows: <input type ="number" name="alpha" min="1" required><br>
+		Number of Columns: <input type ="number" name="alpha" min="1" required><br>
 		Split Chunk Size: <input type ="number" name="hippo"" min="2" max="4" required><br>
 	
 		<input type ="radio" id="a1" name="quote" value ="Puzzles" checked> 

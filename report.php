@@ -5,7 +5,6 @@
  require 'db_credentials.php'; 
   include("./nav.php");
   $query = "SELECT * FROM quote_table";
-  $db->set_charset("utf8");
   $GLOBALS['data'] = mysqli_query($db, $query);
  ?>
 <?php
@@ -39,17 +38,17 @@ include_once 'db_credentials.php';
   <tr>
     <th>Author</th>
     <th>Total</th>
-    <th>Button</th>
+    
   </tr> <?php
 foreach ($wheel as $toy){
     echo '<tr>
                                 <td>'.$toy[1].'</td>
-                                <td>'.$toy[0].' </span> </td>
-                         <td><a class="btn btn-warning btn-sm" href="list.php?id='.$toy[1].'">Lists</a></td>
+                                <td><a href=list.php?id='.$toy[1].'>'.$toy[0].' </a></span> </td>
+                        
                          
                             
-								<td>yes</td>
-          >
+								
+          
                             
                             </tr>';
 }

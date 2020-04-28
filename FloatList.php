@@ -22,10 +22,8 @@ include_once 'db_credentials.php';
 
   $sql = "SELECT * FROM quote_table
             WHERE id = -1";
-            $sleep=true;
-            
-            $db->set_charset("utf8");
-		
+			$sleep=true;
+		$db->set_charset("utf8");
 $touched=isset($_POST['ident']);
 if (!$touched) {
       header ("Location:http://localhost/quotes/list.php/",FALSE);

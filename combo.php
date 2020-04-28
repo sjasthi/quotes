@@ -54,7 +54,7 @@ $query = "SELECT * FROM quote_table";
  <label for "split">Split Puzzles</label> <br>
  
  <input type="radio" id="scramble" name="ptype" value="scramble">
- <label for "scramble">Split Puzzles</label> <br>
+ <label for "scramble">Scramble Puzzles</label> <br>
  
  <input type="radio" id="drop" name="ptype" value="drop">
  <label for "drop">Drop Puzzles</label> <br>
@@ -63,6 +63,8 @@ $query = "SELECT * FROM quote_table";
  <input type="radio" id="float" name="ptype" value="float">
  <label for "float">Float Puzzles</label> <br>
  
+  <input type="radio" id="Dual" name="ptype" value="dual">
+ <label for "Dual">Float-Drop Puzzles</label> <br>
   <input type="submit"> 
  
  

@@ -9,46 +9,9 @@
 	include ("puzzlemaker.php");
 //error_reporting(0);
 ?>
-<head>
-<div class="container">
-<style>.title {text-align: center; color: darkgoldenrod;}
 
-  .words {
-            height: 50px;
-            text-align: center;
-        }
-        
-        h1,
-        h2,
-        h3 {
-            text-align: center;
-        }
-        
-        table {
-            border: 1px solid black;
-            border-collapse: separate;
-            table-layout: fixed;
-            width: 100px;
-            height: 200px;
-            text-align: center;
-        }
-        
-        table td,
-        table th {
-            font-size: 20px;
-            padding: 10px;
-        }
-        
-        .answerkey td {
-            width: 200px;
-            height: 200px;
-            border: 1px solid black;
-            padding: none
-    </style>
-</head>
 <?php
 include_once 'db_credentials.php'; 
-$db->set_charset("utf8");
 $spaces=array();
   $sql = "SELECT * FROM quote_table
             WHERE id = '-1'";
@@ -66,7 +29,7 @@ if (!$touched) {
 
 	
 }
-
+$db->set_charset("utf8");
     if (!$result = $db->query($sql)) {
         die ('There was an error running query[' . $connection->error . ']');
   
@@ -76,7 +39,7 @@ if (!$touched) {
 	
 	
 	
-}	$norows = 16; //later i'll update this to take from preferences
+}	$nocol = 16; //later i'll update this to take from preferences
   echo '<h2 id="title">Drop Quote</h2><br>';
 
 	$uninpo=1;
@@ -84,7 +47,7 @@ if (!$touched) {
 	$result2 = mysqli_query($db,$sqx);
 	while ($row2 =mysqli_fetch_array($result2))
 	{
-		$norows=$row2["value"];
+		$nocol=$row2["value"];
 		
 	}
 	
@@ -96,5 +59,5 @@ if (!$touched) {
 	}
 	
 		}
-DropM($quoteline,$norows);
+DropM($quoteline,$nocol);
 	 ?>

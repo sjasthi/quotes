@@ -52,7 +52,8 @@ header('Content-type: text/html; charset=utf-8');
         }
 		if (isset($_GET['id'])) {
 			$a =$_GET['id'];
-			$query="SELECT * FROM quote_table WHERE author = '$a'";
+			$query="SELECT * FROM quote_table 
+			WHERE author = '$a'";
 		}
         
     $db->set_charset("utf8");

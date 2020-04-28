@@ -38,7 +38,7 @@ $uninpo=1;
 	$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
 	$result2 = mysqli_query($db,$sqx);
 	while ($row2 =mysqli_fetch_array($result2))
-	{
+	{ $chunks=$row2["Chunks"];
 		$norows=$row2["value"];
 		
 	}
@@ -50,9 +50,15 @@ for ($x=0;$x<$puzzles;$x++)
 	$s=$quotecol[$r];
 	
 	if ($method =="split")
-	{SplitMaker($s);} 
+	{SplitMaker($s,$chunks);} 
 else if ($method=="scramble") {ScrambleMaker($s);} 
 else if ($method=="drop"){DropM($s,$norows);} 
+else if ($method=="dual"){
+		$r2=rand(0,$max);
+	$s2=$quotecol[$r];
+	
+	
+	FloatDrop($s,$s2,$norows);} 
 else {FloatM($s,$norows);}
 	
 	

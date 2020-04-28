@@ -5,7 +5,8 @@
   $left_selected = "";
   require 'db_credentials.php'; 
     include("./nav.php");
-	include ("telugu_parser.php");
+	//error_reporting(0);
+	include ("puzzlemaker.php");
 ?>
 
 <?php
@@ -61,42 +62,9 @@ $uninpo=1;
 	
 	$quoteline = $row["quote"];
 	
-	$arrayfod=parsetoCodePoints($quoteline);
 	
-	$noletters=count($arrayfod);
-	
-	if ($noletters%$nochars ==0)
-	{ $fodder=0;
-	} else $fodder=1;
-	$fodder2= ($noletters/$nochars)+$fodder;
-	
-	$sample=array();
-	$wheeloffortune =array_fill(0,$fodder2,$sample);
-	
-	for ($x=0;$x<$noletters;$x++)
-	{ $tested =parseToCharacter($arrayfod[$x]);
+	} }
+SplitMaker($quoteline,$nochars);
 
-array_push($wheeloffortune[$x/3],$tested);
-	}
-	shuffle($wheeloffortune);
-	}
-}
-
-
-	$counter=0;
-		echo '<font size="18">';
-
-	foreach($wheeloffortune as $value)
-	
-	{ foreach ($value as $value2)
-		{ echo $value2;
-		
-		}
-		
-	
-		 echo "<br>";
-		
-	}echo '</font>';
-	
 
 ?>

@@ -43,11 +43,21 @@
 
 <?php
 include ("telugu_parser.php");
+include ("usefultool.php");
+
 Function ScrambleMaker($quote)
 {
 	
 	
-	$t=parseToCodePoints($quote);
+	$t2=parseToCodePoints($quote,);
+	$t=array();
+	foreach ($t2 as $axe)
+	{
+		if (ctype_cntrl($axe)==false) //this exists so we can strip control characters from the set.
+		{ array_push($t,$axe);
+		} 
+	}
+	
 	shuffle($t);
 	$a="";
 	foreach($t as $axe)
@@ -58,42 +68,55 @@ Function ScrambleMaker($quote)
 	return;
 }
 
-Function SplitMaker($quote)
+Function SplitMaker($quote,$chunks)
 {
-	$t=parseToCodePoints($quote);
+	$t2=parseToCodePoints($quote);
+	$t=array();
+	foreach ($t2 as $axe)
+	{
+		if (ctype_cntrl($axe)==false) //this exists so we can strip control characters from the set.
+		{ array_push($t,$axe);
+		}
+	}
+	
+	
+	
 	$noletters=Count($t);
 	
-		if ($noletters%3 ==0)
+		if ($noletters%$chunks ==0)
 	{ $fodder=0;
 	} else $fodder=1;
-	$fodder2= ($noletters/3)+$fodder;
+	$fodder2= ($noletters/$chunks)+$fodder;
 	
 	$sample=array();
 	$wheeloffortune =array_fill(0,$fodder2,$sample);
-	
+
 	for ($x=0;$x<$noletters;$x++)
 	{ $tested =parseToCharacter($t[$x]);
 
-array_push($wheeloffortune[$x/3],$tested);
+array_push($wheeloffortune[$x/$chunks],$tested);
 	}
 	shuffle($wheeloffortune);
 	
 	
-	$a="";
+	?>
+		<body>
+<table border="1" style="width:100%">
+<tbody>
 	
-	$counter=0;
-	foreach($wheeloffortune as $value)
-	{ foreach ($value as $value2)
-		{ $a .= $value2;
+<?php	
+	
+
+	foreach($wheeloffortune as $value){ 
+	echo "<tr> <td>";foreach ($value as $value2)
+		{ echo $value2;
 		
-		}$a .=  " _  " ;
-		$counter++;
-		if ($counter%4==0)
-		{ $a .=  "<br>";
 		}
-	}
-	echo $a;
-	return;
+	echo "</td></tr>";
+	
+		
+	} 
+	
 }
 
 
@@ -165,7 +188,7 @@ if (isset($wheeloffortune[$col-1-$y%$col][$y/$col]))
 { 
 $alpha =$wheeloffortune[$col-1- $y%$col][$y/$col];
 echo "<td>$alpha</td>";}
-else {echo "<td></td>";}
+else {echo "<td>&#160</td>";}
 
 if ($y%$col==0) 
 { echo "</tr>";
@@ -178,7 +201,7 @@ if ($y%$col==0)
  
 		
 ?>
-  <table border="1" style="width:100%""height:100px">
+  <table border="1" style="width:100%">
         <tbody>
             <tr>
 		<?php	
@@ -189,10 +212,10 @@ if ($y%$col==0)
 }	
 
 if (in_array($y,$spaces)==false){
-echo "<td></td>";}
+echo "<td>&#160</td>";}
 else {
 	echo "<td style=\"background-color:#000000;\"> 
-	
+	&#160
 	</td>";}
 
 if ($y%$col==$col-1) 
@@ -243,12 +266,12 @@ Function FloatM($quote,$col)
 	$tested =parseToCharacter($axe);
 	
 	
-	if (ctype_space($tested)==false && ctype_punct($tested)==false&&$x<$nohope)
+	if (ctype_space($tested)==false && ctype_punct($tested)==false&&ctype_cntrl($tested)==false&&$x<$nohope)
 	{ $t= $x%$col;
 		array_push($wheeloffortune[$t],$tested);
 	
 	} else { $t= $x%$col;
-		array_push($wheeloffortune[$t],"-");
+	
 		array_push($spaces,$x);
 	}
 	$x++;
@@ -273,10 +296,10 @@ if ($y%$col==0)
 }	
 $alpha =$wheeloffortune[$y%$col][$y/$col];
 if (in_array($y,$spaces)==false){
-echo "<td></td>";}
+echo "<td>&#160</td>";}
 else {
 	echo "<td style=\"background-color:#000000;\"> 
-	
+	&#160
 	</td>";}
 
 if ($y%$col==$col-1) 
@@ -292,10 +315,11 @@ for ($y=0;$y<$noletters;$y++)
 if ($y%$col==0)
 { echo "<tr>";
 }	
-$alpha =$wheeloffortune[$y%$col][$y/$col];
+if (isset($wheeloffortune[$y%$col][$y/$col]))
+{$alpha =$wheeloffortune[$y%$col][$y/$col];
 
-echo "<td>$alpha</td>";
-
+echo "<td>$alpha</td>";}
+else {echo "<td>&#160</td>";}
 if ($y%$col==$col-1) 
 { echo "</tr>";
 }
@@ -325,7 +349,7 @@ Function FloatDrop($quote,$quote2,$col)
 		$t=parseToCodePoints($quote);
 	$noletters=Count($t);
 	$spaces=array();
-	
+	$spaces2=array();
 
 
 	
@@ -345,6 +369,8 @@ Function FloatDrop($quote,$quote2,$col)
 	
 	$sample=array();
 	$wheeloffortune =array_fill(0,$col,$sample);
+	
+	$wheeloffortune2 =array_fill(0,$col,$sample);
 	$x=0;
 		foreach ($t as $axe){
 		
@@ -352,12 +378,12 @@ Function FloatDrop($quote,$quote2,$col)
 	$tested =parseToCharacter($axe);
 	
 	
-	if (ctype_space($tested)==false && ctype_punct($tested)==false&&$x<$nohope)
-	{ $t= $x%$col;
-		array_push($wheeloffortune[$t],$tested);
+	if (ctype_space($tested)==false && ctype_punct($tested)==false&&ctype_cntrl($tested)==false&&$x<$nohope)
+	{ $tt= $x%$col;
+		array_push($wheeloffortune[$tt],$tested);
 	
-	} else { $t= $x%$col;
-		array_push($wheeloffortune[$t],"-");
+	} else {
+		
 		array_push($spaces,$x);
 	}
 	$x++;
@@ -365,10 +391,10 @@ Function FloatDrop($quote,$quote2,$col)
 	
 	$t2=parseToCodePoints($quote2);
 	$noletters2=Count($t2);
-		if (($noletters%$col) !=0)
+		if (($noletters2%$col) !=0)
 	 
 
-       $fodder=($col-($noletters%$col));
+       $fodder=($col-($noletters2%$col));
 	   for ($arrayfod2=0;$arrayfod2<$fodder;$arrayfod2++)
 	{ array_push($t2, $trash);
 	}
@@ -380,13 +406,13 @@ Function FloatDrop($quote,$quote2,$col)
 				$tested =parseToCharacter($axe);
 	
 	
-	if (ctype_space($tested)==false && ctype_punct($tested)==false&&$x<$nohope)
-	{ $t= $x%$col;
-		array_push($wheeloffortune[$t],$tested);
+	if (ctype_space($tested)==false && ctype_punct($tested)==false&&ctype_cntrl($tested)==false&&$x<$nohope)
+	{ $tt= $x%$col;
+		array_push($wheeloffortune2[$tt],$tested);
 	
-	} else { $t= $x%$col;
-		array_push($wheeloffortune[$t],"-");
-		array_push($spaces,($x+$noletters));
+	} else { 
+		
+		array_push($spaces2,$x);
 	}
 	$x++;
 	}
@@ -409,6 +435,8 @@ Function FloatDrop($quote,$quote2,$col)
 for ($r=0;$r<$col;$r++)
 {
 	shuffle($wheeloffortune[$r]);
+	shuffle($wheeloffortune2[$r]);
+	SwapBoy($wheeloffortune[$r],$wheeloffortune2[$r]);
 } ?>
 	
 	
@@ -417,21 +445,24 @@ for ($r=0;$r<$col;$r++)
 <tbody>
 
 <?php
-for ($y=0;$y<$noletters;$y++)
+for ($y=$noletters-1;$y>-1;$y--)
 {
-if ($y%$col==0)
+if ($y%$col==$col-1) 
 { echo "<tr>";
 }	
-$alpha =$wheeloffortune[$y%$col][$y/$col];
+
+if (isset($wheeloffortune[$col-1-$y%$col][$y/$col]))
+{
+$alpha =$wheeloffortune[$col-1- $y%$col][$y/$col];
 
 echo "<td>$alpha</td>";
-
-if ($y%$col==$col-1) 
+} else {echo "<td>&#160</td>";
+if ($y%$col==0)
 { echo "</tr>";
 }
 }
 	
-
+}
 	
 
  
@@ -448,10 +479,10 @@ if ($y%$col==0)
 }	
 $alpha =$wheeloffortune[$y%$col][$y/$col];
 if (in_array($y,$spaces)==false){
-echo "<td></td>";}
+echo "<td>&#160</td>";}
 else {
 	echo "<td style=\"background-color:#000000;\"> 
-	
+	&#160
 	</td>";}
 
 if ($y%$col==$col-1) 
@@ -464,17 +495,17 @@ echo "  </tbody>";
         <tbody>
             <tr>
 		<?php	
-			for ($y=$noletters;$y<$noletters+$noletters2;$y++)
+			for ($y=0;$y<$noletters2;$y++)
 {
 if ($y%$col==0)
 { echo "<tr>";
 }	
-$alpha =$wheeloffortune[$y%$col][$y/$col];
-if (in_array($y,$spaces)==false){
-echo "<td> </td>";}
+
+if (in_array($y,$spaces2)==false){
+echo "<td> &#160</td>";}
 else {
 	echo "<td style=\"background-color:#000000;\"> 
-	
+	&#160
 	</td>";}
 
 if ($y%$col==$col-1) 
@@ -485,15 +516,15 @@ echo "  </tbody>";
 
 
 
-for ($y=$noletters;$y<$noletters+$noletters2;$y++)
+for ($y=0;$y<$noletters2+1;$y++)
 {
 if ($y%$col==0)
 { echo "<tr>";
 }	
-$alpha =$wheeloffortune[$y%$col][$y/$col];
+if (isset($wheeloffortune2[$y%$col][$y/$col]))
+{$alpha =$wheeloffortune2[$y%$col][$y/$col];
 
-echo "<td>$alpha</td>";
-
+echo "<td>$alpha</td>";}else {echo "<td>&#160</td>";}
 if ($y%$col==$col-1) 
 { echo "</tr>";
 }
@@ -522,6 +553,7 @@ echo "</h1>";
 	
 	
 }
+
 
 ?>
 

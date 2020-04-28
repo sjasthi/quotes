@@ -5,7 +5,7 @@
   $left_selected = "";
   require 'db_credentials.php'; 
     include("./nav.php");
-	include ("telugu_parser.php");
+	include ("puzzlemaker.php");
 		
 ?>
 
@@ -49,13 +49,8 @@ if (!$touched) {
 		
 			
 					$quoteline = $row["quote"];
-					$sample =parsetoCodePoints($quoteline);
-					shuffle($sample);
-					echo '<font size="18">';
-					foreach ($sample as $axe)
-					{
-						echo parseToCharacter($axe);
-					}
-			echo '</font>';
+					
 		} 
-			}?>
+			}
+			
+			ScrambleMaker($quoteline);?>
