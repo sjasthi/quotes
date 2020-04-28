@@ -32,10 +32,12 @@ $sql = "SELECT * FROM pref WHERE  ID = '1'";
 	if ($result->num_rows > 0) {
  
     while($row = $result->fetch_assoc()) {
+		$axe1=$row["value"];
+		$axe2=$row["Chunks"];
 		
 	echo '<form action="presub.php" method="post">
-		Number of Columns: <input type ="number" name="alpha" min="1" required><br>
-		Split Chunk Size: <input type ="number" name="hippo"" min="2" max="4" required><br>
+		Number of Columns: <input type ="number" name="alpha" min="1"  value='.$axe1.' required><br>
+		Split Chunk Size: <input type ="number" name="hippo"" min="2" max="4" value='.$axe2.' required><br>
 	
 		<input type ="radio" id="a1" name="quote" value ="Puzzles" checked> 
 		<label for "a1"> Display Puzzles</label><br>    

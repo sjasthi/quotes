@@ -19,6 +19,8 @@ include_once 'db_credentials.php';
 $flagged=true;
 $spaces=array();
 $touched=isset($_POST['ident']);
+$db->set_charset("utf8");
+
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
 	

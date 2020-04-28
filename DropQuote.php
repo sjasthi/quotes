@@ -17,6 +17,8 @@ $spaces=array();
             WHERE id = '-1'";
 $flagged=true;
 $touched=isset($_POST['ident']);
+$db->set_charset("utf8");
+
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
 	?>
@@ -29,7 +31,6 @@ if (!$touched) {
 
 	
 }
-$db->set_charset("utf8");
     if (!$result = $db->query($sql)) {
         die ('There was an error running query[' . $connection->error . ']');
   

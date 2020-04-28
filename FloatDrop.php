@@ -15,6 +15,8 @@ include_once 'db_credentials.php';
 
   $sql = "SELECT * FROM quote_table
             WHERE id = '-1'";
+			$db->set_charset("utf8");
+
 $flagged=true;
 $spaces=array();
 $touched=isset($_POST['ident']);

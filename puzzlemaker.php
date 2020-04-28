@@ -105,16 +105,18 @@ array_push($wheeloffortune[$x/$chunks],$tested);
 <tbody>
 	
 <?php	
-	
+$counter =0;
 
 	foreach($wheeloffortune as $value){ 
-	echo "<tr> <td>";foreach ($value as $value2)
+	if ($counter%5==0)
+	{echo "<tr>";}
+	echo "<td>";foreach ($value as $value2)
 		{ echo $value2;
 		
 		}
-	echo "</td></tr>";
-	
-		
+	echo "</td>";
+	if ($counter%5==4)
+		{echo "</tr>";}
 	} 
 	
 }
