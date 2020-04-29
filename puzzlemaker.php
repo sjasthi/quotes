@@ -117,7 +117,12 @@ $counter =0;
 	echo "</td>";
 	if ($counter%5==4)
 		{echo "</tr>";}
-	} 
+	$counter++;
+	}
+
+echo "  </tbody>
+    </table>
+	</body> <br> ";	
 	
 }
 
