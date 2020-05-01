@@ -47,7 +47,7 @@ include ("usefultool.php");
 
 Function ScrambleMaker($quote)
 {
-	
+	$quote=str_replace("\n"," ",$quote);
 	
 	$t2=parseToCodePoints($quote,);
 	$t=array();
@@ -64,12 +64,13 @@ Function ScrambleMaker($quote)
 	{
 		$a .=parseToCharacter($axe);
 	}
+	$a .="<br>";
 	echo $a;
 	return;
 }
 
 Function SplitMaker($quote,$chunks)
-{
+{ 	$quote=str_replace("\n"," ",$quote);
 	$t2=parseToCodePoints($quote);
 	$t=array();
 	foreach ($t2 as $axe)
@@ -129,7 +130,7 @@ echo "  </tbody>
 
 Function DropM($quote , $col)
 {
-	
+		$quote=str_replace("\n"," ",$quote);
 		$t=parseToCodePoints($quote);
 	$noletters=Count($t);
 	$spaces=array();
@@ -247,7 +248,7 @@ echo "</h1>";
 
 Function FloatM($quote,$col)
 {
-	
+		$quote=str_replace("\n"," ",$quote);
 		$t=parseToCodePoints($quote);
 	$noletters=Count($t);
 	$spaces=array();
@@ -352,7 +353,8 @@ Function FloatDrop($quote,$quote2,$col)
 
 {
 	
-	
+		$quote=str_replace("\n"," ",$quote);
+			$quote2=str_replace("\n"," ",$quote2);
 		$t=parseToCodePoints($quote);
 	$noletters=Count($t);
 	$spaces=array();
