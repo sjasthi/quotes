@@ -9,7 +9,7 @@
  ?>
 <?php
 include_once 'db_credentials.php'; 
-
+$db->set_charset("utf8");
        $wheel=array();
    $samp = array();
      echo '<h2 id="title">Reports</h2><br>';
