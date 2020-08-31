@@ -1,2 +1,2 @@
-# abasiccomposer
-A Basic Composer (ABC)
+# Quotes Manager
+Quotes Manager (QM)
