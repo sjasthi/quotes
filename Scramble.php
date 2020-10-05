@@ -1,3 +1,4 @@
+
 <?php $page_title = ' Quote Scramble'; ?>
 <?php 
   $nav_selected = "LIST";
@@ -52,5 +53,47 @@ if (!$touched) {
 					
 		} 
 			}
+
+			$words  = ScrambleMaker($quoteline);
+			$arrWord =  str_split($words);
+			if($words == '')die;
 			
-			ScrambleMaker($quoteline);?>
+		?>	
+		
+					
+<input type="hidden" id="scrableValue" value="<?php echo $quoteline;?>" >
+
+
+<div id="cardPile">
+	<?php 
+		foreach($arrWord as $key => $val){
+			if($val == ' '){
+				echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
+			}else{
+	?>
+			<div class="blank-box"><div id="card<?php echo  $val;?>" draggable="true" ondragstart="drag(event)"><span><?php echo  $val;?></span></div></div>
+	<?php
+			}
+		}
+	?>
+</div>
+
+
+<div id="cardSlots">
+	<?php 
+		foreach($arrWord as $key => $val){
+			if($val == ' '){
+				echo '<div style="border: 1px solid #fff;"></div>';
+			}else{
+	?>
+	<div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	
+	<?php
+			}
+		}
+	?>
+</div>
+<div>
+	
+<button id="submit-game" onclick="checkStats()">Submit</button>
+</div>
