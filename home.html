@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		
+		<link rel="stylesheet" href="stylesjs.css">
+		<script type="text/javascript" src="script.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<div id="wrapper">
+
+			<button id="Classic_Mode_btn" class="btn-border" onclick="changeGameMode('Classic_Mode',this)">Classic Mode</button>
+			<button id='Leap_Mode_btn' onclick="changeGameMode('Leap_Mode',this)">Leap Mode</button>
+
+			<div id="content">
+			<!-- #this is where you place the contents of your web page -->
+				<table id="table">
+				</table>
+				<br>
+				<br>
+				<label>Rows <input type="text" name="rows" id="rows" value="4" size="2"></label>
+				<label>Columns <input type="text" name="columns" id="columns" value="4" size="2"></label>
+				<input type="button" id="newGame" value="Start New Game">
+				<br>
+				<br>
+				Number Of Moves: <span id="moves">0</span>
+				<br>
+				<div id="output"></div>
+			</div>
+		</div>
+
+	</body>
+</html>
