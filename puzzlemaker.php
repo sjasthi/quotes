@@ -1,4 +1,7 @@
 <head>
+<link rel="stylesheet" type="text/css" href="../css/spectrum.css">
+<script type="text/javascript" src="../js/spectrum.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <div class="container">
 <style>
 
@@ -19,7 +22,6 @@
 	}
 
 	table {
-		border: 1px solid black;
 		border-collapse: separate;
 		table-layout: fixed;
 		width: 100px;
@@ -55,57 +57,57 @@
 		}
 
 	function drag(ev) {
-				ev.dataTransfer.setData("text", ev.target.id);
-			}
+		ev.dataTransfer.setData("text", ev.target.id);
+	}
 
-			function drop(ev) {
-				ev.preventDefault();
-				var data = ev.dataTransfer.getData("text");
-				ev.target.appendChild(document.getElementById(data));
-			}
+	function drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		ev.target.appendChild(document.getElementById(data));
+	}
 
-			function viewSolution() {
-				document.getElementById("solution").style.display = "table";
-				document.getElementById("solution2").style.display = "table";
-			}
+	function viewSolution() {
+		document.getElementById("solution").style.display = "table";
+		document.getElementById("solution2").style.display = "table";
+	}
 
-			function clicked(index,col) {
-				var i = index%col;
-				var dest = `td${i}`;
+	function clicked(index,col) {
+		var i = index%col;
+		var dest = `td${i}`;
 				
-				while(document.getElementById(dest).hasChildNodes()) {
-					i += col;
-					dest = `td${i}`;
-				}
-				var src = `drag${index}`;
-				document.getElementById(dest).appendChild(document.getElementById(src));
-			}
+		while(document.getElementById(dest).hasChildNodes()) {
+			i += col;
+			dest = `td${i}`;
+		}
+		var src = `drag${index}`;
+		document.getElementById(dest).appendChild(document.getElementById(src));
+	}
 
-			function clicked_a(index,col) {
-				var i = index%col;
-				var dest = `td_a${i}`;
+	function clicked_a(index,col) {
+		var i = index%col;
+		var dest = `td_a${i}`;
 				
-				while(document.getElementById(dest).hasChildNodes()) {
-					i += col;
-					dest = `td_a${i}`;
-				}
-				var src = `drag_a${index}`;
-				document.getElementById(dest).appendChild(document.getElementById(src));
-			}
+		while(document.getElementById(dest).hasChildNodes()) {
+			i += col;
+			dest = `td_a${i}`;
+		}
+		var src = `drag_a${index}`;
+		document.getElementById(dest).appendChild(document.getElementById(src));
+	}
 
-			function clicked_b(index,col) {
-				var i = index%col;
-				var dest = `td_b${i}`;
+	function clicked_b(index,col) {
+		var i = index%col;
+		var dest = `td_b${i}`;
 				
-				while(document.getElementById(dest).hasChildNodes()) {
-					i += col;
-					dest = `td_b${i}`;
-				}
-				var src = `drag_b${index}`;
-				document.getElementById(dest).appendChild(document.getElementById(src));
-			}
+		while(document.getElementById(dest).hasChildNodes()) {
+			i += col;
+			dest = `td_b${i}`;
+		}
+		var src = `drag_b${index}`;
+		document.getElementById(dest).appendChild(document.getElementById(src));
+	}
 
-		</script>
+</script>
 </head>
 
 <?php
@@ -234,61 +236,131 @@ function DropM($quote, $col){
 	} ?>
 
 	<body>
-	<table border="1" style="width:100%">
-	<tbody>
-	<?php
-		$i = 0;
-		for ($y = $noletters - 1; $y > -1; $y--) {
-			if ($y % $col == $col - 1) {
-				echo "<tr>";
-			}
+		<br>
+        <div class="panel">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div align="center"><h2>Puzzle</h2></div>
+                            </div>
+                        </div>
+                    </div>
+					<br>
+						<table class = "puzzle" border="1" style="width:100%">
+						<tbody>
+						<?php
+							$i = 0;
+							for ($y = $noletters - 1; $y > -1; $y--) {
+								if ($y % $col == $col - 1) {
+									echo "<tr>";
+								}
 
-			if (isset($wheeloffortune[$col - 1 - $y % $col][$y / $col])) {
-				$alpha = $wheeloffortune[$col - 1 - $y % $col][$y / $col];
-				echo "<td><div draggable='true' ondragstart='drag(event)' id='drag$i' onclick='clicked($i,$col)'>$alpha</div></td>";
-			} else {
-				echo "<td>&#160</td>";
-				}
+								if (isset($wheeloffortune[$col - 1 - $y % $col][$y / $col])) {
+									$alpha = $wheeloffortune[$col - 1 - $y % $col][$y / $col];
+									echo "<td><div draggable='true' ondragstart='drag(event)' id='drag$i' onclick='clicked($i,$col)'>$alpha</div></td>";
+								} else {
+									echo "<td>&#160</td>";
+									}
 
-			if ($y % $col == 0) {
-				echo "</tr>";
-			}
-			$i++;
-		}
+								if ($y % $col == 0) {
+									echo "</tr>";
+								}
+								$i++;
+							}
 
 
-	?>
-	<table border="1" style="width:100%">
-	<tbody>
-	<tr>
-	<?php
-		$i=0;
-		for ($y = 0; $y < $noletters; $y++) {
-			if ($y % $col == 0) {
-				echo "<tr>";
-			}
+						?>
+						<table class = "puzzle" border="1" style="width:100%">
+						<tbody>
+						<tr>
+						<?php
+							$i=0;
+							for ($y = 0; $y < $noletters; $y++) {
+								if ($y % $col == 0) {
+									echo "<tr>";
+								}
 
-			if (in_array($y, $spaces) == false) {
-				echo "<td id='td$i' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
-			} else {
-				echo "<td id='td$i' style=\"background-color:#000000;\">&#160</td>";
-				}
+								if (in_array($y, $spaces) == false) {
+									echo "<td id='td$i' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+								} else {
+									echo "<td id='td$i' style=\"background-color:#000000;\">&#160</td>";
+									}
 
-			if ($y % $col == $col - 1) {
-				echo "</tr>";
-			}
-			$i++;
-		}
-		echo "<t/body> 
-    	</table>
-		</body> <br> <h1> Solution:";
-		echo $quote;
-		echo "</h1>";
-	?>
+								if ($y % $col == $col - 1) {
+									echo "</tr>";
+								}
+								$i++;
+							}
+							echo "<t/body> 
+							</table>
+							</body> <br> <h1>";							
+							echo "</h1>";
+						?>
 
-						
-	<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
-	<table id="solution" border="1" style="width:100%">
+					<div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div align="center"><h2>Puzzle Options</h2></div>
+                            </div>
+                        </div>
+                    </div>
+
+                	<div class="panel-body">
+	                    <div class="row">
+							<div class="col-sm-12" align="center">
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Letter Square Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Letter Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Line Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+							</div>
+						</div>
+	                </div>
+                	<br>
+
+					<div class="panel panel-primary solutionSection">
+						<div class="panel-heading ">
+							<div class="row">
+								<div class="col-sm-12">
+									<div align="center"><h2>Solution</h2></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel-body">
+							<?php
+							echo $quote;
+							?>
+							<br>
+
+							<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
+							<table id="solution" border="1" style="width:100%">
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+	
 	<tbody>
 	<tr>
 	<?php
@@ -350,6 +422,18 @@ function FloatM($quote, $col){
 	} ?>
 
 	<body>
+	<br>
+        <div class="panel">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div align="center"><h2>Puzzle</h2></div>
+                            </div>
+                        </div>
+                    </div>
+					<br>
 	<table border="1" style="width:100%">
 	<tbody>
 	<tr>
@@ -400,14 +484,74 @@ function FloatM($quote, $col){
 
 		echo "<t/body> 
 		</table>
-		</body> <br> <h1> Solution:";
-		echo $quote;
+		</body> <br> <h1>";
 		echo "</h1>";
 	?>
+
+<div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div align="center"><h2>Puzzle Options</h2></div>
+                            </div>
+                        </div>
+                    </div>
+
+                	<div class="panel-body">
+	                    <div class="row">
+							<div class="col-sm-12" align="center">
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Letter Square Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Letter Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Line Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+								
+							</div>
+						</div>
+	                </div>
+                	<br>
+
+					<div class="panel panel-primary solutionSection">
+						<div class="panel-heading ">
+							<div class="row">
+								<div class="col-sm-12">
+									<div align="center"><h2>Solution</h2></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel-body">
+							<?php
+							echo $quote;
+							?>
+							<br>
 						
 	<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
 
 	<table id="solution" border="1" style="width:100%">
+	</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
 	<tbody>
 	<tr>
 	<?php
@@ -500,6 +644,19 @@ function FloatDrop($quote, $quote2, $col) {
 	} ?>
 
 	<body>
+	<br>
+        <div class="panel">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div align="center"><h2>Puzzle</h2></div>
+                            </div>
+                        </div>
+                    </div>
+					<br>
+
 	<table border="1" style="width:100%">
 	<tbody>
 
@@ -586,16 +743,77 @@ function FloatDrop($quote, $quote2, $col) {
 			}
 			$i++;
 		}
-																						echo "<t/body> 
+		echo "<t/body> 
 		</table>
-		</body> <br> <h1> Solution:";
-		echo $quote;
-		echo " / "; 
-		echo $quote2;
+		</body> <br> <h1>";
+		
 		echo "</h1>";
 	?>
+
+<div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div align="center"><h2>Puzzle Options</h2></div>
+                            </div>
+                        </div>
+                    </div>
+
+                	<div class="panel-body">
+	                    <div class="row">
+							<div class="col-sm-12" align="center">
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Letter Square Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Letter Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+
+								<div class="row">
+									<div class="col-sm-6" >
+										<label>Line Color</label>
+										<input type="color" id="colorPicker">
+									</div>
+								</div>
+								<br>
+								
+							</div>
+						</div>
+	                </div>
+                	<br>
+
+					<div class="panel panel-primary solutionSection">
+						<div class="panel-heading ">
+							<div class="row">
+								<div class="col-sm-12">
+									<div align="center"><h2>Solution</h2></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel-body">
+							<?php
+							echo $quote;
+							echo " / "; 
+							echo $quote2;
+							?>
+							<br>
 	<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
 	<table id="solution" border="1" style="width:100%">
+
+	</div>
+				</div>
+            </div>
+        </div>
+    </div>
 	<tbody>
 	<?php
 		$i = 0;
