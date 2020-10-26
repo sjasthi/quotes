@@ -46,7 +46,25 @@ $sql = "SELECT * FROM pref WHERE  ID = '1'";
 		<input type ="radio" id="a3" name="quote" value ="Both"> 
 		<label for "a3"> Display Both</label><br>    
 <input type="submit" value="submit">
-		</form>';
+		</form>';		
+	
 	}
+	
+$sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_HEIGHT'";			
+			$result = $db->query($sql);			
+			$row = $result->fetch_assoc();			
+			$height = $row["VALUE"];
+			
+			$sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_WIDTH'";			
+			$result = $db->query($sql);			
+			$row = $result->fetch_assoc();			
+			$width = $row["VALUE"];
+
+	echo '<form action="presubgrid.php" method="post">
+		Grid Height: <input type ="number" name="height" min="10"  value='.$height.' required><br><br>
+		Grid Width: <input type ="number" name="width" min="10" value='.$width.' required><br><br>
+	
+		<input type="submit" name="generate" id="generate" value="Generate" id="generate">
+		</form>';
 	}
    ?>
