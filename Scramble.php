@@ -1,4 +1,3 @@
-
 <?php $page_title = ' Quote Scramble'; ?>
 <?php 
   $nav_selected = "LIST";
