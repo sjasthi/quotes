@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 DEFINE('DB_SERVER', 'localhost');
 DEFINE('DB_NAME', 'quotes_db');
 DEFINE('DB_USER', 'root');

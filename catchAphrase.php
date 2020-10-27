@@ -63,16 +63,10 @@ include("./nav.php");
         <select name="height" id="height" autocomplete="off">
 		
 		<?php
-			$sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_HEIGHT'";			
+			$sql = "SELECT VALUE FROM pref WHERE  NAME = 'GRID_HEIGHT'";			
 			$result = $db->query($sql);			
 			$row = $result->fetch_assoc();			
-			$height = $row["VALUE"];
-			
-			$sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_WIDTH'";			
-			$result = $db->query($sql);			
-			$row = $result->fetch_assoc();			
-			$width = $row["VALUE"];
-			
+			$height = $row["VALUE"];									
 			$arr = array("10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25");
 			
 			foreach($arr as $val){
@@ -83,23 +77,28 @@ include("./nav.php");
 					echo '<option value="'.$val.'">'.$val.'</option>';
 				}
 			}
-		?>
-		    
+		?>		    
         </select>
         <br><br>
 
         <!-- Width dropdown selector, default value is 10 -->
         <label for="width">Grid Width:</label>
         <select name="width" id="width" autocomplete="off">
+
 		<?php
-			foreach($arr as $val){
-				if($val==$width){
-					echo '<option value="'.$val.'" selected>'.$val.'</option>';
+			$sql = "SELECT VALUE FROM pref WHERE  NAME = 'GRID_WIDTH'";			
+			$result = $db->query($sql);			
+			$row = $result->fetch_assoc();			
+			$width = $row["VALUE"];
+			$arr = array("10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25");
+				foreach($arr as $val){
+					if($val==$width){
+						echo '<option value="'.$val.'" selected>'.$val.'</option>';
+					}
+					else{
+						echo '<option value="'.$val.'">'.$val.'</option>';
+					}
 				}
-				else{
-					echo '<option value="'.$val.'">'.$val.'</option>';
-				}
-			}
 		?>
             
         </select>

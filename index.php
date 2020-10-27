@@ -32,6 +32,9 @@ table.center {
   line-height:1.6;
   }
 </style>
+<link rel="stylesheet" href="css/cjui.css">
+    <script src="jquery/jquery.js"></script>
+    <script src="jquery/jui.js"></script>
 </head>
 
 <body>

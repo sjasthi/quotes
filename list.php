@@ -60,7 +60,7 @@ header('Content-type: text/html; charset=utf-8');
 		   $data = mysqli_query($db, $query);
 		   $inform = array(-1);
 ?>
-<form action=modifyQuote.php method ="post">
+<form action=slider16.php method ="post">
 	     <h2 id="title">Quotelist</h2><br>
 		  
 		  <button><a class="btn btn-sm" href="createQuote.php">Create a Quote</a></button>
@@ -71,6 +71,9 @@ header('Content-type: text/html; charset=utf-8');
 		 	 <button type = "submit"formaction ="Scramble.php">Scramble Quote</button>
 	 <button type = "submit"formaction ="Split.php">Split Quote</button>
 	 <button type ="submit" formaction="FloatList.php">DropFloat</button>
+     <button type ="submit" formaction="slider16.php">Slider16</button>
+         <button type ="submit" formaction="slider.php">Slider</button>
+		 <button type ="submit" formaction="catchAphrase.php">Catch a Phrase</button>
 	 
 			
 		    <div id="customerTableView">
@@ -98,7 +101,7 @@ header('Content-type: text/html; charset=utf-8');
                                 <td>'.$row["author"].' </span> </td>
                                 <td>'.$row["topic"].'</td>
                          
-                                <td>'.$row["quote"].' </span> </td>
+                                <td>'.$row["quote"].'</td>
 								
                             
                             </tr>';
