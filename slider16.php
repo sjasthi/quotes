@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Slider16</title>
+    <title>Quiz</title>
     <link rel="stylesheet" href="css/cjui.css">
     <script src="jquery/jquery.js"></script>
     <script src="jquery/jui.js"></script>
@@ -94,7 +94,7 @@
        
              
 
-    <?php $page_title = ' Quote Slider16'; ?>
+    <?php $page_title = ' Quote Slider'; ?>
     <?php 
     $nav_selected = "LIST";
     $left_buttons = "NO";
@@ -109,7 +109,18 @@
  
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-    
+      <li class="nav-item ">
+        <a class="nav-link" href="slider.php?custom">My Quote</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="slider.php?num">Number Puzzle</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="slider.php?slider_quote">slider quote</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="slider.php?quote">quote puzzle</a>
+      </li>
     </ul>
    
   </div>

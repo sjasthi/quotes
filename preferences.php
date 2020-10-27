@@ -10,61 +10,55 @@
 
 <?php 
 
-  echo '<h2 id="title">Preferences</h2><br>';
- if(isset($_GET['updated'])){
-            if($_GET["updated"] == "Success"){
-                echo '<br><h3>yes yes, we changed it no worries </h3>';
-            }
-        }
+  	echo '<h2 id="title">Preferences</h2><br>';
+ 	if(isset($_GET['updated'])){
+        if($_GET["updated"] == "Success"){
+            echo '<br><h3>yes yes, we changed it no worries </h3>';
+         }
+    }
 
-
-
-
-
-$sql = "SELECT * FROM pref WHERE  ID = '1'";
-
-
-   
-   
-    if (!$result = $db->query($sql)) {
-	die ('There was an error running query[' . $connection->error . ']');}
-	
-	if ($result->num_rows > 0) {
- 
-    while($row = $result->fetch_assoc()) {
-		$axe1=$row["value"];
-		$axe2=$row["Chunks"];
+	$sql = "SELECT * FROM pref WHERE  ID = '1'";  
+		if (!$result = $db->query($sql)) {
+			die ('There was an error running query[' . $connection->error . ']');
+		}
 		
-	echo '<form action="presub.php" method="post">
-		Number of Columns: <input type ="number" name="alpha" min="1"  value='.$axe1.' required><br>
-		Split Chunk Size: <input type ="number" name="hippo"" min="2" max="4" value='.$axe2.' required><br>
+		if ($result->num_rows > 0) {
 	
-		<input type ="radio" id="a1" name="quote" value ="Puzzles" checked> 
-		<label for "a1"> Display Puzzles</label><br>    
-		<input type ="radio" id="a2" name="quote" value ="Quotes"> 
-		<label for "a2"> Display Quotes</label><br>    
-		<input type ="radio" id="a3" name="quote" value ="Both"> 
-		<label for "a3"> Display Both</label><br>    
-<input type="submit" value="submit">
-		</form>';		
-	
-	}
-	
-$sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_HEIGHT'";			
-			$result = $db->query($sql);			
-			$row = $result->fetch_assoc();			
-			$height = $row["VALUE"];
+			while($row = $result->fetch_assoc()) {
+				$axe1=$row["value"];
+				$axe2=$row["Chunks"];
+		
+				echo '<form action="presub.php" method="post">
+				Number of Columns: <input type ="number" name="alpha" min="1"  value='.$axe1.' required><br>
+				Split Chunk Size: <input type ="number" name="hippo"" min="2" max="4" value='.$axe2.' required><br>
 			
-			$sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_WIDTH'";			
-			$result = $db->query($sql);			
-			$row = $result->fetch_assoc();			
-			$width = $row["VALUE"];
-
-	echo '<form action="presubgrid.php" method="post">
-		Grid Height: <input type ="number" name="height" min="10"  value='.$height.' required><br><br>
-		Grid Width: <input type ="number" name="width" min="10" value='.$width.' required><br><br>
+				<input type ="radio" id="a1" name="quote" value ="Puzzles" checked> 
+				<label for "a1"> Display Puzzles</label><br>    
+				<input type ="radio" id="a2" name="quote" value ="Quotes"> 
+				<label for "a2"> Display Quotes</label><br>    
+				<input type ="radio" id="a3" name="quote" value ="Both"> 
+				<label for "a3"> Display Both</label><br>    
+				<input type="submit" value="submit">
+				</form>';		
 	
-		<input type="submit" name="generate" id="generate" value="Generate" id="generate">
-		</form>';
-	}
-   ?>
+			}
+	
+			
+		}
+
+		$sql = "SELECT * FROM pref WHERE  NAME = 'GRID_HEIGHT'";			
+				$result = $db->query($sql);			
+				$row = $result->fetch_assoc();			
+				$height = $row["VALUE"];
+						
+		$sql = "SELECT * FROM pref WHERE  NAME = 'GRID_WIDTH'";			
+				$result = $db->query($sql);			
+				$row = $result->fetch_assoc();			
+				$width = $row["VALUE"];
+
+				echo '<form action="presubgrid.php" method="post">
+				Grid Height: <input type ="number" name="height" min="10"  value='.$height.' required><br><br>
+				Grid Width: <input type ="number" name="width" min="10" value='.$width.' required><br><br>			
+				<input type="submit" name="generate" id="generate" value="Generate" id="generate">
+				</form>';
+?>

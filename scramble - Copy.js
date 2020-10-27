@@ -1,3 +1,4 @@
+
 var correctCards = 0;
 $( init );
 

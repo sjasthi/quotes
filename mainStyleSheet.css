@@ -464,3 +464,68 @@ a {
   border: 1px solid #ddd;
   margin-bottom: 12px;
 }
+
+
+
+
+
+/* Individual cards and slots */
+
+
+#cardPile .blank-box {
+    float: left;
+    width: 70px;
+    height: 50px;
+    padding-bottom: 0;
+    border: 1px solid #333;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #fff;
+}
+
+#cardPile, #cardSlots{
+  padding-bottom: 20px;
+    display: inline-block;
+}
+/*#cardPile div {
+padding: 10px;
+  padding-top: 10px;
+
+}*/
+#cardSlots div, #cardPile div {
+
+  float: left;
+  width: 70px;
+  height: 50px;
+  padding-bottom: 0;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 10px;
+  background: #fff;
+}
+
+#cardSlots div:first-child, #cardPile div:first-child {
+  margin-left: 0;
+}
+
+#cardSlots div.hovered {
+  background: #aaa;
+}
+
+#cardSlots div {
+  border-style: dashed;
+}
+
+#cardPile div {
+  color: #fff;
+  text-shadow: 0 0 3px #000;
+}
+
+#cardPile div.ui-draggable-dragging {
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}
