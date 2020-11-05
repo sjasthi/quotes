@@ -8,7 +8,8 @@
 	//error_reporting(0);
 	include ("puzzlemaker.php");
 ?>
-
+<script type="text/javascript" src="js/html2canvas.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 <?php
 include_once 'db_credentials.php'; 
 
