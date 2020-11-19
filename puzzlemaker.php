@@ -115,10 +115,8 @@
 	
 	<?php
 
-        include("word_processor.php");
 		include("telugu_parser.php");
 		include("usefultool.php");
-
 
 		function ScrambleMaker($quote) {
 			$words = explode(" ", $quote );
@@ -146,35 +144,8 @@
 		    shuffle($tmp);
 		    return join("", $tmp);
 		}
-=======
-		function ScrambleMaker2($quote) {
-			echo "inside scramble maker";
-			echo $quote;
-
-			// create a word processor object based on the string
-			$word_processor = new $WordProcessor();
-			echo $word_processor;
-			$word_processor.setWord($quote,"Telugu");
-
-			// rely on the word processor methods to get the array of logical characters, length and so on.
-			// only when you use word processor functions, it works for both English and other languages
-			$newWords = $word_processor.getLogicalChars();
-			echo $newWords;
-			return $newWords;
-
-			// $words = explode(" ", $quote );
-			// 	foreach($words  as $x => $val){
-			// 		$newWords[$x] = str_shuffle($val);
-			// 	}
-			// 	return implode(" ",$newWords);
-		}
-
-
-		
 
 		function SplitMaker($quote, $chunks) {
-
-		
 			$quote = str_replace("\n", " ", $quote);
 			$t2 = parseToCodePoints($quote);
 			$t = array();
