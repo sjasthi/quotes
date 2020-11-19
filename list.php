@@ -74,6 +74,7 @@ header('Content-type: text/html; charset=utf-8');
      <button type ="submit" formaction="slider16.php">Slider16</button>
          <button type ="submit" formaction="slider.php">Slider</button>
 		 <button type ="submit" formaction="catchAphrase.php">Catch a Phrase</button>
+         <button type ="submit" formaction="FeelingLucky.php">Feeling Lucky</button>
 	 
 			
 		    <div id="customerTableView">

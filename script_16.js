@@ -107,6 +107,7 @@ function showTable()
     var rem_space = string.split(" ").join("");
     //var splite_str = string.split("");
     var splite_str = rem_space.split("");
+    console.log(splite_str);
     var character_length = string.split(" ").join("").length;
     var loop_count = 1;
     var string_count_per_tiels = 0;

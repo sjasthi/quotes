@@ -22,7 +22,7 @@ include("./nav.php");
 		$data = mysqli_query($db, $query);
 		$row = $data->fetch_assoc();
 		$quote = $row["quote"];
-		$arr = str_split($row["quote"]);
+		$arr = str_split_unicode($row["quote"]);
 		$phrase = "";
 		foreach ($arr as $ch){
 			if($ch==" "){
@@ -48,11 +48,25 @@ include("./nav.php");
 		$myfile = fopen("fillers.txt", "r") or die("Unable to open file!");
 		$filler = fread($myfile,filesize("fillers.txt"));
 		fclose($myfile);
+
+
 		
 		echo '<label for="fillers" id="fillersLabel">Fillers</label>
         <textarea name="fillers" class="inputBox" id="fillers" 
         title="characters should be separated by commas, e.g.: a,bc, d" 
         spellcheck="false" autocomplete="off" required> '.$filler.'</textarea>';
+
+        function str_split_unicode($str, $l = 0) {
+	    if ($l > 0) {
+		        $ret = array();
+		        $len = mb_strlen($str, "UTF-8");
+			        for ($i = 0; $i < $len; $i += $l) {
+			            $ret[] = mb_substr($str, $i, $l, "UTF-8");
+			        }
+			        return $ret;
+		    }
+		    return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+		}
 		?>
         
         <br><br>
