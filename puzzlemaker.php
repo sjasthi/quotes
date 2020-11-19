@@ -119,6 +119,34 @@
 		include("telugu_parser.php");
 		include("usefultool.php");
 
+
+		function ScrambleMaker($quote) {
+			$words = explode(" ", $quote );
+				foreach($words  as $x => $val){
+					$newWords[$x] = mb_str_shuffle($val);
+				}
+				return implode(" ",$newWords);
+		}
+
+		function str_split_unicode($str, $l = 0) {
+	    if ($l > 0) {
+		        $ret = array();
+		        $len = mb_strlen($str, "UTF-8");
+			        for ($i = 0; $i < $len; $i += $l) {
+			            $ret[] = mb_substr($str, $i, $l, "UTF-8");
+			        }
+			        return $ret;
+		    }
+		    return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+		    //return preg_split("/\pL\pM*|./u", $str, -1, PREG_SPLIT_NO_EMPTY);
+		}
+
+		function mb_str_shuffle($str) {
+		    $tmp = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+		    shuffle($tmp);
+		    return join("", $tmp);
+		}
+=======
 		function ScrambleMaker2($quote) {
 			echo "inside scramble maker";
 			echo $quote;
@@ -449,7 +477,9 @@
 
 				for ($r = 0; $r < $col; $r++) {
 					shuffle($wheeloffortune[$r]);
-				} ?>
+				} 
+
+				?>
 
 			<br>
 			<button id="captureTable" onclick="takeshot()">Generate</button> 

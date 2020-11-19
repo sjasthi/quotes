@@ -92,16 +92,17 @@
       <body>
              
        
-             
 
     <?php $page_title = ' Quote Slider'; ?>
     <?php 
+
+             ini_set('display_errors', 1);
     $nav_selected = "LIST";
     $left_buttons = "NO";
     $left_selected = "";
     require 'db_credentials.php'; 
     include("./nav.php");
-
+  
     ?>
        <br>
          
@@ -171,6 +172,8 @@
 
     ?>
     <?php
+    
+    //"అ,హిం,స,కు,మిం,చి,న,ఆ,యు,ధం,లే,దు,.]";
         include 'slider16/index.php';
       
 

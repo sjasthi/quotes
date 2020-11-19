@@ -1,4 +1,6 @@
-<?php $page_title = ' Quote Drop'; ?>
+<?php 
+
+$page_title = ' Quote Drop'; ?>
 
 <?php 
 	$nav_selected = "LIST";
@@ -57,3 +59,12 @@
 	}
 	DropM($quoteline,$nocol);
 ?>
+
+
+
+
+
+
+
+
+

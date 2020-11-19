@@ -1,4 +1,6 @@
-<?php $page_title = ' Quote Scramble'; ?>
+<?php 
+
+$page_title = ' Quote Scramble'; ?>
 
 <?php 
 	$nav_selected = "LIST";
@@ -43,7 +45,9 @@
 		}
 
 		$words  = ScrambleMaker($quoteline);
-		$arrWord =  str_split($words);
+		$arrWord =  str_split_unicode($words);
+//		$arrWord =  str_split($words);
+		
 		if($words == '')die;			
 ?>	
 					
