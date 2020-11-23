@@ -63,18 +63,18 @@ header('Content-type: text/html; charset=utf-8');
 <form action=slider16.php method ="post">
 	     <h2 id="title">Quotelist</h2><br>
 		  
-		  <button><a class="btn btn-sm" href="createQuote.php">Create a Quote</a></button>
-		 <button type = "submit">Modify</button>
-		 <button type = "submit" formaction ="deleteQuote.php">Delete</button>
-		 <button type = "submit"formaction ="DropQuote.php">Drop Quote</button>
-		  <button type = "submit"formaction ="FloatQuote.php">Float Quote</button>
-		 	 <button type = "submit"formaction ="Scramble.php">Scramble Quote</button>
-	 <button type = "submit"formaction ="Split.php">Split Quote</button>
-	 <button type ="submit" formaction="FloatList.php">DropFloat</button>
-     <button type ="submit" formaction="slider16.php">Slider16</button>
-         <button type ="submit" formaction="slider.php">Slider</button>
-		 <button type ="submit" formaction="catchAphrase.php">Catch a Phrase</button>
-         <button type ="submit" formaction="FeelingLucky.php">Feeling Lucky</button>
+		<button><a class="btn btn-sm" href="createQuote.php">Create a Quote</a></button>	 
+        <button type = "submit" formaction ="modifyQuote.php">Modify</button>
+		<button type = "submit" formaction ="deleteQuote.php">Delete</button>
+		<button type = "submit"formaction ="DropQuote.php">Drop Quote</button>
+		<button type = "submit"formaction ="FloatQuote.php">Float Quote</button>
+		<button type = "submit"formaction ="Scramble.php">Scramble Quote</button>
+        <button type = "submit"formaction ="Split.php">Split Quote</button>
+        <button type ="submit" formaction="FloatList.php">DropFloat</button>
+        <button type ="submit" formaction="slider16.php">Slider16</button>
+        <button type ="submit" formaction="slider.php">Slider</button>
+		<button type ="submit" formaction="catchAphrase.php">Catch a Phrase</button>
+        <button type ="submit" formaction="FeelingLucky.php">Feeling Lucky</button>
 	 
 			
 		    <div id="customerTableView">
