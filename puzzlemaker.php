@@ -54,6 +54,47 @@
 	}
 </style>
 <script>
+
+function dropInputFocusedOut(e) {
+		e.target.remove();
+	}
+
+	function dropInputKeyedUp(e,col) {
+		var index = +e.target.id.substring(5);
+		var j = index%col;
+	
+		while(document.getElementById('td'+j) != null) {
+			
+			var td = document.getElementById('td'+j);
+			var drag = document.getElementById('drag'+j);
+			if(drag!= null && drag.parentNode.id.substring(0,2) != 'td') {
+				//console.log(drag.innerText+" "+e.target.value);
+				if(drag.innerText.toLowerCase() == e.target.value.toLowerCase()) {
+					e.target.blur();
+					document.getElementById('td'+index).appendChild(drag);
+					index = index + 1;
+					while(document.getElementById('td'+index) != null) {
+						if(document.getElementById('td'+index).hasChildNodes() == false) {
+							document.getElementById('td'+index).click();
+							break;
+						}
+						index++;
+					}
+					return true;
+				}
+			}
+			j += col;
+		}
+		e.target.value = "";
+	}
+
+	function dropClicked(ev, col) {
+		if(ev.target.hasChildNodes())
+			return false;
+		ev.target.innerHTML = "<input id='input"+ev.target.id.substring(2)+"' type='text' style='width:100%; outline:none; border:none; padding:0; margin:0;' onfocusout='dropInputFocusedOut(event)' onkeyup='dropInputKeyedUp(event,"+col+")'>";
+		document.getElementById('input'+ev.target.id.substring(2)).focus();
+	}
+
 	function allowDrop(ev) {
 		ev.preventDefault();
 		}
@@ -107,6 +148,130 @@
 		}
 		var src = `drag_b${index}`;
 		document.getElementById(dest).appendChild(document.getElementById(src));
+	}
+
+	function dropClicked_a(ev, col) {
+		if(ev.target.hasChildNodes())
+			return false;
+		ev.target.innerHTML = "<input id='input_a"+ev.target.id.substring(4)+"' type='text' style='width:100%; outline:none; border:none; padding:0; margin:0;' onfocusout='dropInputFocusedOut(event)' onkeyup='dropInputKeyedUp_a(event,"+col+")'>";
+		document.getElementById('input_a'+ev.target.id.substring(4)).focus();
+	}
+
+	function dropClicked_b(ev, col) {
+		if(ev.target.hasChildNodes())
+			return false;
+		ev.target.innerHTML = "<input id='input_b"+ev.target.id.substring(4)+"' type='text' style='width:100%; outline:none; border:none; padding:0; margin:0;' onfocusout='dropInputFocusedOut(event)' onkeyup='dropInputKeyedUp_b(event,"+col+")'>";
+		document.getElementById('input_b'+ev.target.id.substring(4)).focus();
+	}
+
+	function dropInputKeyedUp_a(e,col) {
+		var index = +e.target.id.substring(7);
+		var j = index%col;
+	
+		while(document.getElementById('td_a'+j) != null) {
+			
+			var td = document.getElementById('td_a'+j);
+			var drag = document.getElementById('drag_a'+j);
+			if(drag!= null && drag.parentNode.id.substring(0,4) != 'td_a') {
+				//console.log(drag.innerText+" "+e.target.value);
+				if(drag.innerText.toLowerCase() == e.target.value.toLowerCase()) {
+					e.target.blur();
+					document.getElementById('td_a'+index).appendChild(drag);
+					index = index + 1;
+					while(document.getElementById('td_a'+index) != null) {
+						if(document.getElementById('td_a'+index).hasChildNodes() == false) {
+							document.getElementById('td_a'+index).click();
+							break;
+						}
+						index++;
+					}
+					return true;
+				}
+			}
+			j += col;
+		}
+
+		j = index%col;
+	
+		while(document.getElementById('td_b'+j) != null) {
+			
+			var td = document.getElementById('td_b'+j);
+			var drag = document.getElementById('drag_b'+j);
+			if(drag!= null && drag.parentNode.id.substring(0,2) != 'td') {
+				//console.log(drag.innerText+" "+e.target.value);
+				if(drag.innerText.toLowerCase() == e.target.value.toLowerCase()) {
+					e.target.blur();
+					document.getElementById('td_a'+index).appendChild(drag);
+					index = index + 1;
+					while(document.getElementById('td_a'+index) != null) {
+						if(document.getElementById('td_a'+index).hasChildNodes() == false) {
+							document.getElementById('td_a'+index).click();
+							break;
+						}
+						index++;
+					}
+					return true;
+				}
+			}
+			j += col;
+		}
+
+		e.target.value = "";
+	}
+
+	function dropInputKeyedUp_b(e,col) {
+		var index = +e.target.id.substring(7);
+		var j = index%col;
+	
+		while(document.getElementById('td_b'+j) != null) {
+			
+			var td = document.getElementById('td_b'+j);
+			var drag = document.getElementById('drag_b'+j);
+			if(drag!= null && drag.parentNode.id.substring(0,2) != 'td') {
+				//console.log(drag.innerText+" "+e.target.value);
+				if(drag.innerText.toLowerCase() == e.target.value.toLowerCase()) {
+					e.target.blur();
+					document.getElementById('td_b'+index).appendChild(drag);
+					index = index + 1;
+					while(document.getElementById('td_b'+index) != null) {
+						if(document.getElementById('td_b'+index).hasChildNodes() == false) {
+							document.getElementById('td_b'+index).click();
+							break;
+						}
+						index++;
+					}
+					return true;
+				}
+			}
+			j += col;
+		}
+
+		j = index%col;
+	
+		while(document.getElementById('td_a'+j) != null) {
+			
+			var td = document.getElementById('td_a'+j);
+			var drag = document.getElementById('drag_a'+j);
+			if(drag!= null && drag.parentNode.id.substring(0,2) != 'td') {
+				//console.log(drag.innerText+" "+e.target.value);
+				if(drag.innerText.toLowerCase() == e.target.value.toLowerCase()) {
+					e.target.blur();
+					document.getElementById('td_b'+index).appendChild(drag);
+					index = index + 1;
+					while(document.getElementById('td_b'+index) != null) {
+						if(document.getElementById('td_b'+index).hasChildNodes() == false) {
+							document.getElementById('td_b'+index).click();
+							break;
+						}
+						index++;
+					}
+					return true;
+				}
+			}
+			j += col;
+		}
+
+		e.target.value = "";
 	}
 
 </script>
@@ -294,7 +459,7 @@
 											}
 
 											if (in_array($y, $spaces) == false) {
-												echo "<td id='td$i' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+												echo "<td id='td$i' onclick='dropClicked(event,$col)' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
 											} else {
 												echo "<td id='td$i' style=\"background-color:#000000;\">&#160</td>";
 												}
@@ -478,7 +643,7 @@
 										}
 										$alpha = $wheeloffortune[$y % $col][$y / $col];
 										if (in_array($y, $spaces) == false) {
-										echo "<td id='td$i' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+										echo "<td id='td$i' onclick='dropClicked(event,$col)' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
 										} else {
 											echo "<td id='td$i' style=\"background-color:#000000;\"> 
 											&#160
@@ -739,7 +904,7 @@
 									}
 									$alpha = $wheeloffortune[$y % $col][$y / $col];
 									if (in_array($y, $spaces) == false) {
-										echo "<td id='td_a$i' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+										echo "<td id='td_a$i' ondrop='drop(event)' onclick='dropClicked_a(event,$col)' ondragover='allowDrop(event)'></td>";
 									} else {
 										echo "<td id='td_a$i' style=\"background-color:#000000;\"> &#160</td>";
 										}
@@ -760,7 +925,7 @@
 										echo "<tr>";
 									}
 									if (in_array($y, $spaces2) == false) {
-										echo "<td id='td_b$i' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+										echo "<td id='td_b$i' onclick='dropClicked_b(event,$col)' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
 									} else {
 										echo "<td id='td_b$i' style=\"background-color:#000000;\"> &#160</td>";
 										}
