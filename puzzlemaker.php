@@ -38,6 +38,23 @@
 			padding: 10px;
 		}
 
+		#convert td,
+		#solution td {
+			border: 1px solid black;
+			height: 48px;
+			width: 48px;
+			font-size: 24px;
+			vertical-align: middle;
+		}
+
+		#dropFloatDDiv table td {
+			border: 1px solid black;
+			height: 48px;
+			width: 48px;
+			font-size: 24px;
+			vertical-align: middle;
+		}
+
 		.answerkey td {
 			width: 200px;
 			height: 200px;
@@ -284,26 +301,38 @@
 		function ScrambleMaker($quote) {
 			$words = explode(" ", $quote );
 				foreach($words  as $x => $val){
-					$newWords[$x] = mb_str_shuffle($val);
+					$newWords[$x] = mb_str_shuffle2($val);
 				}
 				return implode(" ",$newWords);
 		}
 
 		function str_split_unicode($str, $l = 0) {
-	    if ($l > 0) {
-		        $ret = array();
-		        $len = mb_strlen($str, "UTF-8");
-			        for ($i = 0; $i < $len; $i += $l) {
-			            $ret[] = mb_substr($str, $i, $l, "UTF-8");
-			        }
-			        return $ret;
-		    }
-		    return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+			if ($l > 0) {
+				$ret = array();
+				$len = mb_strlen($str, "UTF-8");
+				for ($i = 0; $i < $len; $i += $l) {
+					$ret[] = mb_substr($str, $i, $l, "UTF-8");
+				}
+				return $ret;
+			}
+			return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
 		    //return preg_split("/\pL\pM*|./u", $str, -1, PREG_SPLIT_NO_EMPTY);
 		}
 
+		function mb_str_shuffle2($str) {
+			$t = parseToCodePoints($str);
+			$arr = array();
+			foreach($t as $ch) {
+				array_push($arr, parseToCharacter($ch));
+			}
+			shuffle($arr);
+		    return join("", $arr);
+		}
+
 		function mb_str_shuffle($str) {
-		    $tmp = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+			$tmp = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+			print_r($tmp);
+			echo "<br>";
 		    shuffle($tmp);
 		    return join("", $tmp);
 		}
@@ -324,14 +353,13 @@
 			if ($noletters % $chunks == 0) {
 				$fodder = 0;
 			} else $fodder = 1;
-			$fodder2 = ($noletters / $chunks) + $fodder;
 
+			$fodder2 = ($noletters / $chunks) + $fodder;
 			$sample = array();
 			$wheeloffortune = array_fill(0, $fodder2, $sample);
 
 			for ($x = 0; $x < $noletters; $x++) {
 				$tested = parseToCharacter($t[$x]);
-
 				array_push($wheeloffortune[$x / $chunks], $tested);
 			}
 			shuffle($wheeloffortune);
@@ -352,7 +380,7 @@
 				if ($counter % 5 == 0) {
 					echo "<tr>";
 				}
-				echo "<td>";
+				echo "<td style='border:1px solid black;'>";
 				foreach ($value as $value2) {
 					echo $value2;
 				}
@@ -448,7 +476,6 @@
 
 									?>
 									
-									<tr>
 									<?php
 										$i=0;
 										for ($y = 0; $y < $noletters; $y++) {
@@ -619,7 +646,7 @@
 			<button id="captureTable" onclick="takeshot()">Generate</button> 
 			<div id="output"></div>
 			<script type="text/javascript" src="js/html2canvas.js"></script>		  
-				<div class="panel panel-primary" id="capture">
+				<div class="panel" id="capture">
 					<div class="panel-group">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
@@ -643,9 +670,7 @@
 										if (in_array($y, $spaces) == false) {
 										echo "<td id='td$i' onclick='dropClicked(event,$col)' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
 										} else {
-											echo "<td id='td$i' style=\"background-color:#000000;\"> 
-											&#160
-											</td>";
+											echo "<td id='td$i' style=\"background-color:#000000;\"> &#160 </td>";
 										}
 
 										if ($y % $col == $col - 1) {
@@ -655,7 +680,7 @@
 									}
 									
 								?>
-								<tr>
+								
 								<?php
 									$i=0;
 									for ($y = 0; $y < $noletters; $y++) {
@@ -866,8 +891,8 @@
 							</div>
 						</div>
 						<br>
-						<div id="">
-							<table  id="convert" class = "puzzle" border="1" style="width:100%">
+						<div id="dropFloatDDiv">
+							<table  id="convert" class = "puzzle" border="1" style="border-collapse:collapse;width:100%;">
 							<tbody>
 
 							<?php
@@ -891,8 +916,8 @@
 								}
 
 							?>
-							<table border="1" style="width:100%">
-							<tbody>
+							<!--<table border="1" style="width:100%">-->
+							<tbody style="border-top: 4px solid black;">
 							<tr>
 							<?php
 								$i=0;
@@ -913,8 +938,8 @@
 								}
 								echo "</tbody>";
 							?>
-							<table border="1" style="width:100%">
-							<tbody>
+							<!--<table border="1" style="width:100%">-->
+							<tbody style="border-top: 4px solid black;">
 							<tr>
 							<?php
 								$i=0;
@@ -934,8 +959,8 @@
 								}
 								//echo "  </tbody>";
 							?>
-							<table border="1" style="width:100%">
-							<tbody>
+							<!--<table border="1" style="width:100%">-->
+							<tbody style="border-top: 4px solid black;">
 							<?php
 								$i=0;
 								for ($y = 0; $y < $noletters2; $y++) {
@@ -971,29 +996,45 @@
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-sm-12" align="center">
-											<div class="row">
-												<div class="col-sm-6" >
-													<label>Letter Square Color</label>
-													<input type="color" id="squarePicker" name="squareColor">
-												</div>
-											</div>
-											<br>
+											<div class="col-sm-16" >
+												<div class="row">
+													<div class="col-sm-16" >
+														<h3>Choose Option</h3>
+													</div>
+													<br>
+													<div align="center" >
+														<div class="row">
+															<div class="col-sm-6" >
+																<label>Square Color</label>
+															</div>
+															<div class="col-sm-6" >
+																<input type="color" id="squarePicker" name="squareColor">
+															</div>
+														</div>
+														<br>
 
-											<div class="row">
-												<div class="col-sm-6" >
-													<label>Letter Color</label>
-													<input type="color" id="colorPicker" name="letterColor">
-												</div>
-											</div>
-											<br>
+														<div class="row">
+															<div class="col-sm-6" >
+																<label>Letter Color</label>
+															</div>
+															<div class="col-sm-6" >
+																<input type="color" id="colorPicker" name="letterColor">
+															</div>
+														</div>
+														<br>
 
-											<div class="row">
-												<div class="col-sm-6" >
-													<label>Line Color</label>
-													<input type="color" id="linePicker" name="lineColor">
+														<div class="row">
+															<div class="col-sm-6" >
+																<label>Line Color</label>
+															</div>
+															<div class="col-sm-6" >
+																<input type="color" id="linePicker" name="lineColor">
+															</div>
+														</div>
+														<br>
+													</div>
 												</div>
-											</div>
-											<br>										
+											</div>										
 										</div>
 									</div>
 								</div>
@@ -1017,7 +1058,7 @@
 									?>
 									<br>
 									<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
-									<table id="solution" border="1" style="width:100%">
+									<table id="solution" border="1" style="border-collapse:collapse; width:100%">
 								</div>
 							</div>
 						</div>
@@ -1044,9 +1085,10 @@
 				}
 			?>
 			</tbody>
-			<table id="solution2" border="1" style="width:100%">
-
-			<tbody>
+			<br>
+		    <!--<table id="solution2" border="1" style="width:100%">-->
+			
+			<tbody style="border-top: 4px solid black;">
 			<?php		
 				$i = 0;
 				for ($y = 0; $y < $noletters2; $y++) {

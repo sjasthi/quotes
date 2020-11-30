@@ -102,7 +102,7 @@
     $left_selected = "";
     require 'db_credentials.php'; 
     include("./nav.php");
-  
+    include("./telugu_parser.php");
     ?>
        <br>
          
@@ -167,6 +167,19 @@
      $quoteline = $row["quote"];
 
     } }
+
+
+    //..
+    $arr = parseToCodePoints($quoteline);
+		$quote_arr = array();
+		foreach ($arr as $ch){
+			$ch = parseToCharacter($ch);
+			if($ch==" "){
+				continue;
+			}				
+			array_push($quote_arr,$ch);
+    }
+    //..
 
 
 

@@ -101,14 +101,19 @@ function showTable()
     var k = 0;
     error1 = false;
     var string = document.getElementById("quote").value;
+    var string1 = document.getElementById("quote_arr").value;
+    var string1_arr = JSON.parse(string1);
+    
     var rows = document.getElementById("rows").value;
     var columns = document.getElementById("columns").value;
     var calculate_number_of_tiles = rows * columns -1;
     var rem_space = string.split(" ").join("");
     //var splite_str = string.split("");
-    var splite_str = rem_space.split("");
+    //var splite_str = rem_space.split("");
+    splite_str = string1_arr;
     console.log(splite_str);
-    var character_length = string.split(" ").join("").length;
+    //var character_length = string.split(" ").join("").length;
+    var character_length = splite_str.length;
     var loop_count = 1;
     var string_count_per_tiels = 0;
     var remainder = character_length % calculate_number_of_tiles;

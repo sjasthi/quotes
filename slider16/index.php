@@ -13,6 +13,7 @@
         <br>
         <br>
         <label>Quote<input type="text" name="quote" id="quote" value="<?php echo $quoteline; ?>"  style=" width: 200px;"></label>
+        <input type="hidden" id="quote_arr" value=<?php echo json_encode($quote_arr); ?>>  
         <input type="hidden" id="arrData" value="<?php echo $stringArrData; ?>"> 
         <label>Rows <input type="text" name="rows" id="rows" value="4" size="2"></label>
         <label>Columns <input type="text" name="columns" id="columns" value="4" size="2"></label>

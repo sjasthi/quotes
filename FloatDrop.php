@@ -14,7 +14,7 @@
 <script type="text/javascript" src="js/main.js"></script>
 
 <?php
-	//error_reporting(0);
+	
 	include_once 'db_credentials.php'; 
 	$sql = "SELECT * FROM quote_table
 			WHERE id = '-1'";
