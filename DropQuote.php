@@ -1,6 +1,4 @@
-<?php 
-
-$page_title = ' Quote Drop'; ?>
+<?php $page_title = ' Quote Drop'; ?>
 
 <?php 
 	$nav_selected = "LIST";
@@ -40,7 +38,7 @@ $page_title = ' Quote Drop'; ?>
 		die ('There was an error running query[' . $connection->error . ']');								
 	}	
 	
-	$nocol = 16; //later i'll update this to take from preferences
+	$nocol = 16;
 	echo '<h2 id="title">Drop Quote</h2><br>';
 
 	$uninpo=1;
@@ -57,6 +55,7 @@ $page_title = ' Quote Drop'; ?>
 		}
 		
 	}
+	// echo $quoteline."<br>";
 	DropM($quoteline,$nocol);
 ?>
 
