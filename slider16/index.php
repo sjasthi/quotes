@@ -1,8 +1,6 @@
+<div id="wrapper">
 
 
-   <div id="wrapper">
-
-    
     <button id="Classic_Mode_btn" class="btn-border" onclick="changeGameMode('Classic_Mode',this)">Classic Mode</button>
     <button id='Leap_Mode_btn' onclick="changeGameMode('Leap_Mode',this)">Leap Mode</button>
 
@@ -12,9 +10,9 @@
         </table>
         <br>
         <br>
-        <label>Quote<input type="text" name="quote" id="quote" value="<?php echo $quoteline; ?>"  style=" width: 200px;"></label>
-        <input type="hidden" id="quote_arr" value=<?php echo json_encode($quote_arr); ?>>  
-        <input type="hidden" id="arrData" value="<?php echo $stringArrData; ?>"> 
+        <label style="display: none;">Quote<input type="text" name="quote" id="quote" value="<?php echo $quoteline; ?>" style=" width: 200px;"></label>
+        <input type="hidden" id="quote_arr" value=<?php echo json_encode($quote_arr); ?>>
+        <input type="hidden" id="arrData" value="<?php echo $stringArrData; ?>">
         <label>Rows <input type="text" name="rows" id="rows" value="4" size="2"></label>
         <label>Columns <input type="text" name="columns" id="columns" value="4" size="2"></label>
         <input type="button" id="newGame" value="Start New Game">
@@ -24,7 +22,6 @@
         <br>
         <div id="output"></div>
         <button id="submit-game" onclick="checkStats()">Submit</button>
-        
+
     </div>
 </div>
-

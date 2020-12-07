@@ -520,8 +520,7 @@ padding: 10px;
 }
 
 #cardPile div {
-  color: #fff;
-  text-shadow: 0 0 3px #000;
+  color: rgba(0, 0, 0, .8);
 }
 
 #cardPile div.ui-draggable-dragging {
