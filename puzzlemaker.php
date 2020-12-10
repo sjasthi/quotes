@@ -147,7 +147,7 @@
 				var td = document.getElementById('td' + j);
 				var drag = document.getElementById('drag' + j);
 				if (drag != null && drag.parentNode.id.substring(0, 2) != 'td') {
-					if (drag.innerText === e.target.value) {
+					if (drag.innerText.toLowerCase() == e.target.value.toLowerCase()) {
 						e.target.blur();
 						document.getElementById('td' + index).appendChild(drag);
 						index = index + 1;
@@ -487,6 +487,64 @@
 
 			e.target.value = "";
 		}
+		
+		function checkSolution() {
+			var i=0;
+			var quote = document.getElementById('original_quote').value;
+			var ans = "";
+			while(document.getElementById('td'+i)) {
+				var ch = document.getElementById('td'+i).innerText;
+				if(ch==String.fromCharCode(160))
+					ch = ' ';
+				ans += ch;
+				i++;
+			}
+			ans = ans.trim();
+			quote = quote.trim();
+			
+			if(quote == ans) {
+				alert("Congratulations! You have solved it!");
+			}
+			else {
+				alert("Sorry! It is not quite right!");
+			}
+		}
+
+		function checkSolution_floatDrop() {
+			var i=0;
+			var quote1 = document.getElementById('original_quote1').value;
+			var quote2 = document.getElementById('original_quote2').value;
+			var ans1 = "";
+			var ans2 = "";
+			while(document.getElementById('td_a'+i)) {
+				var ch = document.getElementById('td_a'+i).innerText;
+				if(ch==String.fromCharCode(160))
+					ch = ' ';
+				ans1 += ch;
+				i++;
+			}
+
+			i=0;
+			while(document.getElementById('td_b'+i)) {
+				var ch = document.getElementById('td_b'+i).innerText;
+				if(ch==String.fromCharCode(160))
+					ch = ' ';
+				ans2 += ch;
+				i++;
+			}
+			ans1 = ans1.trim();
+			ans2 = ans2.trim();
+			quote1 = quote1.trim();
+			quote2 = quote2.trim();
+			
+			console.log(quote2);
+			if(quote1 == ans1 && quote2 == ans2) {
+				alert("Congratulations! You have solved it!");
+			}
+			else {
+				alert("Sorry! It is not quite right!");
+			}
+		}
 	</script>
 </head>
 
@@ -497,37 +555,15 @@
 	include("telugu_parser.php");
 	include("usefultool.php");
 
-	function ScrambleMaker($quote)
-	{
-		$words = explode(" ", $quote);
-
-		$shuffledLetters = '';
-
-		$shuffledWords = $words;
-
-		shuffle($shuffledWords);
-
-		foreach ($shuffledWords as $word) {
-			$shuffledLetters .= mb_str_shuffle2($word);
-		}
-
-		$pos = 0;
-
-		$newWords = [];
-
-		foreach ($words  as $x => $val) {
-			$numberOfLetters = mb_strlen($val);
-
-			$newWords[$x] = mb_substr($shuffledLetters, $pos, $numberOfLetters);
-
-			$pos += $numberOfLetters;
-		}
-
-		return implode(" ", $newWords);
+	function ScrambleMaker($quote) {
+		$words = explode(" ", $quote );
+		//foreach($words  as $x => $val){
+		//	$newWords[$x] = mb_str_shuffle2($val);
+		//}
+		return mb_str_shuffle2(implode("",$words));
 	}
 
-	function str_split_unicode($str, $l = 0)
-	{
+	function str_split_unicode($str, $l = 0) {
 		if ($l > 0) {
 			$ret = array();
 			$len = mb_strlen($str, "UTF-8");
@@ -540,21 +576,19 @@
 		//return preg_split("/\pL\pM*|./u", $str, -1, PREG_SPLIT_NO_EMPTY);
 	}
 
-	function mb_str_shuffle2($str)
-	{
+	function mb_str_shuffle2($str) {
 		$t = parseToCodePoints($str);
 		$arr = array();
-		foreach ($t as $ch) {
+		foreach($t as $ch) {
 			array_push($arr, parseToCharacter($ch));
 		}
 		shuffle($arr);
 		return join("", $arr);
 	}
 
-	function mb_str_shuffle($str)
-	{
+	function mb_str_shuffle($str) {
 		$tmp = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
-		//print_r($tmp);
+		print_r($tmp);
 		echo "<br>";
 		shuffle($tmp);
 		return join("", $tmp);
@@ -645,7 +679,7 @@
 				$quote_array = array();
 				foreach ($t as $axe) {
 					$tested = parseToCharacter($axe);
-					if (ctype_space($tested) == false && ctype_punct($tested) == false && ctype_cntrl($tested) == false && $x < $nohope) {
+					if (ctype_space($tested) == false && ctype_cntrl($tested) == false && $x < $nohope) {
 						$t = $x % $col;
 						array_push($wheeloffortune[$t], $tested);
 						array_push($quote_array, $tested);
@@ -665,6 +699,8 @@
 
 
 				<br>
+				<input type="hidden" id="original_quote" value="<?php echo $quote; ?>">
+				<button id="submitSolution" onclick="checkSolution()">Submit</button>
 				<button id="captureTable" onclick="takeshot()">Generate </button>
 				<div id="output"></div>
 				<script type="text/javascript" src="js/html2canvas.js"></script>
@@ -894,7 +930,7 @@
 
 						$tested = parseToCharacter($axe);
 
-						if (ctype_space($tested) == false && ctype_punct($tested) == false && ctype_cntrl($tested) == false && $x < $nohope) {
+						if (ctype_space($tested) == false && ctype_cntrl($tested) == false && $x < $nohope) {
 							$t = $x % $col;
 							array_push($wheeloffortune[$t], $tested);
 							array_push($quote_array, $tested);
@@ -912,6 +948,8 @@
 					?>
 
 					<br>
+					<input type="hidden" id="original_quote" value="<?php echo $quote; ?>">
+					<button id="submitSolution" onclick="checkSolution()">Submit</button>
 					<button id="captureTable" onclick="takeshot()">Generate</button>
 					<div id="output"></div>
 					<script type="text/javascript" src="js/html2canvas.js"></script>
@@ -1145,7 +1183,7 @@
 					$quote_array1 = array();
 					foreach ($t as $axe) {
 						$tested = parseToCharacter($axe);
-						if (ctype_space($tested) == false && ctype_punct($tested) == false && ctype_cntrl($tested) == false && $x < $nohope) {
+						if (ctype_space($tested) == false && ctype_cntrl($tested) == false && $x < $nohope) {
 							$tt = $x % $col;
 							array_push($quote_array1, $tested);
 							array_push($wheeloffortune[$tt], $tested);
@@ -1171,7 +1209,7 @@
 					foreach ($t2 as $axe) {
 						$tested = parseToCharacter($axe);
 
-						if (ctype_space($tested) == false && ctype_punct($tested) == false && ctype_cntrl($tested) == false && $x < $nohope2) {
+						if (ctype_space($tested) == false && ctype_cntrl($tested) == false && $x < $nohope2) {
 							$tt = $x % $col;
 							array_push($wheeloffortune2[$tt], $tested);
 							array_push($quote_array2, $tested);
@@ -1188,6 +1226,9 @@
 					} ?>
 
 					<br>
+					<input type="hidden" id="original_quote1" value="<?php echo $quote; ?>">
+					<input type="hidden" id="original_quote2" value="<?php echo $quote2; ?>">
+					<button id="submitSolution" onclick="checkSolution_floatDrop()">Submit</button>
 					<button id="captureTable" onclick="takeshot()">Generate </button>
 					<div id="output"></div>
 					<script type="text/javascript" src="js/html2canvas.js"></script>

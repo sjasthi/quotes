@@ -163,8 +163,10 @@
     if ($ch == " ") {
       continue;
     }
+    //echo $ch;
     array_push($quote_arr, $ch);
   }
+  //echo $quoteline;
   //..
 
 
