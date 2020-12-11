@@ -24,7 +24,7 @@
          <link rel="stylesheet" href="css/cjui.css">
     <script src="jquery/jquery.js"></script>
     <script src="jquery/jui.js"></script>
-    <script src="scramble.js"></script>
+    <!--<script src="scramble.js"></script>-->
     </head>
 
 <body class="body_background">

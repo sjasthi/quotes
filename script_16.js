@@ -98,6 +98,7 @@ var data_arr = ['ZI','ND','AG', 'IN','IK','AL','JA','TI','HA','IA','UR',
 
 function showTable()
 {
+    console.table(arrayForBoard);
     var k = 0;
     error1 = false;
     var string = document.getElementById("quote").value;
@@ -124,7 +125,13 @@ function showTable()
         }
         loop_count++;
     });
+    if (loop_count > calculate_number_of_tiles) {
+        string_count_per_tiels++;
+        loop_count = 1;
+    }
+    console.log(string_count_per_tiels);
     var check_nub = calculate_number_of_tiles - remainder;
+    console.log(check_nub);
     var arr = [];
     var concate_data = '';
     var index = 1;
@@ -194,6 +201,7 @@ function showTable()
             }
         }
     });*/
+    console.log(arr);
      var array_first = [];
      var array_second = [];
      var all_index = 1;
@@ -208,6 +216,7 @@ function showTable()
     var prepare_data = array_first.concat(array_second);;
     var index = 0;
     var outputString = "";
+    console.log(prepare_data);
     for (var i = 0; i < rows; i++) {
         outputString += "<tr id='Classic_Mode' class='table_row'>";
         for (var j = 0; j < columns; j++) {
@@ -238,8 +247,7 @@ function showTable()
 
 function moveThisTile( tableRow, tableColumn,that)
 {
-
-    var id = that.parentNode.id
+    var id = that.parentNode.id;
     if (id == 'Classic_Mode'){
         if (checkIfMoveable(tableRow, tableColumn, "up") ||
             checkIfMoveable(tableRow, tableColumn, "down") ||
