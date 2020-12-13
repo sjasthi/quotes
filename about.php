@@ -38,20 +38,37 @@
 
 <body class="body_background">
 
-<h3 style = "color: #01B0F1;">Problem Solution</h3>
-
-
 <h3 style = "color: #01B0F1;">About</h3>
 
-	<h3>Team</h3>
+	<h3>Puzzles Supported</h3>
 	<p>
 		<ul>
-      <li>Siva Jasthi (siva.jasthi@metrostate.edu) </li>
-      <li>First Last (first.last@metrostate.edu) </li>
-      
+      <li>Drop Quote </li>
+      <li>Float Quote </li>
+      <li>DropFloat </li>
+      <li>Scrambler </li>
+      <li>Splitter </li>
+      <li>Slider16 </li>
 		</ul>
   </p>
   
+	<h3>Languages Supported</h3>
+	<p>
+		<ul>
+      <li>English </li>
+      <li>Telugu</li>
+		</ul>
+  </p>
+
+  <h3>Contributors</h3>
+	<p>
+		<ul>
+      <li>Siva Jasthi (siva.jasthi@metrostate.edu) </li>
+      <li>Robert Moore (robert.moore@my.metrostat.edu)  </li>
+      <li>Anath Xayakoummane (rw8085wf@go.minnstate.edu)  </li>
+      <li>First Last (first.last@metrostate.edu) </li>
+		</ul>
+  </p>
 
 
 </body>

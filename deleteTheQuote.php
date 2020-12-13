@@ -13,7 +13,7 @@ if (isset($_POST['id'])){
             WHERE id = '$id'";
 
     mysqli_query($db, $sql);
-    header('location: list.php?deleted=Success');
+    header('location: admin.php?deleted=Success');
 }//end if
 ?>
 

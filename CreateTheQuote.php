@@ -1,8 +1,6 @@
 <?php
    
 include_once 'db_credentials.php';
-
-   echo "HERE";
 	
 	  $man = mysqli_real_escape_string($db,$_POST['man']);
 	  $subject = mysqli_real_escape_string($db,$_POST['subject']);
@@ -13,8 +11,5 @@ include_once 'db_credentials.php';
                 ";
 
                 mysqli_query($db, $sql);
-                header('location: list.php?create=Success');
-				
-				
-				
+                header('location: admin.php?create=Success');
 ?>

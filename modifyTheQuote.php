@@ -25,7 +25,7 @@ if (isset($_POST['id'])){
 
                 mysqli_query($db, $sql);
                 
-                 header('location: list.php?updated=Success');
+                 header('location: admin.php?updated=Success');
                 
     
 }//end if
