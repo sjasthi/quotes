@@ -82,6 +82,8 @@ $quotes_to_show = 10;
 // SELECT id, author, topic FROM quote_table ORDER BY id DESC LIMIT 20
 $sql = "SELECT id, author, topic FROM quote_table ORDER BY id DESC LIMIT $quotes_to_show";
 
+// to get the unicode characters from the database
+mysqli_set_charset($db, "utf8");
 $result = mysqli_query($db, $sql);
 
 echo '<table class="puzzle">';
