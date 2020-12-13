@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2020 at 02:27 AM
+-- Generation Time: Dec 13, 2020 at 06:30 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -43,7 +43,7 @@ CREATE TABLE `pref` (
 --
 
 INSERT INTO `pref` (`value`, `Language`, `display`, `Chunks`, `ID`, `NAME`, `COMMENTS`) VALUES
-(20, 'Telugu', 'Puzzles', 3, 1, '', '');
+(10, 'Telugu', 'Puzzles', 3, 1, '', '');
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ INSERT INTO `preferences` (`id`, `name`, `value`, `comments`) VALUES
 (2, 'DEFAULT_LANGUAGE', 'Telugu', 'Telugu and English are two possible values'),
 (3, 'DEFAULT_HOME_PAGE_DISPLAY', 'Puzzles', 'Puzzles, Quote, Both - are three possible values'),
 (4, 'DEFAULT_CHUNK_SIZE', 'Puzzle', 'For  SplitQuote, how many characters in each block'),
-(5, 'NO_OF_QUOTES_TO_DISPLAY', '100', 'The quotes are ordered by the ID in des order'),
+(5, 'NO_OF_QUOTES_TO_DISPLAY', '10', 'The quotes are ordered by the ID in des order'),
 (6, 'FEELING_LUCKY_MODE', 'LAST', 'Feeling Lucky --> brings up LAST, FIRST or RANDOM quote for puzzle playing'),
 (7, 'FEELING_LUCKY_TYPE', 'DropQuote', 'DropQuote, FloatQuote, DropFloat, Scrambler, Splitter, Slider16 (used by Feeling Lucky)');
 
@@ -340,7 +340,8 @@ INSERT INTO `quote_table` (`id`, `author`, `topic`, `quote`) VALUES
 (269, 'అభినేత్రి సావిత్రి', 'డాక్టర్ చక్రవర్తి', 'ఆశలు తీరని ఆవేశములో ఆశయాలలో ఆవేదనలో చీకటి మూసిన ఏకాంతములో తోడొకరుండిన అదే బాగ్యము అదే స్వర్గము'),
 (271, 'junk', 'junk2', 'junk'),
 (272, 'junk', 'junk', 'junk'),
-(273, 'test', 'test', 'test');
+(273, 'test', 'test', 'test'),
+(274, 'Anon', 'Test', 'A thankful heart is not only the greatest virtue, but the parent of all the other virtues. - cicero');
 
 --
 -- Indexes for dumped tables
@@ -366,7 +367,7 @@ ALTER TABLE `quote_table`
 -- AUTO_INCREMENT for table `quote_table`
 --
 ALTER TABLE `quote_table`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=274;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

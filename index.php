@@ -70,11 +70,34 @@
                         <br>
                     </div>
 
-<!-- Hard code the preferences for now; TBD: 
-Eventually, this will be fetched from the preferences table. -->
+
+<!-- =========================================
+Retrive the preferences, store those in session variables
+These vars get updated whenever the user clicks HOME page 
+DEFAULT_COLUMN_COUNT, DEFAULT_LANGUAGE, DEFAULT_HOME_PAGE_DISPLAY,  
+DEFAULT_CHUNK_SIZE, NO_OF_QUOTES_TO_DISPLAY, FEELING_LUCKY_MODE, FEELING_LUCKY_TYPE
+========================================= -->
+
 <?php
 
-$quotes_to_show = 10;
+$sql = "SELECT `id`, `name`, `value`, `comments` FROM `preferences`";
+mysqli_set_charset($db, "utf8");
+$result = mysqli_query($db, $sql);
+
+
+// in each row, we will display 6 icons
+if($result->num_rows > 0) {
+  while ($row = $result->fetch_assoc()) {
+        $_SESSION[$row['name']] = $row['value'];
+  } // end while
+} // end if
+?>
+
+<?php
+
+// hard code now; retrieve the preference later.
+//$quotes_to_show = 10;
+$quotes_to_show = $_SESSION['NO_OF_QUOTES_TO_DISPLAY'];
 
 
 // Get the last "puzzles_to_show" number of word_sets  (or all word_sets if the count is < 100)
