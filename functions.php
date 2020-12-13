@@ -199,5 +199,3 @@ function show_flash_message() {
   }
   return NULL;
 }
-
-?>

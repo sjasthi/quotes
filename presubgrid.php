@@ -24,5 +24,3 @@ $id=1;
                 mysqli_query($db, $sql);
                 
          header('location: preferences.php?updated=Success');
-
-?>

@@ -12,4 +12,3 @@ include_once 'db_credentials.php';
 
                 mysqli_query($db, $sql);
                 header('location: admin.php?create=Success');
-?>

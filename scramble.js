@@ -12,29 +12,27 @@ function drop(event) {
   event.target.appendChild(document.getElementById(data));
 }
 
-function checkStats(){
-    if (checkIfWinner())
-        {
-            alert("Congratulation! ");
-         }
-    else{
-            alert('Try again');
-         
-    }
+function checkStats() {
+  if (checkIfWinner()) {
+    alert("Congratulation! ");
+  }
+  else {
+    alert('Try again');
+
+  }
 }
 
 
-function checkIfWinner()
-{
+function checkIfWinner() {
 
   var scrableValue = $('#scrableValue').val();
   scrableValue = scrableValue.replace(/\s/g, '');
   var userScrableValue = $('#cardSlots span').text();
-  if(scrableValue == userScrableValue){
+  if (scrableValue == userScrableValue) {
     return true;
   }
   return false;
 
 
-/*    return true;*/
+  /*    return true;*/
 }

@@ -9,11 +9,11 @@
  *  https://stackoverflow.com/questions/14643617/create-table-using-javascript
  */
 
- /**
-  * Generate game and solution grids, fill with both fillers and phrase, and add to end of document.
-  * 
-  * @param {boolean} starting Whether this function is being called when the page starts or not.
-  */
+/**
+ * Generate game and solution grids, fill with both fillers and phrase, and add to end of document.
+ * 
+ * @param {boolean} starting Whether this function is being called when the page starts or not.
+ */
 function gen(starting) {
     // pull height and width from dropdowns
     var height = document.getElementById("height").value;
@@ -107,7 +107,7 @@ function gridValues(height, width, fillers) {
     for (var i = 0; i < height; i++) {
         for (var j = 0; j < width; j++) {
             // pick a random value from the filler options for the location
-            values[i*width + j] = fillers[Math.floor(Math.random() * fillers.length)];
+            values[i * width + j] = fillers[Math.floor(Math.random() * fillers.length)];
         }
     }
     return values;
@@ -140,7 +140,7 @@ function chooseLocations(height, width, phraseChars) {
             while (!legitimatePlacement && !startOver) {
                 // pick a random location for the next character
                 var placement = Math.floor(Math.random() * placementOptions);
-                
+
                 // adjust placement based on which placements have been determined to be bad
                 for (var j = 0; j < badPlacements.length; j++) {
                     if (j <= placement) {
@@ -233,7 +233,7 @@ function legitimate(locations, newLocation, height, width) {
     for (var i = 0; i < locations.length - 1; i++) {
         // the new location touches an old location if it is within the 3x3 square surrounding the old location
         if (newLocation[0] <= (locations[i][0] + 1) && newLocation[0] >= (locations[i][0] - 1)
-        && newLocation[1] <= (locations[i][1] + 1) && newLocation[1] >= (locations[i][1] - 1)) {
+            && newLocation[1] <= (locations[i][1] + 1) && newLocation[1] >= (locations[i][1] - 1)) {
             return false;
         }
     }
@@ -254,7 +254,7 @@ function fillGrid(grid, values) {
     for (var i = 0; i < rows.length; i++) {
         var cells = rows[i].getElementsByTagName("TD");
         for (var j = 0; j < cells.length; j++) {
-            cells[j].innerText = values[i*(cells.length) + j];
+            cells[j].innerText = values[i * (cells.length) + j];
         }
     }
 }

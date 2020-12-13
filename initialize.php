@@ -31,5 +31,3 @@
   $config = array();
   
   define("DEBUG_MODE", "ON");
-  
-?>

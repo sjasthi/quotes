@@ -23,7 +23,3 @@ $x = "అహింసకు మించిన ఆయుధం లేదు.";
     print_r($x_wp->getLogicalChars());
     echo "<br> code points = ";
     print_r($x_wp->getCodePoints());
-    
-
-
-?>

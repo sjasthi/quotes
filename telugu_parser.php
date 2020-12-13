@@ -162,6 +162,3 @@ function isTeluguNumber($ch) {
 function isTelugu($ch) {
 	return ( $ch >= 0x0c01 && $ch <= 0x0c6f ) || ( $ch == 0x200c );
 }
-
-
-?>

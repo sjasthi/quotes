@@ -99,4 +99,3 @@ function len_lex_sort($word1, $word2) {
 	if( $word1->getLength() == $word2->getLength() ) return strcasecmp($word1->getWord(), $word2->getWord());
 	else return $word1->getLength() > $word2->getLength();
 }
-?>

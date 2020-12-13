@@ -487,47 +487,46 @@
 
 			e.target.value = "";
 		}
-		
+
 		function checkSolution() {
-			var i=0;
+			var i = 0;
 			var quote = document.getElementById('original_quote').value;
 			var ans = "";
-			while(document.getElementById('td'+i)) {
-				var ch = document.getElementById('td'+i).innerText;
-				if(ch==String.fromCharCode(160))
+			while (document.getElementById('td' + i)) {
+				var ch = document.getElementById('td' + i).innerText;
+				if (ch == String.fromCharCode(160))
 					ch = ' ';
 				ans += ch;
 				i++;
 			}
 			ans = ans.trim();
 			quote = quote.trim();
-			
-			if(quote == ans) {
+
+			if (quote == ans) {
 				alert("Congratulations! You have solved it!");
-			}
-			else {
+			} else {
 				alert("Sorry! It is not quite right!");
 			}
 		}
 
 		function checkSolution_floatDrop() {
-			var i=0;
+			var i = 0;
 			var quote1 = document.getElementById('original_quote1').value;
 			var quote2 = document.getElementById('original_quote2').value;
 			var ans1 = "";
 			var ans2 = "";
-			while(document.getElementById('td_a'+i)) {
-				var ch = document.getElementById('td_a'+i).innerText;
-				if(ch==String.fromCharCode(160))
+			while (document.getElementById('td_a' + i)) {
+				var ch = document.getElementById('td_a' + i).innerText;
+				if (ch == String.fromCharCode(160))
 					ch = ' ';
 				ans1 += ch;
 				i++;
 			}
 
-			i=0;
-			while(document.getElementById('td_b'+i)) {
-				var ch = document.getElementById('td_b'+i).innerText;
-				if(ch==String.fromCharCode(160))
+			i = 0;
+			while (document.getElementById('td_b' + i)) {
+				var ch = document.getElementById('td_b' + i).innerText;
+				if (ch == String.fromCharCode(160))
 					ch = ' ';
 				ans2 += ch;
 				i++;
@@ -536,12 +535,11 @@
 			ans2 = ans2.trim();
 			quote1 = quote1.trim();
 			quote2 = quote2.trim();
-			
+
 			console.log(quote2);
-			if(quote1 == ans1 && quote2 == ans2) {
+			if (quote1 == ans1 && quote2 == ans2) {
 				alert("Congratulations! You have solved it!");
-			}
-			else {
+			} else {
 				alert("Sorry! It is not quite right!");
 			}
 		}
@@ -555,15 +553,17 @@
 	include("telugu_parser.php");
 	include("usefultool.php");
 
-	function ScrambleMaker($quote) {
-		$words = explode(" ", $quote );
+	function ScrambleMaker($quote)
+	{
+		$words = explode(" ", $quote);
 		//foreach($words  as $x => $val){
 		//	$newWords[$x] = mb_str_shuffle2($val);
 		//}
-		return mb_str_shuffle2(implode("",$words));
+		return mb_str_shuffle2(implode("", $words));
 	}
 
-	function str_split_unicode($str, $l = 0) {
+	function str_split_unicode($str, $l = 0)
+	{
 		if ($l > 0) {
 			$ret = array();
 			$len = mb_strlen($str, "UTF-8");
@@ -576,17 +576,19 @@
 		//return preg_split("/\pL\pM*|./u", $str, -1, PREG_SPLIT_NO_EMPTY);
 	}
 
-	function mb_str_shuffle2($str) {
+	function mb_str_shuffle2($str)
+	{
 		$t = parseToCodePoints($str);
 		$arr = array();
-		foreach($t as $ch) {
+		foreach ($t as $ch) {
 			array_push($arr, parseToCharacter($ch));
 		}
 		shuffle($arr);
 		return join("", $arr);
 	}
 
-	function mb_str_shuffle($str) {
+	function mb_str_shuffle($str)
+	{
 		$tmp = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
 		print_r($tmp);
 		echo "<br>";
