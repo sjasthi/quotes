@@ -60,10 +60,17 @@ header('Content-type: text/html; charset=utf-8');
 		   $data = mysqli_query($db, $query);
 		   $inform = array(-1);
 ?>
-<form action=slider16.php method ="post">
+
+<!-- 
+Reference: https://www.w3schools.com/tags/att_button_formaction.asp
+See the difference between action and formaction.
+button formaction overrides form action attribute.
+Since we are having specific action for each of the buttons,
+it is NOT required to have a action attribute on the form -->
+
+<form method ="POST">
 	     <h2 id="title">Quotelist</h2><br>
-		  
-		<button><a class="btn btn-sm" href="createQuote.php">Create a Quote</a></button>	 
+        <button type = "submit" formaction ="createQuote.php">Create</button>	 
         <button type = "submit" formaction ="modifyQuote.php">Modify</button>
 		<button type = "submit" formaction ="deleteQuote.php">Delete</button>
 		<button type = "submit"formaction ="DropQuote.php">Drop Quote</button>
