@@ -39,7 +39,7 @@ $GLOBALS['topic_summary'] = mysqli_query($db, $topic_query);
 <body class="body_background">
   <div id="wrap">
     <div class="container">
-      <h3>Quotes Summary</h3>
+      <h3>Author Summary</h3>
       <table id="info" cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered" width="100%">
 
         <thead>
@@ -50,7 +50,6 @@ $GLOBALS['topic_summary'] = mysqli_query($db, $topic_query);
         </thead>
 
         <tbody>
-
           <?php
           // retrive the result set from GLOBALS
           $result = $GLOBALS['author_summary'];
@@ -63,18 +62,48 @@ $GLOBALS['topic_summary'] = mysqli_query($db, $topic_query);
               $count = $row["quote_count"];
 
               echo "<tr>
-                             <td> $author </td>
-                             <td> $count </td>
-                          </tr>";
+                      <td> $author </td>
+                      <td> $count </td>
+                    </tr>";
             }
           }
           ?>
+        </tbody>
+      </table>
 
+      <h3>Topic Summary</h3>
+      <table id="topic_table" cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered" width="100%">
+
+        <thead>
+          <tr>
+            <th>Topic</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <?php
+          // retrive the result set from GLOBALS
+          $result = $GLOBALS['topic_summary'];
+
+          if ($result->num_rows > 0) {
+            // output data of each
+            while ($row = $result->fetch_assoc()) {
+
+              $topic = $row["topic"];
+              $count = $row["quote_count"];
+
+              echo "<tr>
+                      <td> $topic </td>
+                      <td> $count </td>
+                    </tr>";
+            }
+          }
+          ?>
         </tbody>
       </table>
 
     </div>
-
   </div>
 
   <!--JQuery-->
@@ -118,6 +147,23 @@ $GLOBALS['topic_summary'] = mysqli_query($db, $topic_query);
           'pdfHtml5'
         ]
       });
+
+      $('#topic_table').DataTable({
+        dom: 'lBfrtip',
+        lengthMenu: [
+          [10, 25, 50, -1],
+          [10, 25, 50, "All"]
+        ],
+        paging: true,
+        pagingType: "full_numbers",
+        buttons: [
+          'copyHtml5',
+          'excelHtml5',
+          'csvHtml5',
+          'pdfHtml5'
+        ]
+      });
+
 
       $('#info thead tr').clone(true).appendTo('#info thead');
       $('#info thead tr:eq(1) th').each(function(i) {
