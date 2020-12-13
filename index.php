@@ -93,14 +93,14 @@ if($result->num_rows > 0) {
 } // end if
 ?>
 
+
 <?php
 
-// hard code now; retrieve the preference later.
 //$quotes_to_show = 10;
 $quotes_to_show = $_SESSION['NO_OF_QUOTES_TO_DISPLAY'];
 
 
-// Get the last "puzzles_to_show" number of word_sets  (or all word_sets if the count is < 100)
+// Get the last 'quotes_to_show' number of quotes
 // We just need id, author and topic 
 // SELECT id, author, topic FROM quote_table ORDER BY id DESC LIMIT 20
 $sql = "SELECT id, author, topic FROM quote_table ORDER BY id DESC LIMIT $quotes_to_show";
@@ -117,27 +117,27 @@ if($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     
     echo '<tr>';
-    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?id='.$row['id'].'">
+    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=drop_quote&id='.$row['id'].'">
           <img src="./images/drop_quote.png" height="50" width="50">
           <br>'.$row['topic'].'<br>'.$row['author'].'</a></td>';
 
-    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?id='.$row['id'].'">
+    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=float_quote&id='.$row['id'].'">
           <img src="./images/float_quote.png" height="50" width="50">
           <br>'.$row['topic'].'<br>'.$row['author'].'</a></td>';
 
-    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?id='.$row['id'].'">
+    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=drop_float&id='.$row['id'].'">
           <img src="./images/drop_float.png" height="50" width="50">
           <br>'.$row['topic'].'<br>'.$row['author'].'</a></td>';
 
-    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?id='.$row['id'].'">
-          <img src="./images/scramble.png" height="50" width="50">
+    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=scrambler&id='.$row['id'].'">
+          <img src="./images/scrambler.png" height="50" width="50">
           <br>'.$row['topic'].'<br>'.$row['author'].'</a></td>';
 
-    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?id='.$row['id'].'">
+    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=splitter&id='.$row['id'].'">
           <img src="./images/splitter.png" height="50" width="50">
           <br>'.$row['topic'].'<br>'.$row['author'].'</a></td>';
     
-    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?id='.$row['id'].'">
+    echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=slider16&id='.$row['id'].'">
           <img src="./images/slider16.png" height="50" width="50">
           <br>'.$row['topic'].'<br>'.$row['author'].'</a></td>';
 
