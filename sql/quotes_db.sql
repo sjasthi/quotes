@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2020 at 06:30 AM
+-- Generation Time: Dec 15, 2020 at 06:28 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -66,7 +66,7 @@ INSERT INTO `preferences` (`id`, `name`, `value`, `comments`) VALUES
 (1, 'DEFAULT_COLUMN_COUNT', '15', 'this is the default column count for the puzzle'),
 (2, 'DEFAULT_LANGUAGE', 'Telugu', 'Telugu and English are two possible values'),
 (3, 'DEFAULT_HOME_PAGE_DISPLAY', 'Puzzles', 'Puzzles, Quote, Both - are three possible values'),
-(4, 'DEFAULT_CHUNK_SIZE', 'Puzzle', 'For  SplitQuote, how many characters in each block'),
+(4, 'DEFAULT_CHUNK_SIZE', '3', 'For  SplitQuote, how many characters in each block'),
 (5, 'NO_OF_QUOTES_TO_DISPLAY', '10', 'The quotes are ordered by the ID in des order'),
 (6, 'FEELING_LUCKY_MODE', 'LAST', 'Feeling Lucky --> brings up LAST, FIRST or RANDOM quote for puzzle playing'),
 (7, 'FEELING_LUCKY_TYPE', 'DropQuote', 'DropQuote, FloatQuote, DropFloat, Scrambler, Splitter, Slider16 (used by Feeling Lucky)');
@@ -338,10 +338,9 @@ INSERT INTO `quote_table` (`id`, `author`, `topic`, `quote`) VALUES
 (265, 'cicero', 'B Plus', 'A thankful heart is not only the greatest virtue, but the parent of all the other virtues. - cicero'),
 (268, 'అభినేత్రి సావిత్రి', 'కుటుంబ గౌరవం', 'ఆనందాలే నిండాలి. అనురాగాలే పండాలి. అందరు ఒకటై ఉండాలి. కన్నుల పండుగ చెయ్యాలి.'),
 (269, 'అభినేత్రి సావిత్రి', 'డాక్టర్ చక్రవర్తి', 'ఆశలు తీరని ఆవేశములో ఆశయాలలో ఆవేదనలో చీకటి మూసిన ఏకాంతములో తోడొకరుండిన అదే బాగ్యము అదే స్వర్గము'),
-(271, 'junk', 'junk2', 'junk'),
-(272, 'junk', 'junk', 'junk'),
 (273, 'test', 'test', 'test'),
-(274, 'Anon', 'Test', 'A thankful heart is not only the greatest virtue, but the parent of all the other virtues. - cicero');
+(274, 'Anon', 'Test', 'A thankful heart is not only the greatest virtue, but the parent of all the other virtues. - cicero'),
+(275, 'junk2', 'junk', 'junk');
 
 --
 -- Indexes for dumped tables
@@ -367,7 +366,7 @@ ALTER TABLE `quote_table`
 -- AUTO_INCREMENT for table `quote_table`
 --
 ALTER TABLE `quote_table`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=277;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
