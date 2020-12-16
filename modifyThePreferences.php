@@ -17,29 +17,19 @@ $sql = "UPDATE `preferences` SET `value`= $column_count WHERE `name`= 'DEFAULT_C
 mysqli_query($db, $sql);
 
 $sql = "UPDATE `preferences` SET `value`='$language' WHERE `name`= 'DEFAULT_LANGUAGE'";
-echo $sql;
-echo "<br>";
 mysqli_query($db, $sql);
 
 $sql = "UPDATE `preferences` SET `value`='$home_page_display' WHERE `name`= 'DEFAULT_HOME_PAGE_DISPLAY'";
-echo $sql;
-echo "<br>";
 mysqli_query($db, $sql);
 
 $sql = "UPDATE `preferences` SET `value`= $no_of_quotes_to_display WHERE `name`= 'NO_OF_QUOTES_TO_DISPLAY'";
-echo $sql;
-echo "<br>";
 mysqli_query($db, $sql);
 
 
 $sql = "UPDATE `preferences` SET `value`='$feeling_lucky_mode' WHERE `name`= 'FEELING_LUCKY_MODE'";
-echo $sql;
-echo "<br>";
 mysqli_query($db, $sql);
 
-$sql = "UPDATE `preferences` SET `value`= '$feeling_lucky_type' WHERE `name`= 'FEELING_LUCKY_TYPE'";
-echo $sql;
-echo "<br>";
+$sql = "UPDATE `preferences` SET `value`= '$feeling_lucky_type' WHERE `name`= 'FEELING_LUCKY_TYPE'";;
 mysqli_query($db, $sql);
 
 // =========== Refresh $_SESSION varaibles again ==============
@@ -55,6 +45,4 @@ if ($result->num_rows > 0) {
 } // end if
 // ==============================================
 
-
-header('Cache-Control: no-cache, no-store, must-revalidate');
 header('location: preferences.php?preferencesUpdated=Success');
