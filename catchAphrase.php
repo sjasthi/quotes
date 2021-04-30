@@ -1,7 +1,8 @@
 <?php
+$nav_selected = "ADMIN";
+$left_buttons = false;
 include "./nav.php";
 include "./telugu_parser.php";
-require_once "./db_functions.php";
 
 if (isset($_POST["phrase"])) {
 	// get phrase from posted value
@@ -62,20 +63,18 @@ fclose($myfile);
 	<label for="height">Grid Height:</label>
 	<select name="height" id="height" autocomplete="off">
 		<?php
-		$height = get_preference('GRID_HEIGHT');
-		if (is_null($height)) {
-			// if no datbase preference for height exists, default value is 10
-			$height = "10";
-		}
-		$arr = array("10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25");
-
-		foreach ($arr as $val) {
-			if ($val == $height) {
-				echo '<option value="' . $val . '" selected>' . $val . '</option>';
-			} else {
-				echo '<option value="' . $val . '">' . $val . '</option>';
+		if (isset($_POST['height'])) {
+			$height = $_POST['height'];
+		} else {
+			$height = get_preference('GRID_HEIGHT');
+			if (is_null($height)) {
+				// if no datbase preference for height exists, default value is 12
+				$height = "12";
 			}
 		}
+		for ($i = 10; $i <= 25; $i++) {
+            echo '<option value="' . $i . '"' . (($i == $height) ? ' selected' : '' ) .'>' . $i . '</option>';
+        }
 		?>
 	</select>
 	<br><br>
@@ -84,21 +83,24 @@ fclose($myfile);
 	<label for="width">Grid Width:</label>
 	<select name="width" id="width" autocomplete="off">
 		<?php
-		$width = get_preference('GRID_HEIGHT');
-		if (is_null($width)) {
-			// if no datbase preference for width exists, default value is 10
-			$width = "10";
-		}
-		$arr = array("10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25");
-		foreach ($arr as $val) {
-			if ($val == $width) {
-				echo '<option value="' . $val . '" selected>' . $val . '</option>';
-			} else {
-				echo '<option value="' . $val . '">' . $val . '</option>';
+		if (isset($_POST['width'])) {
+			$width = $_POST['width'];
+		} else {
+			$width = get_preference('GRID_WIDTH');
+			if (is_null($width)) {
+				// if no datbase preference for width exists, default value is 16
+				$width = "16";
 			}
 		}
+		for ($i = 10; $i <= 25; $i++) {
+            echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
+        }
 		?>
 	</select>
+	<br><br>
+
+	<label for="show_solution">Hide Solution on Generate:</label>
+	<input type="checkbox" id='hide_solution' name="hide_solution" value="true" <?php if (isset($_POST['hide_solution']) && $_POST['hide_solution'] == 'true') echo "checked"; ?>>
 	<br><br>
 
 	<input type="submit" name="generate" id="generate" value="Generate" id="generate">
@@ -106,14 +108,14 @@ fclose($myfile);
 
 	<table id="game"></table>
 	<br>
-	<button type="button" id="toggleSolution" name="toggleSolution">Show Solution</button>
-	<br><br>
 	<table id="solution"></table>
+	<br>
+	<button type="button" id="toggleSolution" name="toggleSolution">Show Solution</button>
 
 	<!-- show grids on startup -->
 	<script>
-		gen();
-		document.getElementById("toggleSolution").addEventListener("click", toggleSolution);
+		gen(<?php echo ((isset($_POST['hide_solution']) && $_POST['hide_solution'] == 'true') ? "true" : "false"); ?>);
+		document.getElementById("toggleSolution").addEventListener("click", function() { toggleSolution(false); });
 	</script>
 </form>
 <link type="text/css" media="all" href="phrase_style.css" rel="stylesheet">

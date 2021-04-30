@@ -5,10 +5,7 @@ $left_selected = "";
 
 include("./nav.php");
 
-
-
-$query = "SELECT * FROM quote_table";
-
+$quotes = get_quotes();
 ?>
 
 <style>
@@ -45,23 +42,14 @@ $query = "SELECT * FROM quote_table";
 
         if (isset($_GET['deleted'])) {
             if ($_GET["deleted"] == "Success") {
-                echo '<br><h3>We deleted that quote, do not worry</h3>';
+                echo '<br><h3>The quote has been deleted.</h3>';
             }
         }
         if (isset($_GET['updated'])) {
             if ($_GET["updated"] == "Success") {
-                echo '<br><h3>yes yes, we changed it no worries </h3>';
+                echo '<br><h3>The quote has been modified.</h3>';
             }
         }
-        if (isset($_GET['id'])) {
-            $a = $_GET['id'];
-            $query = "SELECT * FROM quote_table 
-			WHERE author = '$a'";
-        }
-
-        $db->set_charset("utf8");
-        $data = mysqli_query($db, $query);
-        $inform = array(-1);
         ?>
 
         <!-- Reference: https://www.w3schools.com/tags/att_button_formaction.asp
@@ -98,19 +86,16 @@ it is NOT required to have a action attribute on the form -->
                                 <th>Quote</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php
-
-                            if ($data->num_rows > 0) {
-
-                                while ($row = $data->fetch_assoc()) {
+                            if (!is_null($quotes)) {
+                                foreach ($quotes as $quote) {
                                     echo '<tr>
-                                        <td><input type ="radio" name ="ident" value =' . $row["id"] . '></td>
-                                        <td>' . $row["id"] . '</td>
-                                        <td>' . $row["author"] . ' </span> </td>
-                                        <td>' . $row["topic"] . '</td>
-                                        <td>' . $row["quote"] . '</td>
+                                        <td><input type ="radio" name ="ident" value =' . $quote["id"] . '></td>
+                                        <td>' . $quote["id"] . '</td>
+                                        <td>' . $quote["author"] . ' </span> </td>
+                                        <td>' . $quote["topic"] . '</td>
+                                        <td>' . $quote["quote"] . '</td>
                                     </tr>';
                                 }
                             } else {

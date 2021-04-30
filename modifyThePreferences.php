@@ -1,48 +1,42 @@
 <?php
+include_once './db_credentials.php';
+require_once './query_functions.php';
 
-include_once 'db_credentials.php';
-
-// get the POSTed values fom the preference form
-$column_count = mysqli_real_escape_string($db, $_POST['column_count']);
-$language = mysqli_real_escape_string($db, $_POST['language']);
-$home_page_display = mysqli_real_escape_string($db, $_POST['home_page_display']);
-$no_of_quotes_to_display = mysqli_real_escape_string($db, $_POST['no_of_quotes_to_display']);
-$feeling_lucky_mode = mysqli_real_escape_string($db, $_POST['feeling_lucky_mode']);
-$feeling_lucky_type = mysqli_real_escape_string($db, $_POST['feeling_lucky_type']);
-
-
-// id name value comments - is the preferences table structure
 // Update each row with the new value
-$sql = "UPDATE `preferences` SET `value`= $column_count WHERE `name`= 'DEFAULT_COLUMN_COUNT';";
-mysqli_query($db, $sql);
+if ($_POST['column_count'] != "") {
+    update_preference('DEFAULT_COLUMN_COUNT', $_POST['column_count']);
+}
 
-$sql = "UPDATE `preferences` SET `value`='$language' WHERE `name`= 'DEFAULT_LANGUAGE'";
-mysqli_query($db, $sql);
+if ($_POST['language'] != "") {
+    update_preference('DEFAULT_LANGUAGE', $_POST['language']);
+}
 
-$sql = "UPDATE `preferences` SET `value`='$home_page_display' WHERE `name`= 'DEFAULT_HOME_PAGE_DISPLAY'";
-mysqli_query($db, $sql);
+if ($_POST['home_page_display'] != "") {
+    update_preference('DEFAULT_HOME_PAGE_DISPLAY', $_POST['home_page_display']);
+}
 
-$sql = "UPDATE `preferences` SET `value`= $no_of_quotes_to_display WHERE `name`= 'NO_OF_QUOTES_TO_DISPLAY'";
-mysqli_query($db, $sql);
+if ($_POST['chunk_size'] != "") {
+    update_preference('DEFAULT_CHUNK_SIZE', $_POST['chunk_size']);
+}
 
+if ($_POST['no_of_quotes_to_display'] != "") {
+    update_preference('NO_OF_QUOTES_TO_DISPLAY', $_POST['no_of_quotes_to_display']);
+}
 
-$sql = "UPDATE `preferences` SET `value`='$feeling_lucky_mode' WHERE `name`= 'FEELING_LUCKY_MODE'";
-mysqli_query($db, $sql);
+if ($_POST['feeling_lucky_mode'] != "") {
+    update_preference('FEELING_LUCKY_MODE', $_POST['feeling_lucky_mode']);
+}
 
-$sql = "UPDATE `preferences` SET `value`= '$feeling_lucky_type' WHERE `name`= 'FEELING_LUCKY_TYPE'";;
-mysqli_query($db, $sql);
+if ($_POST['feeling_lucky_type'] != "") {
+    update_preference('FEELING_LUCKY_TYPE', $_POST['feeling_lucky_type']);
+}
 
-// =========== Refresh $_SESSION varaibles again ==============
-// refresh the $_SESSION variables so that we see the updated values
-$sql = "SELECT `id`, `name`, `value`, `comments` FROM `preferences`";
-mysqli_set_charset($db, "utf8");
-$result = mysqli_query($db, $sql);
+if ($_POST['grid_height'] != "") {
+    update_preference('GRID_HEIGHT', $_POST['grid_height']);
+}
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $_SESSION[$row['name']] = $row['value'];
-    } // end while
-} // end if
-// ==============================================
+if ($_POST['grid_width'] != "") {
+    update_preference('GRID_WIDTH', $_POST['grid_width']);
+}
 
 header('location: preferences.php?preferencesUpdated=Success');
