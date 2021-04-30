@@ -35,3 +35,21 @@ function run_sql($sql_script)
         }
     }
 }
+
+/**
+ * A function which connects to the database using PDO.
+ * 
+ * @return object pdo database connection.
+ */
+function pdo_connect_to_db() {
+    // Set DSN - data source name
+    $dsn = 'mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME;
+
+    // Create PDO instance
+    $pdo = new PDO($dsn, DB_USER, DB_PASS);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+    // set the PDO error mode to exception
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    return $pdo;
+}
