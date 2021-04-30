@@ -11,21 +11,22 @@
 }
 
 /* phrase input box */
-#phrase {
+#phrase, #processedPhrase {
     padding: 5px;
     border: 1px solid;
     border-color: black;
     border-radius: 5px;
+    line-height: 2em;
 }
 
 /* input box for fillers */
 #fillers {
-    height: 100px;
-    padding: 1px;
+    height: 10em;
     border: 1px solid;
     border-color: black;
     border-radius: 20px;
     resize: none;
+    padding: 10px;
 }
 
 /* all labels */
@@ -35,7 +36,7 @@ label {
 }
 
 /* label for phrase input box */
-#phraseLabel {
+#phraseLabel, #processedPhraseLabel {
     vertical-align: middle;
 }
 
@@ -45,7 +46,7 @@ label {
 }
 
 /* generate button */
-#generate {
+#generate, #toggleSolution {
     font-size: medium;
     background-color: lightskyblue;
     padding: 5px;
@@ -55,15 +56,12 @@ label {
 }
 
 /* table formatting */
-table, tr, td {
-    margin-left: auto; 
-    margin-right: auto;
-    border-collapse: collapse;
+#game table, tr, td, #solution table, tr, td {
     padding: 5px;
 }
 
 /* table cell formatting */
-td {
+#game td, #solution td {
     box-sizing: border-box;
     width: 40px;
     height: 40px;
@@ -71,4 +69,15 @@ td {
     padding: 5px;
     border: 1px solid;
     border-color: black;
+    text-align: center;
+}
+
+#game, #solution {
+    display: block;
+    margin: 0 auto;
+}
+
+#emptyCell {
+    border-top: 0 !important;
+    border-left: 0 !important;
 }
