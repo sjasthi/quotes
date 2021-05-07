@@ -1,4 +1,5 @@
 <?php
+require_once 'authentication.php';
 
 function url_for($script_path) {
   // add the leading '/' if not present
@@ -149,6 +150,7 @@ function countitems($item) {
 }
 
   function is_logged_in() {
+	developer_is_logged_in();
     // Having a admin_id in the session serves a dual-purpose:
     // - Its presence indicates the admin is logged in.
     // - Its value tells which admin for looking up their record.
