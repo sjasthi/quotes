@@ -1,19 +1,23 @@
-<?php $page_title = 'The Cow Layer'; ?>
 <?php
+$page_title = 'Create a Quote';
 $nav_selected = "LIST";
 $left_buttons = "NO";
 $left_selected = "";
+if (isset($_POST["quote"])) {
+    require_once "./initialize.php";
+    $success = create_quote($_POST["author"], $_POST["topic"], $_POST["quote"]);
+    
+    if ($success) {
+        redirect_to('./admin.php?create=Success');
+    } else {
+        redirect_to('./admin.php?create=Failure');
+    }
+}
 
-require 'db_credentials.php';
 include("./nav.php");
 ?>
 
-<?php
-$mysqli = new MySQLi('localhost', 'root', '', 'quotes_db');
-
-?>
-
-<form action="createTheQuote.php" method="POST" enctype="multipart/form-data">
+<form action="createQuote.php" method="POST" enctype="multipart/form-data">
     <br>
     <h3 id="title">Create A Quote</h3> <br>
 
@@ -21,16 +25,16 @@ $mysqli = new MySQLi('localhost', 'root', '', 'quotes_db');
 
         <tr>
             <td style="width:100px">Author:</td>
-            <td><input type="text" name="man" class="form-control" maxlength="50" size="50" required title="Please enter an author."></td>
+            <td><input type="text" name="author" class="form-control" maxlength="50" size="50" required title="Please enter an author."></td>
         </tr>
         <tr>
             <td style="width:100px">Topic:</td>
-            <td><input type="text" name="subject" class="form-control" maxlength="50" size="50" required title="Please enter a topic."></td>
+            <td><input type="text" name="topic" class="form-control" maxlength="50" size="50" required title="Please enter a topic."></td>
         </tr>
 
         <tr>
             <td style="width:100px">Quotation:</td>
-            <td><input type="text" name="quoted" class="form-control" maxlength="300" size="200" required title="Please enter a quote."></td>
+            <td><input type="text" name="quote" class="form-control" maxlength="300" size="200" required title="Please enter a quote."></td>
         </tr>
 
 

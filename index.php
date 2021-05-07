@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $_SESSION['lastpage'] = 'index';
 
 // set the current page to one of the main buttons
@@ -74,79 +72,46 @@ include("nav.php");
               <br>
             </div>
 
-
-            <!-- =========================================
-Retrive the preferences, store those in session variables
-These vars get updated whenever the user clicks HOME page 
-DEFAULT_COLUMN_COUNT, DEFAULT_LANGUAGE, DEFAULT_HOME_PAGE_DISPLAY,  
-DEFAULT_CHUNK_SIZE, NO_OF_QUOTES_TO_DISPLAY, FEELING_LUCKY_MODE, FEELING_LUCKY_TYPE
-========================================= -->
-
             <?php
-
-            $sql = "SELECT `id`, `name`, `value`, `comments` FROM `preferences`";
-            mysqli_set_charset($db, "utf8");
-            $result = mysqli_query($db, $sql);
-
-
-            // in each row, we will display 6 icons
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                $_SESSION[$row['name']] = $row['value'];
-              } // end while
-            } // end if
-            ?>
-
-
-            <?php
-
-            //$quotes_to_show = 10;
-            $quotes_to_show = $_SESSION['NO_OF_QUOTES_TO_DISPLAY'];
-
-
             // Get the last 'quotes_to_show' number of quotes
-            // We just need id, author and topic 
-            // SELECT id, author, topic FROM quote_table ORDER BY id DESC LIMIT 20
-            $sql = "SELECT id, author, topic FROM quote_table ORDER BY id DESC LIMIT $quotes_to_show";
-
-            // to get the unicode characters from the database
-            mysqli_set_charset($db, "utf8");
-            $result = mysqli_query($db, $sql);
+            $quotes = get_recent_quotes(get_preference('NO_OF_QUOTES_TO_DISPLAY'));
 
             echo '<table class="puzzle">';
 
-
             // in each row, we will display 6 icons
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
+            foreach ($quotes as $quote) {
+              ?>
+              <tr>
+                <td class="filled"><a href="feelingLucky/feelingLucky.php?type=drop_quote&id=<?php echo $quote['id']; ?>">
+                  <img src="./images/drop_quote.png" height="50" width="50">
+                  <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
+                </td>
 
-                echo '<tr>';
-                echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=drop_quote&id=' . $row['id'] . '">
-          <img src="./images/drop_quote.png" height="50" width="50">
-          <br>' . $row['topic'] . '<br>' . $row['author'] . '</a></td>';
+                <td class="filled"><a href="feelingLucky/feelingLucky.php?type=float_quote&id=<?php echo $quote['id']; ?>">
+                  <img src="./images/float_quote.png" height="50" width="50">
+                  <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
+                </td>
 
-                echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=float_quote&id=' . $row['id'] . '">
-          <img src="./images/float_quote.png" height="50" width="50">
-          <br>' . $row['topic'] . '<br>' . $row['author'] . '</a></td>';
+                <td class="filled"><a href="feelingLucky/feelingLucky.php?type=drop_float&id=<?php echo $quote['id']; ?>">
+                <img src="./images/drop_float.png" height="50" width="50">
+                <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
+                </td>
 
-                echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=drop_float&id=' . $row['id'] . '">
-          <img src="./images/drop_float.png" height="50" width="50">
-          <br>' . $row['topic'] . '<br>' . $row['author'] . '</a></td>';
+                <td class="filled"><a href="feelingLucky/feelingLucky.php?type=scrambler&id=<?php echo $quote['id']; ?>">
+                <img src="./images/scrambler.png" height="50" width="50">
+                <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a></td>
 
-                echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=scrambler&id=' . $row['id'] . '">
-          <img src="./images/scrambler.png" height="50" width="50">
-          <br>' . $row['topic'] . '<br>' . $row['author'] . '</a></td>';
+                <td class="filled"><a href="feelingLucky/feelingLucky.php?type=splitter&id=<?php echo $quote['id']; ?>">
+                  <img src="./images/splitter.png" height="50" width="50">
+                  <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
+                </td>
 
-                echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=splitter&id=' . $row['id'] . '">
-          <img src="./images/splitter.png" height="50" width="50">
-          <br>' . $row['topic'] . '<br>' . $row['author'] . '</a></td>';
-
-                echo  '<td class="filled"><a href="feelingLucky/feelingLucky.php?type=slider16&id=' . $row['id'] . '">
-          <img src="./images/slider16.png" height="50" width="50">
-          <br>' . $row['topic'] . '<br>' . $row['author'] . '</a></td>';
-
-                echo '</tr>';
-              }
+                <td class="filled"><a href="feelingLucky/feelingLucky.php?type=slider16&id=<?php echo $quote['id']; ?>">
+                  <img src="./images/slider16.png" height="50" width="50">
+                  <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
+                </td>
+              </tr>
+              <?php
             }
 
             echo '</table>';

@@ -12,7 +12,7 @@
  /**
   * Generate game and solution grids, fill with both fillers and phrase, and add to end of document.
   */
-function gen() {
+function gen(hideSolution) {
     // pull height and width from dropdowns
     var height = document.getElementById("height").value;
     var width = document.getElementById("width").value;
@@ -39,7 +39,7 @@ function gen() {
     gridParent.replaceChild(newSolutionGrid, solutionGrid);
     // generate grid tr and tds
     generateGrid(height, width, newSolutionGrid);
-    toggleSolution(); // hide solution grid
+    toggleSolution(hideSolution); // hide or show solution grid
 
     // get phrase and fillers and parse into arrays
     var phraseChars = parseInputString(document.getElementById("processedPhrase").value);
@@ -325,17 +325,17 @@ function addLabels(width, height, grid) {
  * A function to toggle showing the solution grid. Also changes the toggle button from 'Show' to 'Hide' 
  *  solution and vice versa.
  */
-function toggleSolution() {
+function toggleSolution(hideSolution) {
     var solutionGrid = document.getElementById("solution");
-    if (solutionGrid.style.display === "none") {
-        solutionGrid.style.display = "block"; // show solution grid
-
-        var toggleButton = document.getElementById("toggleSolution");
-        toggleButton.innerText = "Hide Solution";
-    } else {
+    if (solutionGrid.style.display === "block" || hideSolution) {
         solutionGrid.style.display = "none"; // hide solution grid
 
         var toggleButton = document.getElementById("toggleSolution");
         toggleButton.innerText = "Show Solution";
+    } else {
+        solutionGrid.style.display = "block"; // show solution grid
+
+        var toggleButton = document.getElementById("toggleSolution");
+        toggleButton.innerText = "Hide Solution";
     }
 }

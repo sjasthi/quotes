@@ -1,5 +1,5 @@
 <?php
-require_once('initialize.php');
+require_once './initialize.php';
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +47,7 @@ require_once('initialize.php');
             <br />Home</li>
         </a>
 
+        <?php if (is_admin()) { ?>
         <a href="admin.php">
           <li <?php if ($nav_selected == "ADMIN") {
                 echo 'class="current-page"';
@@ -54,6 +55,7 @@ require_once('initialize.php');
             <img src="./images/admin.png">
             <br />Admin</li>
         </a>
+        <?php }?>
 
         <a href="report.php">
           <li <?php if ($nav_selected == "REPORT") {
@@ -63,6 +65,7 @@ require_once('initialize.php');
             <br />Reports</li>
         </a>
 
+        <?php if (is_admin()) { ?>
         <a href="preferences.php">
           <li <?php if ($nav_selected == "PREF") {
                 echo 'class="current-page"';
@@ -70,6 +73,7 @@ require_once('initialize.php');
             <img src="./images/preferences.png">
             <br />Preferences</li>
         </a>
+        <?php }?>
 
         <a href="about.php">
           <li <?php if ($nav_selected == "PREF") {
@@ -79,7 +83,10 @@ require_once('initialize.php');
             <br />About</li>
         </a>
 
-        <a href="login.php">
+        <?php
+        if (!is_logged_in()) {
+        ?>
+        <a href="<?php echo LOGIN_LINK; ?>">
           <li <?php if ($nav_selected == "PREF") {
                 echo 'class="current-page"';
               } ?>>
@@ -87,7 +94,10 @@ require_once('initialize.php');
             <br />Login</li>
         </a>
 
-        <a href="logout.php">
+        <?php
+        } else {
+        ?>
+        <a href="<?php echo LOGOUT_LINK; ?>">
           <li <?php if ($nav_selected == "PREF") {
                 echo 'class="current-page"';
               } ?>>
@@ -95,6 +105,7 @@ require_once('initialize.php');
             <br />Logout</li>
         </a>
 
+        <?php } ?>
         <a href="feelingLucky.php">
           <li <?php if ($nav_selected == "PREF") {
                 echo 'class="current-page"';

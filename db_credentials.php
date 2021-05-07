@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 DEFINE('DB_SERVER', 'localhost');
 DEFINE('DB_NAME', 'quotes_db');
 DEFINE('DB_USER', 'root');
@@ -43,7 +42,7 @@ function run_sql($sql_script)
  */
 function pdo_connect_to_db() {
     // Set DSN - data source name
-    $dsn = 'mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME;
+    $dsn = 'mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME . ";charset=utf8";
 
     // Create PDO instance
     $pdo = new PDO($dsn, DB_USER, DB_PASS);

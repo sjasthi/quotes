@@ -1,4 +1,5 @@
 <?php
+require_once 'authentication.php';
 
 function url_for($script_path) {
   // add the leading '/' if not present
@@ -149,6 +150,7 @@ function countitems($item) {
 }
 
   function is_logged_in() {
+	developer_is_logged_in();
     // Having a admin_id in the session serves a dual-purpose:
     // - Its presence indicates the admin is logged in.
     // - Its value tells which admin for looking up their record.
@@ -163,7 +165,7 @@ function countitems($item) {
     // - Its value tells which admin for looking up their record.
 	if (!isset($_SESSION['logged_in'])) {return false;}
 	if (!isset($_SESSION['role'])) {return false;}
-    return ($_SESSION['logged_in'] == true and $_SESSION['role'] == 'SUPER-ADMIN');
+    return ($_SESSION['logged_in'] and $_SESSION['role'] == 'SUPER_ADMIN');
   }  
   
   function is_admin() {
@@ -173,7 +175,7 @@ function countitems($item) {
 	if (!isset($_SESSION['logged_in'])) {return false;}
 	if (!isset($_SESSION['role'])) {return false;}
 	if (is_super_admin() == true) {return true;}
-    return ($_SESSION['logged_in'] == true and $_SESSION['role'] == 'ADMIN');
+    return ($_SESSION['logged_in'] and $_SESSION['role'] == 'ADMIN');
   }  
   
   function is_user() {
