@@ -549,8 +549,6 @@
 <body>
 
 	<?php
-
-	include("telugu_parser.php");
 	include("usefultool.php");
 
 	function ScrambleMaker($quote)

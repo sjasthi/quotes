@@ -1,10 +1,10 @@
 <?php
 // live indic-wp location, uncomment when uploading this file to main site
-//require_once '/home2/icsbinco/public_html/indic-wp/word_processor.php';
+//require_once '/home2/icsbinco/public_html/indic-wp/telugu_parser.php';
 
 ///*
 // local indic-wp location, comment out when uploading this file to main site
-$file = "../../indic-wp/word_processor.php";
+$file = "../indic-wp/telugu_parser.php";
 if (file_exists($file)) {
     include $file;
 } else {

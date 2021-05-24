@@ -1,6 +1,7 @@
 <?php
+$nav_selected = "ADMIN";
+$left_buttons = false;
 include './nav.php';
-include("./telugu_parser.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -2,8 +2,6 @@
 $nav_selected = "ADMIN";
 $left_buttons = false;
 include "./nav.php";
-//include "./telugu_parser.php";
-include 'indic-wp.php';
 
 if (isset($_POST["phrase"])) {
 	// get phrase from posted value
@@ -17,10 +15,9 @@ if (isset($_POST["phrase"])) {
 }
 
 $language = "Telugu";
-$wordProcessor = new WordProcessor($phrase, $language);
 
 // parse quote into characters separated by commas
-$arr = $wordProcessor->parseToCodePoints($phrase);
+$arr = parseToCodePoints($phrase);
 $processed_phrase = "";
 foreach ($arr as $ch) {
 	$ch = parseToCharacter($ch);
