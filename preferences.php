@@ -9,16 +9,16 @@ require 'db_credentials.php';
 include("./nav.php");
 
 // Here are the preferences we saved in $_SESSION in index dot php.
-// DEFAULT_COLUMN_COUNT, 
-// DEFAULT_LANGUAGE, 
-// DEFAULT_HOME_PAGE_DISPLAY,  
-// DEFAULT_CHUNK_SIZE, 
-// NO_OF_QUOTES_TO_DISPLAY, 
-// FEELING_LUCKY_MODE, 
+// DEFAULT_COLUMN_COUNT,
+// DEFAULT_LANGUAGE,
+// DEFAULT_HOME_PAGE_DISPLAY,
+// DEFAULT_CHUNK_SIZE,
+// NO_OF_QUOTES_TO_DISPLAY,
+// FEELING_LUCKY_MODE,
 // FEELING_LUCKY_TYPE,
 // GRID_HEIGHT,
 // GRID_WIDTH
-// Retrieve those and show the current values. 
+// Retrieve those and show the current values.
 
 
 
@@ -122,6 +122,11 @@ foreach ($preferences as $preference) {
 						<td style="width:200px">Grid Width:</td>
 						<td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['GRID_WIDTH']; ?>" title="Current value"></td>
 						<td><input required type="text" name="grid_width" maxlength="10" size="15" title="Enter the default grid width for Catch a Phrase" value="<?php echo $preference_array['GRID_WIDTH']; ?>"></td>
+					</tr>
+					<tr>
+						<td style="width:200px">Keep Punctuation Marks:</td>
+						<td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['KEEP_PUNCTUATION_MARKS']; ?>" title="Current value"></td>
+						<td><input required type="text" name="keep_punctuation_marks" maxlength="10" size="15" title="Determine whether to keep punctuation marks or not" value="<?php echo $preference_array['KEEP_PUNCTUATION_MARKS']; ?>"></td>
 					</tr>
 				</table>
 

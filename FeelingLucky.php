@@ -1,20 +1,18 @@
 <?php
-ini_set('display_errors', 1);
-$nav_selected = "LIST";
-$left_buttons = "NO";
-$left_selected = "";
-require 'db_credentials.php';
-include("./nav.php");
-include("puzzlemaker.php");
+  ini_set('display_errors', 1);
+  $nav_selected = "LIST";
+  $left_buttons = "NO";
+  $left_selected = "";
+  require 'db_credentials.php';
+  include("./nav.php");
+  include("puzzlemaker.php");
 ?>
 <style media="screen">
   body {
     background: #fff;
     margin: 0;
-
     padding: 0;
   }
-
   .quiz {
     min-width: 70vw;
     margin: 20px auto;
@@ -25,7 +23,6 @@ include("puzzlemaker.php");
     padding: 3%;
     background: #fff;
     text-align: center;
-
   }
 
   .box {
@@ -61,96 +58,94 @@ include("puzzlemaker.php");
     color: #000;
   }
 </style>
+
 <link type="text/css" media="all" href="phrase_style.css" rel="stylesheet" />
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
-
+<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 
 <?php
+  $spaces = array();
+  //Use id given if game is played from home screen
+  if(isset($_GET['id'])){
+    $sql = "SELECT * FROM quote_table WHERE id =".$_GET['id'];
+  }else{
+    //Puzzle generation dependant on feeling_lucky_mode when no id is given
+    $modeType = "SELECT * FROM preferences WHERE name = 'FEELING_LUCKY_MODE'";
+    $result = mysqli_query($db, $modeType);
+    $mode = mysqli_fetch_array($result);
 
-$spaces = array();
-$sql = "SELECT * FROM quote_table
-      WHERE id = '-1'";
-$flagged = true;
-$touched = isset($_POST['ident']);
-$db->set_charset("utf8");
-
-if (!$touched) {
-  echo 'You need to select an entry. Go back and try again. <br>';
-?>
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
-<?php
-} else {
-  $id = $_POST['ident'];
-  $sql = "SELECT * FROM quote_table
-        WHERE id = '$id'";
-}
-
-if (!$result = $db->query($sql)) {
-  die('There was an error running query[' . $connection->error . ']');
-}
-
-$nocol = $norows =  16; //later i'll update this to take from preferences
-echo '<h2 id="title">Drop Quote</h2><br>';
-
-$uninpo = 1;
-$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
-$result2 = mysqli_query($db, $sqx);
-while ($row2 = mysqli_fetch_array($result2)) {
-  $nocol = $row2["value"];
-}
-
-
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $quoteline = $row["quote"];
+    if($mode['value'] == 'FIRST'){
+      $sql = "SELECT * FROM quote_table limit 1";
+    }elseif ($mode['value'] == 'LAST') {
+      $sql = "SELECT * FROM quote_table order by id DESC limit 1";
+    }else{
+      $length = "SELECT * FROM quote_table order by id DESC limit 1";
+      $result = mysqli_query($db,$length);
+      $lastID = mysqli_fetch_array($result);
+      $id = mt_rand(1,$lastID['id']);
+      $randomID = $id;
+      //echo($randomID);
+      $sql = "SELECT * FROM quote_table where id = ".$id;
+      //Check the data to determine if a quote was retrieved. Quote generation
+      //Defaults to the last quote when no quote was retrieved.
+      $check = mysqli_query($db, $sql);
+      $row = mysqli_fetch_array($check);
+      if($row['quote'] == ''){
+        $sql = "SELECT * FROM quote_table order by id DESC limit 1";
+        $randomID = $lastID['id'];
+      }
+    }
   }
-}
-DropM($quoteline, $nocol);
+
+  $flagged = true;
+  $db->set_charset("utf8");
+
+  if (!$result = $db->query($sql)) {
+    die('There was an error running query[' . $connection->error . ']');
+  }
+
+  $nocol = $norows =  16; //later i'll update this to take from preferences
+  echo '<h2 id="title">Drop Quote</h2><br>';
+
+  $default_column_count = "SELECT * FROM preferences WHERE name = 'DEFAULT_COLUMN_COUNT'";
+  $result2 = mysqli_query($db, $default_column_count);
+
+  while ($row2 = mysqli_fetch_array($result2)) {
+    $nocol = $row2["value"];
+  }
+
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $quoteline = $row["quote"];
+    }
+  }
+
+  if(isset($quoteline)){
+    DropM($quoteline, 20, $nocol);
+  }
 ?>
 <hr />
 
-
 <?php
-error_reporting(1);
+  error_reporting(1);
 
-if (!$touched) {
-  echo 'You need to select an entry. Go back and try again. <br>';
+  if (!$result = $db->query($sql)) {
+    die('There was an error running query[' . $connection->error . ']');
+  }
 
-
-?>
-
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
-
-<?php
-} else {
-
-
-  $id = $_POST['ident'];
-  $sql = "SELECT * FROM quote_table
-            WHERE id = '$id'";
-}
-
-if (!$result = $db->query($sql)) {
-  die('There was an error running query[' . $connection->error . ']');
-}
-
-$norows = 16;
+  $norows = 16;
 ?>
 
 <div id="convert-to-image">
-  <?php
 
+<?php
   echo '<h2 id="title">Float Quote</h2><br>';
-
-  $uninpo = 1;
-  $sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
-  $result2 = mysqli_query($db, $sqx);
+  $result2 = mysqli_query($db, $default_column_count);
 
   while ($row2 = mysqli_fetch_array($result2)) {
     $norows = $row2["value"];
   }
-
 
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -158,74 +153,56 @@ $norows = 16;
       //makes an array from the line
     }
   }
-
-  FloatM($quoteline, $norows);
-  ?>
+  if(isset($quoteline)){
+    FloatM($quoteline, 20, $norows);
+  }
+?>
 </div>
-
 
 <hr />
 
-
 <?php
-echo '<h2 id="title">Scramble Quote</h2><br>';
+  echo '<h2 id="title">Scramble Quote</h2><br>';
 
-$sql = "SELECT * FROM quote_table
-      WHERE id = '-1'";
+  $db->set_charset("utf8");
 
-$db->set_charset("utf8");
-
-$touched = isset($_POST['ident']);
-if (!$touched) {
-  echo 'You need to select an entry. Go back and try again. <br>';
-?>
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
-
-<?php
-} else {
-  $id = $_POST['ident'];
-  $sql = "SELECT * FROM quote_table
-        WHERE id = '$id'";
-}
-
-if (!$result = $db->query($sql)) {
-  die('There was an error running query[' . $connection->error . ']');
-}
-
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $quoteline = $row["quote"];
+  if (!$result = $db->query($sql)) {
+    die('There was an error running query[' . $connection->error . ']');
   }
-}
 
-$words  = ScrambleMaker($quoteline);
-$arrWord =  str_split_unicode($words);
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $quoteline = $row["quote"];
+    }
+  }
+  if(isset($quoteline)){
+    $words  = ScrambleMaker($quoteline);
+    $arrWord =  str_split_unicode($words);
 //    $arrWord =  str_split($words);
-
-if ($words == '') die;
+  }
+  if ($words == '') die;
 ?>
 
 <input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
 
 <div id="cardPile">
   <?php
-  foreach ($arrWord as $key => $val) {
-    if ($val == ' ') {
-      echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
-    } else {
+    foreach ($arrWord as $key => $val) {
+      if ($val == ' ') {
+        echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
+      } else {
   ?>
-      <div class="blank-box">
-        <div id="card<?php echo  $val; ?>" draggable="true" ondragstart="drag(event)">
-          <span><?php echo  $val; ?></span>
-        </div>
-      </div>
+  <div class="blank-box">
+    <div id="card<?php echo  $val; ?>" draggable="true" ondragstart="drag(event)">
+      <span><?php echo  $val; ?></span>
+    </div>
+  </div>
   <?php
     }
   }
   ?>
 
 </div>
-
 
 <div id="cardSlots">
   <?php
@@ -234,74 +211,48 @@ if ($words == '') die;
       echo '<div style="border: 1px solid #fff;"></div>';
     } else {
   ?>
-      <div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
+  <div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
   <?php
     }
   }
   ?>
 </div>
 <div>
-
   <button id="submit-game" onclick="checkStats()">Submit</button>
 </div>
-
-
 
 <hr />
 
 <?php $page_title = ' Quote Split'; ?>
 <?php
 
+  $db->set_charset("utf8");
 
-$sql = "SELECT * FROM quote_table
-      WHERE id = '-1'";
+  if (!$result = $db->query($sql)) {
+    die('There was an error running query[' . $connection->error . ']');
+    }
+  echo '<h2 id="title">Split Quote</h2><br>';
 
-$db->set_charset("utf8");
+  $default_chunk = "SELECT * FROM quote_table WHERE name ='DEFAULT_CHUNK_SIZE'";
+  $result2 = mysqli_query($db, $default_chunk);
 
-$touched = isset($_POST['ident']);
-if (!$touched) {
-  echo 'You need to select an entry. Go back and try again. <br>';
-
-?>
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
-<?php
-} else {
-  $id = $_POST['ident'];
-  $sql = "SELECT * FROM quote_table
-            WHERE id = '$id'";
-}
-
-if (!$result = $db->query($sql)) {
-  die('There was an error running query[' . $connection->error . ']');
-}
-$nochars = 3;
-echo '<h2 id="title">Split Quote</h2><br>';
-$uninpo = 1;
-$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
-$result2 = mysqli_query($db, $sqx);
-
-while ($row2 = mysqli_fetch_array($result2)) {
-  $nochars = $row2["Chunks"];
-}
-
-
-
-
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-
-    $quoteline = $row["quote"];
+  $nochars = 3;
+  while ($row2 = mysqli_fetch_array($result2)) {
+    $nochars = $row2["value"];
   }
-}
-SplitMaker($quoteline, $nochars);
 
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $quoteline = $row["quote"];
+    }
+  }
 
+  if(isset($quoteline)){
+    SplitMaker($quoteline, $nochars);
+  }
 ?>
-
 
 <hr />
-
 
 <script type="text/javascript" src="script_16.js"></script>
 
@@ -322,17 +273,10 @@ SplitMaker($quoteline, $nochars);
         $(this).addClass('butNotHere');
       }
 
-
-
     });
 
   });
 </script>
-
-
-
-
-
 
 <?php $page_title = ' Quote Slider'; ?>
 
@@ -361,56 +305,22 @@ SplitMaker($quoteline, $nochars);
 
 <br>
 <?php
+  include_once 'db_credentials.php';
 
-include_once 'db_credentials.php';
-
-
-$sql = "SELECT * FROM quote_table
-    WHERE id = '1'";
-
-$db->set_charset("utf8");
-
-$touched = isset($_POST['ident']);
-if (!$touched) {
-
-?>
-
-<?php
-} else {
-
-  $id = $_POST['ident'];
-  $sql = "SELECT * FROM quote_table
-    WHERE id = '$id'";
-}
-
-if (!$result = $db->query($sql)) {
-  die('There was an error running query[' . $connection->error . ']');
-}
-
-
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $quoteline = $row["quote"];
+  if (!$result = $db->query($sql)) {
+    die('There was an error running query[' . $connection->error . ']');
   }
-}
 
-
-
-?>
-<?php
-
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $quoteline = $row["quote"];
+    }
+  }
 //"అ,హిం,స,కు,మిం,చి,న,ఆ,యు,ధం,లే,దు,.]";
-include 'slider16/index.php';
-
-
+  include 'slider16/index.php';
 ?>
-
-
 
 <hr />
-
-
-
 
 <script src="phrase_scripts.js"></script>
 <!-- input form for phrase and filler values -->
@@ -419,9 +329,16 @@ include 'slider16/index.php';
   <label for="phrase" id="phraseLabel">Phrase</label>
 
 
-
   <?php
-  $query = "SELECT * FROM quote_table where id=" . $_POST['ident'];
+  if(isset($_GET['id'])){
+    $query = "SELECT * FROM quote_table WHERE id=".$_GET['id'];
+  }else if($mode['value'] == 'FIRST'){
+    $query = "SELECT * FROM quote_table WHERE id='1'";
+  }else if($mode['value'] == 'LAST'){
+    $query = "SELECT * FROM quote_table WHERE id=".$_lastID['id'];
+  }else{
+    $query = "SELECT * FROM quote_table WHERE id=".$randomID;
+  }
   $db->set_charset("utf8");
   $data = mysqli_query($db, $query);
   $row = $data->fetch_assoc();
@@ -440,7 +357,7 @@ include 'slider16/index.php';
   }
   //$arr = implode(', ', $arr);
   echo '<input type="text" class="inputBox" name="phrase" id="phrase" value="' . $phrase . '"
-        title="characters should be separated by commas, e.g.: a,bc, d" 
+        title="characters should be separated by commas, e.g.: a,bc, d"
         spellcheck="false" autocomplete="off" required>';
 
   ?>
@@ -455,8 +372,8 @@ include 'slider16/index.php';
 
 
   echo '<label for="fillers" id="fillersLabel">Fillers</label>
-        <textarea name="fillers" class="inputBox" id="fillers" 
-        title="characters should be separated by commas, e.g.: a,bc, d" 
+        <textarea name="fillers" class="inputBox" id="fillers"
+        title="characters should be separated by commas, e.g.: a,bc, d"
         spellcheck="false" autocomplete="off" required> ' . $filler . '</textarea>';
 
 
@@ -470,7 +387,7 @@ include 'slider16/index.php';
   <select name="height" id="height" autocomplete="off">
 
     <?php
-    $sql = "SELECT VALUE FROM pref WHERE  NAME = 'GRID_HEIGHT'";
+    $sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_HEIGHT'";
     $result = $db->query($sql);
     $row = $result->fetch_assoc();
     $height = $row["VALUE"];
@@ -492,7 +409,7 @@ include 'slider16/index.php';
   <select name="width" id="width" autocomplete="off">
 
     <?php
-    $sql = "SELECT VALUE FROM pref WHERE  NAME = 'GRID_WIDTH'";
+    $sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_WIDTH'";
     $result = $db->query($sql);
     $row = $result->fetch_assoc();
     $width = $row["VALUE"];
@@ -512,15 +429,12 @@ include 'slider16/index.php';
   <input type="submit" name="generate" id="generate" value="Generate" id="generate">
   <br><br>
 
-
-
   <!-- show grids on startup -->
   <script>
     gen(true);
   </script>
 
 </form>
-
 
 </body>
 
