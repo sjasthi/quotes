@@ -24,7 +24,11 @@ if ($_POST['no_of_quotes_to_display'] != "") {
 }
 
 if ($_POST['feeling_lucky_mode'] != "") {
-    update_preference('FEELING_LUCKY_MODE', $_POST['feeling_lucky_mode']);
+    $update = strtoupper($_POST[feeling_lucky_mode]);
+    if(!($update == 'FIRST' || $update == 'LAST')){
+      $update = 'RANDOM';
+    }
+    update_preference('FEELING_LUCKY_MODE', $update);
 }
 
 if ($_POST['feeling_lucky_type'] != "") {
@@ -37,6 +41,13 @@ if ($_POST['grid_height'] != "") {
 
 if ($_POST['grid_width'] != "") {
     update_preference('GRID_WIDTH', $_POST['grid_width']);
+}
+
+if ($_POST['keep_punctuation_marks'] != ""){
+  $update = strtoupper($_POST['keep_punctuation_marks']);
+  if($update == 'TRUE' || $update == 'FALSE'){
+    update_preference('KEEP_PUNCTUATION_MARKS', $update);
+  }
 }
 
 header('location: preferences.php?preferencesUpdated=Success');
