@@ -136,7 +136,7 @@ it is NOT required to have a action attribute on the form -->
                 'copy', 'excel', 'csv', 'pdf'
             ]
         });
-
+ 
         $('#quotesTable thead tr').clone(true).appendTo('#quotesTable thead');
         $('#quotesTable thead tr:eq(1) th').each(function(i) {
             var title = $(this).text();
