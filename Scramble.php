@@ -22,7 +22,7 @@ if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
 ?>
 
-	<button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 
 <?php
 
@@ -40,6 +40,10 @@ if ($result->num_rows > 0) {
 	while ($row = $result->fetch_assoc()) {
 		$quoteline = $row["quote"];
 	}
+}
+
+if (isset($quoteline) == false){
+	exit(0);
 }
 
 $quote = str_replace("\n", " ", $quoteline);

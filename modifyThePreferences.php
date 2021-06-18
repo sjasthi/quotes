@@ -38,5 +38,7 @@ if ($_POST['grid_height'] != "") {
 if ($_POST['grid_width'] != "") {
     update_preference('GRID_WIDTH', $_POST['grid_width']);
 }
-
+if ($_POST['keep_punctuation_marks'] != "") {
+    update_preference('KEEP_PUNCTUATION_MARKS', $_POST['keep_punctuation_marks']);
+}
 header('location: preferences.php?preferencesUpdated=Success');

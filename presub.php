@@ -16,7 +16,7 @@ $id=1;
     
      
             
-                 $sql = "UPDATE pref
+                 $sql = "UPDATE preferences
                   
 				  SET 
 				   value = '$colnum',

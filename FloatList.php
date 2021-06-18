@@ -31,7 +31,7 @@ $query = "SELECT * FROM quote_table";
     if (!$touched) {
         echo 'You need to select an entry. Go back and try again. <br>';
     ?>
-        <button style="margin-top:20px ;"><a class="btn btn-sm" href="list.php">Go back</a></button>
+        <button style="margin-top:20px ;"><a class="btn btn-sm" href="admin.php">Go back</a></button>
 
     <?php
 

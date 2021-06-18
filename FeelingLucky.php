@@ -72,19 +72,23 @@ $spaces = array();
 $sql = "SELECT * FROM quote_table
       WHERE id = '-1'";
 $flagged = true;
-$touched = isset($_POST['ident']);
+$touched = isset($_GET['id']);
 $db->set_charset("utf8");
 
 if (!$touched) {
   echo 'You need to select an entry. Go back and try again. <br>';
 ?>
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+  <button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 <?php
 } else {
-  $id = $_POST['ident'];
+  $id = $_GET['id'];
+  $type = $_GET['type'];
+
   $sql = "SELECT * FROM quote_table
         WHERE id = '$id'";
 }
+if ($type == "drop") {
+
 
 if (!$result = $db->query($sql)) {
   die('There was an error running query[' . $connection->error . ']');
@@ -94,19 +98,28 @@ $nocol = $norows =  16; //later i'll update this to take from preferences
 echo '<h2 id="title">Drop Quote</h2><br>';
 
 $uninpo = 1;
-$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
-$result2 = mysqli_query($db, $sqx);
-while ($row2 = mysqli_fetch_array($result2)) {
-  $nocol = $row2["value"];
-}
+$sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
 
 
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $quoteline = $row["quote"];
+  $result2 = mysqli_query($db, $sqx);
+  while ($row2 = mysqli_fetch_array($result2)) {
+    $nocol = $row2["value"];
+  }
+
+
+
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $quoteline = $row["quote"];
+    }
+    if (isset($quoteline) == false){
+      exit(0);
+    }
+    else {
+      DropM($quoteline, $nocol, $touched);	
+    }
   }
 }
-DropM($quoteline, $nocol);
 ?>
 <hr />
 
@@ -120,13 +133,13 @@ if (!$touched) {
 
 ?>
 
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+  <button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 
 <?php
 } else {
 
 
-  $id = $_POST['ident'];
+  $id = $_GET['id'];
   $sql = "SELECT * FROM quote_table
             WHERE id = '$id'";
 }
@@ -134,7 +147,7 @@ if (!$touched) {
 if (!$result = $db->query($sql)) {
   die('There was an error running query[' . $connection->error . ']');
 }
-
+if ($type == "float") {
 $norows = 16;
 ?>
 
@@ -144,22 +157,24 @@ $norows = 16;
   echo '<h2 id="title">Float Quote</h2><br>';
 
   $uninpo = 1;
-  $sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
-  $result2 = mysqli_query($db, $sqx);
-
-  while ($row2 = mysqli_fetch_array($result2)) {
-    $norows = $row2["value"];
-  }
+	$sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
 
 
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $quoteline = $row["quote"];
-      //makes an array from the line
+    $result2 = mysqli_query($db, $sqx);
+
+    while ($row2 = mysqli_fetch_array($result2)) {
+      $norows = $row2["value"];
     }
-  }
 
-  FloatM($quoteline, $norows);
+
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        $quoteline = $row["quote"];
+        //makes an array from the line
+      }
+    }
+    FloatM($quoteline, $norows, $touched);
+  }
   ?>
 </div>
 
@@ -168,6 +183,8 @@ $norows = 16;
 
 
 <?php
+if ($type == "scramble") {
+
 echo '<h2 id="title">Scramble Quote</h2><br>';
 
 $sql = "SELECT * FROM quote_table
@@ -175,15 +192,17 @@ $sql = "SELECT * FROM quote_table
 
 $db->set_charset("utf8");
 
-$touched = isset($_POST['ident']);
+
+$touched = isset($_GET['id']);
+
 if (!$touched) {
   echo 'You need to select an entry. Go back and try again. <br>';
 ?>
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+  <button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 
 <?php
 } else {
-  $id = $_POST['ident'];
+  $id = $_GET['id'];
   $sql = "SELECT * FROM quote_table
         WHERE id = '$id'";
 }
@@ -192,36 +211,38 @@ if (!$result = $db->query($sql)) {
   die('There was an error running query[' . $connection->error . ']');
 }
 
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $quoteline = $row["quote"];
-  }
-}
 
-$words  = ScrambleMaker($quoteline);
-$arrWord =  str_split_unicode($words);
-//    $arrWord =  str_split($words);
-
-if ($words == '') die;
-?>
-
-<input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
-
-<div id="cardPile">
-  <?php
-  foreach ($arrWord as $key => $val) {
-    if ($val == ' ') {
-      echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
-    } else {
-  ?>
-      <div class="blank-box">
-        <div id="card<?php echo  $val; ?>" draggable="true" ondragstart="drag(event)">
-          <span><?php echo  $val; ?></span>
-        </div>
-      </div>
-  <?php
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $quoteline = $row["quote"];
     }
   }
+
+  $words  = ScrambleMaker($quoteline);
+  $arrWord =  str_split_unicode($words);
+  //    $arrWord =  str_split($words);
+
+  if ($words == '') die;
+  ?>
+
+  <input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
+
+  <div id="cardPile">
+    <?php
+    foreach ($arrWord as $key => $val) {
+      if ($val == ' ') {
+        echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
+      } else {
+    ?>
+        <div class="blank-box">
+          <div id="card<?php echo  $val; ?>" draggable="true" ondragstart="drag(event)">
+            <span><?php echo  $val; ?></span>
+          </div>
+        </div>
+    <?php
+      }
+    }
+
   ?>
 
 </div>
@@ -249,53 +270,66 @@ if ($words == '') die;
 
 
 <hr />
-
-<?php $page_title = ' Quote Split'; ?>
 <?php
+}
+  ?>
 
 
-$sql = "SELECT * FROM quote_table
-      WHERE id = '-1'";
+<?php 
+if ($type == "splitter") {
 
-$db->set_charset("utf8");
+  $page_title = ' Quote Split'; 
 
-$touched = isset($_POST['ident']);
-if (!$touched) {
-  echo 'You need to select an entry. Go back and try again. <br>';
 
-?>
-  <button><a class="btn btn-sm" href="list.php">Go back</a></button>
-<?php
-} else {
-  $id = $_POST['ident'];
   $sql = "SELECT * FROM quote_table
-            WHERE id = '$id'";
-}
+        WHERE id = '-1'";
 
-if (!$result = $db->query($sql)) {
-  die('There was an error running query[' . $connection->error . ']');
-}
-$nochars = 3;
-echo '<h2 id="title">Split Quote</h2><br>';
-$uninpo = 1;
-$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
-$result2 = mysqli_query($db, $sqx);
+  $db->set_charset("utf8");
 
-while ($row2 = mysqli_fetch_array($result2)) {
-  $nochars = $row2["Chunks"];
-}
+  $touched = isset($_GET['id']);
 
+  if (!$touched) {
+    echo 'You need to select an entry. Go back and try again. <br>';
 
-
-
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-
-    $quoteline = $row["quote"];
+  ?>
+    <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+  <?php
+  } else {
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM quote_table
+              WHERE id = '$id'";
   }
-}
-SplitMaker($quoteline, $nochars);
 
+  if (!$result = $db->query($sql)) {
+    die('There was an error running query[' . $connection->error . ']');
+  }
+
+
+
+  $nochars = 3;
+  echo '<h2 id="title">Split Quote</h2><br>';
+  #$uninpo = 1;
+	$sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+   # $result2 = mysqli_query($db, $sqx);
+  if (!$result2 = $db->query($sqx)) {
+    die('There was an error running query[' . $connection->error . ']');
+  }
+
+  while ($row2 = mysqli_fetch_array($result2)) {
+    $nochars = $row2["value"];
+  }
+
+
+
+
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+
+      $quoteline = $row["quote"];
+    }
+  }
+  SplitMaker($quoteline, $nochars);
+}
 
 ?>
 
@@ -370,7 +404,7 @@ $sql = "SELECT * FROM quote_table
 
 $db->set_charset("utf8");
 
-$touched = isset($_POST['ident']);
+$touched = isset($_GET['id']);
 if (!$touched) {
 
 ?>
@@ -378,7 +412,7 @@ if (!$touched) {
 <?php
 } else {
 
-  $id = $_POST['ident'];
+  $id = $_GET['id'];
   $sql = "SELECT * FROM quote_table
     WHERE id = '$id'";
 }
@@ -421,7 +455,7 @@ include 'slider16/index.php';
 
 
   <?php
-  $query = "SELECT * FROM quote_table where id=" . $_POST['ident'];
+  $query = "SELECT * FROM quote_table where id=" . $_GET['id'];
   $db->set_charset("utf8");
   $data = mysqli_query($db, $query);
   $row = $data->fetch_assoc();
