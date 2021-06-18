@@ -26,7 +26,7 @@ $db->set_charset("utf8");
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
 ?>
-	<button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 <?php
 } else {
 	$id = $_POST['ident'];
@@ -42,7 +42,7 @@ $nocol = 16;
 echo '<h2 id="title">Drop Quote</h2><br>';
 
 $uninpo = 1;
-$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
+$sqx = "SELECT * FROM preferences WHERE id = '$uninpo'";
 $result2 = mysqli_query($db, $sqx);
 while ($row2 = mysqli_fetch_array($result2)) {
 	$nocol = $row2["value"];
@@ -55,5 +55,7 @@ if ($result->num_rows > 0) {
 	}
 }
 // echo $quoteline."<br>";
-DropM($quoteline, $nocol, $touched);
+if(isset($quoteline)){
+	DropM($quoteline, $nocol, $touched);
+}
 ?>

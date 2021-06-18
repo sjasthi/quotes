@@ -25,7 +25,7 @@ if (!$touched) {
 
 ?>
 
-	<button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 
 <?php
 } else {
@@ -50,7 +50,7 @@ $norows = 16;
 	echo '<h2 id="title">Float Quote</h2><br>';
 
 	$uninpo = 1;
-	$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
+	$sqx = "SELECT * FROM preferences WHERE id = '$uninpo'";
 	$result2 = mysqli_query($db, $sqx);
 	while ($row2 = mysqli_fetch_array($result2)) {
 		$norows = $row2["value"];
@@ -63,6 +63,8 @@ $norows = 16;
 		}
 	}
 	include("puzzlemaker.php");
-	FloatM($quoteline, $norows, $touched);
+	if(isset($quoteline)){
+		FloatM($quoteline, $norows, $touched);
+	}
 	?>
 </div>

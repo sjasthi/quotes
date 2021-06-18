@@ -1,8 +1,3 @@
-<?php
-$nav_selected = "ADMIN";
-$left_buttons = false;
-include './nav.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,6 +103,9 @@ include './nav.php';
   $nav_selected = "LIST";
   $left_buttons = "NO";
   $left_selected = "";
+  require 'db_credentials.php';
+  include("./nav.php");
+  include("./telugu_parser.php");
   ?>
   <br>
 
@@ -123,6 +121,10 @@ include './nav.php';
 
   <br>
   <?php
+
+  include_once 'db_credentials.php';
+
+
   $sql = "SELECT * FROM quote_table
     WHERE id = '1'";
 
