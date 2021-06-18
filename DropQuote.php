@@ -7,7 +7,7 @@ $left_selected = "";
 require 'db_credentials.php';
 include("./nav.php");
 include("puzzlemaker.php");
-//error_reporting(0);
+//error_reporting(0) tweak;
 ?>
 
 <script type="text/javascript" src="js/html2canvas.js"></script>
