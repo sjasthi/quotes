@@ -106,7 +106,7 @@
   //Retrieve the puzzle preferences to determine what type of puzzle to Generate
   //as well as how to generate it
   $puzzleTypeSQL = 'SELECT * FROM preferences WHERE name = "FEELING_LUCKY_TYPE"';
-  $pTypeResult = mysqli_query($db,$puzzleTypeSQL);
+  $pTypeResult = mysqli_query($db, $puzzleTypeSQL);
   $puzzleType = mysqli_fetch_array($pTypeResult);
 
   $columnCountSQL = "SELECT * FROM preferences WHERE name = 'DEFAULT_COLUMN_COUNT'";
@@ -224,8 +224,8 @@
             }
           });
         });
-      </script>
-      <?php
+        </script>
+        <?php
         $arr = parseToCodePoints($quoteline);
         $quote_arr = array();
         foreach ($arr as $ch) {
