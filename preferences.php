@@ -18,6 +18,7 @@ include("./nav.php");
 // FEELING_LUCKY_TYPE,
 // GRID_HEIGHT,
 // GRID_WIDTH
+// KEEP_PUNCTUATION_MARKS 
 // Retrieve those and show the current values. 
 
 
@@ -119,11 +120,20 @@ foreach ($preferences as $preference) {
 						<td><input required type="text" name="grid_height" maxlength="10" size="15" title="Enter the default grid height for Catch a Phrase" value="<?php echo $preference_array['GRID_HEIGHT']; ?>"></td>
 					</tr>
 					<tr>
+					
 						<td style="width:200px">Grid Width:</td>
 						<td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['GRID_WIDTH']; ?>" title="Current value"></td>
 						<td><input required type="text" name="grid_width" maxlength="10" size="15" title="Enter the default grid width for Catch a Phrase" value="<?php echo $preference_array['GRID_WIDTH']; ?>"></td>
 					</tr>
+					<tr>
+					
+					<td style="width:200px">Keep Punctuation Marks:</td>
+					<td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['KEEP_PUNCTUATION_MARKS']; ?>" title="Current value"></td>
+					<td><input required type="text"  maxlength="10" size="15" name="keep_punctuation_marks" title="Enter TRUE OR FALSE" value="<?php echo $preference_array['KEEP_PUNCTUATION_MARKS']; ?>"></td>
+				</tr>
 				</table>
+
+				
 
 				<br>
 				<button type="submit" name="submit" class="btn btn-primary btn-md align-items-center">UPDATE</button>

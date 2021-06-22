@@ -25,7 +25,7 @@ if (!$touched) {
 
 ?>
 
-	<button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 
 <?php
 } else {
@@ -49,18 +49,39 @@ $norows = 16;
 
 	echo '<h2 id="title">Float Quote</h2><br>';
 
-	$uninpo = 1;
-	$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
+	$punctuation=TRUE;
+	$sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+	$resultPunct = mysqli_query($db,$sqx);
+	
+	while ($rowPunct =mysqli_fetch_array($resultPunct))
+	{ 
+		$punctuation=$rowPunct["value"];	
+	}
+  
+  
+  $nochars=3;
+	  $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+	  $result2 = mysqli_query($db,$sqx);
+	  
+	  while ($row2 =mysqli_fetch_array($result2))
+	  { 
+		  $nochars=$row2["value"];
+	  }
 	$result2 = mysqli_query($db, $sqx);
 	while ($row2 = mysqli_fetch_array($result2)) {
 		$norows = $row2["value"];
 	}
+
+
 
 	if ($result->num_rows > 0) {
 		while ($row = $result->fetch_assoc()) {
 			$quoteline = $row["quote"];
 			//makes an array from the line
 		}
+	}
+	if (isset($quoteline) == false){
+		exit(0);
 	}
 	include("puzzlemaker.php");
 	FloatM($quoteline, $norows, $touched);
