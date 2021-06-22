@@ -74,8 +74,8 @@
   $db->set_charset("utf8");
 
   $mode;
-  if(isset($_GET['id'])){
-    $sql = "SELECT * FROM quote_table WHERE id =".$_GET['id'];
+  if(isset($_POST['id'])){
+    $sql = "SELECT * FROM quote_table WHERE id =".$_POST['id'];
   }else{
     //Puzzle generation dependant on feeling_lucky_mode when no id is given
     $modeType = "SELECT * FROM preferences WHERE name = 'FEELING_LUCKY_MODE'";
@@ -153,45 +153,74 @@
     case 'SCRAMBLE':
       echo '<h2 id="title">Scramble Quote</h2><br>';
 
-      $words  = ScrambleMaker($quoteline);
-      $arrWord =  str_split_unicode($words);
+        $quote = str_replace("\n", " ", $quoteline);
+        $words  = ScrambleMaker($quoteline);
+        // arrWord =  str_split_unicode($words);
+        // $arrWord =  str_split($words);
+        $arrQuote = parseToCodePoints($quote);
+        $arrWord = parseToCodePoints($words);
 
-      if ($words == '') die;
-      ?>
-      <input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
-      <div id="cardPile">
-      <?php
-          foreach ($arrWord as $key => $val) {
-            if ($val == ' ') {
-              echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
-            } else {
-      ?>
-        <div class="blank-box">
-          <div id="card<?php echo  $val; ?>" draggable="true" ondragstart="drag(event)">
-            <span><?php echo  $val; ?></span>
-          </div>
+        if ($words == '') die;
+        ?>
+        <script src="scramble.js"></script>
+
+        <input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
+        <script>
+        	function drag_scramble(ev) {
+        		ev.dataTransfer.setData("text", ev.target.id);
+        	}
+
+        	function drop_scramble(ev) {
+        		ev.preventDefault();
+        		var data = ev.dataTransfer.getData("text");
+        		ev.target.appendChild(document.getElementById(data));
+        	}
+
+        	function allowDrop_scramble(ev) {
+        		ev.preventDefault();
+        	}
+        </script>
+        <div id="cardPile">
+        	<?php
+        	$i = 0;
+        	foreach ($arrQuote as $key => $val) {
+        		$val = parseToCharacter($val);
+        		if ($val == ' ') {
+        			echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
+        		} else {
+        			$val2 = parseToCharacter($arrWord[$i]);
+        			$i++;
+        	?>
+        			<div class="blank-box">
+        				<div id="card<?php echo $key; ?>" draggable="true" ondragstart="drag_scramble(event)">
+        					<span><?php echo $val2; ?></span>
+        				</div>
+        			</div>
+        	<?php
+        		}
+        	}
+        	?>
+
         </div>
-        <?php
-          }
-        }
-        ?>
-      </div>
-      <div id="cardSlots">
-        <?php
-        foreach ($arrWord as $key => $val) {
-          if ($val == ' ') {
-            echo '<div style="border: 1px solid #fff;"></div>';
-          } else {
-        ?>
-        <div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <?php
-          }
-        }
-        ?>
-      </div>
-      <div>
-        <button id="submit-game" onclick="checkStats()">Submit</button>
-      </div>
+
+
+        <div id="cardSlots">
+        	<?php
+        	foreach ($arrQuote as $key => $val) {
+        		$val = parseToCharacter($val);
+        		if ($val == ' ') {
+        			echo '<div style="border: 1px solid #fff;"></div>';
+        		} else {
+        	?>
+        			<div ondrop="drop_scramble(event)" ondragover="allowDrop_scramble(event)"></div>
+
+        	<?php
+        		}
+        	}
+        	?>
+        </div>
+
+        <div> <button id="submit-game" onclick="checkStats()">Submit</button> </div>
       <?php
           break;
 
