@@ -168,8 +168,24 @@
 
     } $nochars=3;
 
-    $uninpo=1;
-    $sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
+    $punctuation=TRUE;
+    $sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+    $resultPunct = mysqli_query($db,$sqx);
+    
+    while ($rowPunct =mysqli_fetch_array($resultPunct))
+    { 
+      $punctuation=$rowPunct["value"];	
+    }
+  
+  
+  $nochars=3;
+    $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+    $result2 = mysqli_query($db,$sqx);
+    
+    while ($row2 =mysqli_fetch_array($result2))
+    { 
+      $nochars=$row2["value"];
+    }
     $result2 = mysqli_query($db,$sqx);
 
     while ($row2 =mysqli_fetch_array($result2))

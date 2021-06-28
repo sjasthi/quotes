@@ -57,18 +57,25 @@
     padding: 5px;
     color: #000;
   }
+  .backButton{
+    border-radius: 10px;
+    background-color: rgb(13,70,155);
+  }
 </style>
 
 <link type="text/css" media="all" href="phrase_style.css" rel="stylesheet" />
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
-<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
+<button class="backButton"><a class="btn btn-sm" href="index.php" style="color:white;">Return</a></button>
 
 <?php
-  $spaces = array();
-  //Use id given if game is played from home screen
-  if(isset($_GET['id'])){
-    $sql = "SELECT * FROM quote_table WHERE id =".$_GET['id'];
+
+  $flagged = true;
+  $db->set_charset("utf8");
+
+  $mode;
+  if(isset($_POST['id'])){
+    $sql = "SELECT * FROM quote_table WHERE id =".$_POST['id'];
   }else{
     //Puzzle generation dependant on feeling_lucky_mode when no id is given
     $modeType = "SELECT * FROM preferences WHERE name = 'FEELING_LUCKY_MODE'";
@@ -83,10 +90,8 @@
       $length = "SELECT * FROM quote_table order by id DESC limit 1";
       $result = mysqli_query($db,$length);
       $lastID = mysqli_fetch_array($result);
-      $id = mt_rand(1,$lastID['id']);
-      $randomID = $id;
-      //echo($randomID);
-      $sql = "SELECT * FROM quote_table where id = ".$id;
+      $randomID = mt_rand(1,$lastID['id']);
+      $sql = "SELECT * FROM quote_table where id = ".$randomID;
       //Check the data to determine if a quote was retrieved. Quote generation
       //Defaults to the last quote when no quote was retrieved.
       $check = mysqli_query($db, $sql);
@@ -98,344 +103,328 @@
     }
   }
 
-  $flagged = true;
-  $db->set_charset("utf8");
+  //Retrieve the puzzle preferences to determine what type of puzzle to Generate
+  //as well as how to generate it
+  $puzzleTypeSQL = 'SELECT * FROM preferences WHERE name = "FEELING_LUCKY_TYPE"';
+  $pTypeResult = mysqli_query($db, $puzzleTypeSQL);
+  $puzzleType = mysqli_fetch_array($pTypeResult);
+
+  $columnCountSQL = "SELECT * FROM preferences WHERE name = 'DEFAULT_COLUMN_COUNT'";
+  $cCountResult = mysqli_query($db, $columnCountSQL);
+  $columnCount = mysqli_fetch_array($cCountResult) ;
+
+  $chunkSizeSQL = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+  $cSizeResult = mysqli_query($db, $chunkSizeSQL);
+  $chunkSize = mysqli_fetch_array($cSizeResult);
+
+  $punctuationSQL = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+  $punctResult = mysqli_query($db, $punctuationSQL);
+  $punctuation = mysqli_fetch_array($punctResult);
 
   if (!$result = $db->query($sql)) {
     die('There was an error running query[' . $connection->error . ']');
   }
 
-  $nocol = $norows =  16; //later i'll update this to take from preferences
-  echo '<h2 id="title">Drop Quote</h2><br>';
-
-  $default_column_count = "SELECT * FROM preferences WHERE name = 'DEFAULT_COLUMN_COUNT'";
-  $result2 = mysqli_query($db, $default_column_count);
-
-  while ($row2 = mysqli_fetch_array($result2)) {
-    $nocol = $row2["value"];
-  }
-
   if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+      $row = $result->fetch_assoc();
       $quoteline = $row["quote"];
-    }
   }
 
   if(isset($quoteline)){
-    DropM($quoteline, 20, $nocol);
-  }
-?>
-<hr />
-
-<?php
-  error_reporting(1);
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-
-  $norows = 16;
-?>
-
-<div id="convert-to-image">
-
-<?php
-  echo '<h2 id="title">Float Quote</h2><br>';
-  $result2 = mysqli_query($db, $default_column_count);
-
-  while ($row2 = mysqli_fetch_array($result2)) {
-    $norows = $row2["value"];
-  }
-
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $quoteline = $row["quote"];
-      //makes an array from the line
-    }
-  }
-  if(isset($quoteline)){
-    FloatM($quoteline, 20, $norows);
-  }
-?>
-</div>
-
-<hr />
-
-<?php
-  echo '<h2 id="title">Scramble Quote</h2><br>';
-
-  $db->set_charset("utf8");
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $quoteline = $row["quote"];
-    }
-  }
-  if(isset($quoteline)){
-    $words  = ScrambleMaker($quoteline);
-    $arrWord =  str_split_unicode($words);
-//    $arrWord =  str_split($words);
-  }
-  if ($words == '') die;
-?>
-
-<input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
-
-<div id="cardPile">
-  <?php
-    foreach ($arrWord as $key => $val) {
-      if ($val == ' ') {
-        echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
-      } else {
-  ?>
-  <div class="blank-box">
-    <div id="card<?php echo  $val; ?>" draggable="true" ondragstart="drag(event)">
-      <span><?php echo  $val; ?></span>
-    </div>
-  </div>
-  <?php
-    }
-  }
-  ?>
-
-</div>
-
-<div id="cardSlots">
-  <?php
-  foreach ($arrWord as $key => $val) {
-    if ($val == ' ') {
-      echo '<div style="border: 1px solid #fff;"></div>';
-    } else {
-  ?>
-  <div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-  <?php
-    }
-  }
-  ?>
-</div>
-<div>
-  <button id="submit-game" onclick="checkStats()">Submit</button>
-</div>
-
-<hr />
-
-<?php $page_title = ' Quote Split'; ?>
-<?php
-
-  $db->set_charset("utf8");
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-    }
-  echo '<h2 id="title">Split Quote</h2><br>';
-
-  $default_chunk = "SELECT * FROM quote_table WHERE name ='DEFAULT_CHUNK_SIZE'";
-  $result2 = mysqli_query($db, $default_chunk);
-
-  $nochars = 3;
-  while ($row2 = mysqli_fetch_array($result2)) {
-    $nochars = $row2["value"];
-  }
-
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $quoteline = $row["quote"];
+    if($punctuation['value'] == 'FALSE'){
+      $regex = '/[^a-z\s]/i';
+      $quoteline = preg_replace($regex, '', $quoteline);
     }
   }
 
-  if(isset($quoteline)){
-    SplitMaker($quoteline, $nochars);
-  }
-?>
+  switch($puzzleType['value']){
 
-<hr />
+    case 'DROPQUOTE':
+      echo '<h2 id="title">Drop Quote</h2><br>';
+      DropMaker($quoteline, $columnCount['value']);
+        break;
 
-<script type="text/javascript" src="script_16.js"></script>
+    case 'FLOATQUOTE':
+      echo '<h2 id="title">Float Quote</h2><br>';
+      error_reporting(1);
+      FloatMaker($quoteline, $columnCount['value']);
+        break;
 
-<link rel="stylesheet" href="stylesjs.css">
+    case 'SCRAMBLE':
+      echo '<h2 id="title">Scramble Quote</h2><br>';
 
-<script type="text/javascript">
-  $(document).ready(function() {
+        $quote = str_replace("\n", " ", $quoteline);
+        $words  = ScrambleMaker($quoteline);
+        // arrWord =  str_split_unicode($words);
+        // $arrWord =  str_split($words);
+        $arrQuote = parseToCodePoints($quote);
+        $arrWord = parseToCodePoints($words);
 
-    $(".box").draggable({
-      obstacle: ".butNotHere",
-      preventCollision: true,
-      containment: ".quiz",
-      grid: [10, 10],
-      start: function(event, ui) {
-        $(this).removeClass('butNotHere');
-      },
-      stop: function(event, ui) {
-        $(this).addClass('butNotHere');
-      }
+        if ($words == '') die;
+        ?>
+        <script src="scramble.js"></script>
 
-    });
+        <input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
+        <script>
+        	function drag_scramble(ev) {
+        		ev.dataTransfer.setData("text", ev.target.id);
+        	}
 
-  });
-</script>
+        	function drop_scramble(ev) {
+        		ev.preventDefault();
+        		var data = ev.dataTransfer.getData("text");
+        		ev.target.appendChild(document.getElementById(data));
+        	}
 
-<?php $page_title = ' Quote Slider'; ?>
+        	function allowDrop_scramble(ev) {
+        		ev.preventDefault();
+        	}
+        </script>
+        <div id="cardPile">
+        	<?php
+        	$i = 0;
+        	foreach ($arrQuote as $key => $val) {
+        		$val = parseToCharacter($val);
+        		if ($val == ' ') {
+        			echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
+        		} else {
+        			$val2 = parseToCharacter($arrWord[$i]);
+        			$i++;
+        	?>
+        			<div class="blank-box">
+        				<div id="card<?php echo $key; ?>" draggable="true" ondragstart="drag_scramble(event)">
+        					<span><?php echo $val2; ?></span>
+        				</div>
+        			</div>
+        	<?php
+        		}
+        	}
+        	?>
 
-<br>
-
-<nav>
-
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link" href="slider.php?custom">My Quote</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="slider.php?num">Number Puzzle</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="slider.php?slider_quote">slider quote</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="slider.php?quote">quote puzzle</a>
-      </li>
-    </ul>
-
-  </div>
-</nav>
-
-<br>
-<?php
-  include_once 'db_credentials.php';
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $quoteline = $row["quote"];
-    }
-  }
-//"అ,హిం,స,కు,మిం,చి,న,ఆ,యు,ధం,లే,దు,.]";
-  include 'slider16/index.php';
-?>
-
-<hr />
-
-<script src="phrase_scripts.js"></script>
-<!-- input form for phrase and filler values -->
-<form action="javascript:" method="get" onsubmit="event.preventDefault(); gen(false)">
-  <!-- phrase values, each character should be separated by commas -->
-  <label for="phrase" id="phraseLabel">Phrase</label>
+        </div>
 
 
-  <?php
-  if(isset($_GET['id'])){
-    $query = "SELECT * FROM quote_table WHERE id=".$_GET['id'];
-  }else if($mode['value'] == 'FIRST'){
-    $query = "SELECT * FROM quote_table WHERE id='1'";
-  }else if($mode['value'] == 'LAST'){
-    $query = "SELECT * FROM quote_table WHERE id=".$_lastID['id'];
-  }else{
-    $query = "SELECT * FROM quote_table WHERE id=".$randomID;
-  }
-  $db->set_charset("utf8");
-  $data = mysqli_query($db, $query);
-  $row = $data->fetch_assoc();
-  $quote = $row["quote"];
-  $arr = str_split_unicode($row["quote"]);
-  $phrase = "";
-  foreach ($arr as $ch) {
-    if ($ch == " ") {
-      continue;
-    }
-    if ($phrase == "") {
-      $phrase = $ch;
-    } else {
-      $phrase = $phrase . "," . $ch;
-    }
-  }
-  //$arr = implode(', ', $arr);
-  echo '<input type="text" class="inputBox" name="phrase" id="phrase" value="' . $phrase . '"
-        title="characters should be separated by commas, e.g.: a,bc, d"
-        spellcheck="false" autocomplete="off" required>';
+        <div id="cardSlots">
+        	<?php
+        	foreach ($arrQuote as $key => $val) {
+        		$val = parseToCharacter($val);
+        		if ($val == ' ') {
+        			echo '<div style="border: 1px solid #fff;"></div>';
+        		} else {
+        	?>
+        			<div ondrop="drop_scramble(event)" ondragover="allowDrop_scramble(event)"></div>
 
-  ?>
+        	<?php
+        		}
+        	}
+        	?>
+        </div>
 
-  <br><br>
+        <div> <button id="submit-game" onclick="checkStats()">Submit</button> </div>
+      <?php
+          break;
 
-  <?php
-  $myfile = fopen("fillers.txt", "r") or die("Unable to open file!");
-  $filler = fread($myfile, filesize("fillers.txt"));
-  fclose($myfile);
+      case 'SPLIT':
+        echo '<h2 id="title">Split Quote</h2><br>';
+        SplitMaker($quoteline, $chunkSize['value']);
+          break;
 
+      case 'SLIDER16':
+        echo'<h2 id="title">Slider 16</h2><br ';
+        ?>
+        <link rel="stylesheet" href="css/cjui.css">
+        <script src="jquery/jquery.js"></script>
+        <script src="jquery/jui.js"></script>
+        <link rel="stylesheet" href="stylesjs.css">
+        <script type="text/javascript" src="script_16.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+          $(".box").draggable({
+            obstacle: ".butNotHere",
+            preventCollision: true,
+            containment: ".quiz",
+            grid: [10, 10],
+            start: function(event, ui) {
+              $(this).removeClass('butNotHere');
+            },
+            stop: function(event, ui) {
+              $(this).addClass('butNotHere');
+            }
+          });
+        });
+        </script>
+        <?php
+        $arr = parseToCodePoints($quoteline);
+        $quote_arr = array();
+        foreach ($arr as $ch) {
+          $ch = parseToCharacter($ch);
+          if ($ch == " ") {
+            continue;
+          }
+          array_push($quote_arr, $ch);
+        }
+        include 'slider16/index.php';
+          break;
 
+        case 'DROPFLOAT':
+          error_reporting(0);
+          echo'<h2>Drop Float</h2>';
 
-  echo '<label for="fillers" id="fillersLabel">Fillers</label>
-        <textarea name="fillers" class="inputBox" id="fillers"
-        title="characters should be separated by commas, e.g.: a,bc, d"
-        spellcheck="false" autocomplete="off" required> ' . $filler . '</textarea>';
+          if($mode != null){
+            $quoteline2 = '';
+            $invalid = true;
 
+            if($mode['value'] == "FIRST"){
+              $index = 2;
+              while($invalid){
+                $sql = "SELECT * FROM quote_table WHERE id = ".$index;
+                $result = mysqli_query($db, $sql);
+                $candidate = mysqli_fetch_array($result);
+                $quoteline2 = $candidate['quote'];
+                if($quoteline2 != ''){
+                  $invalid = false;
+                }
+                $index++;
+              }
+            } else{
+                $length = "SELECT * FROM quote_table order by id DESC limit 1";
+                $result = mysqli_query($db,$length);
+                $lastID = mysqli_fetch_array($result);
 
-  ?>
+                if($mode['value'] == "LAST"){
+                  $index = $lastID['id'] - 1;
+                  while($invalid){
+                    $sql = "SELECT * FROM quote_table WHERE id = ".$index;
+                    $result = mysqli_query($db, $sql);
+                    $candidate = mysqli_fetch_array($result);
+                    $quoteline2 = $candidate['quote'];
+                    if($quoteline2 != ''){
+                      $invalid = false;
+                    }
+                    $index--;
+                  }
+                } else if($mode['value'] == "RANDOM"){
+                  $index = mt_rand(1,$lastID['id']);
+                  while($invalid){
+                    $sql = "SELECT * FROM quote_table WHERE id = ".$index;
+                    $result = mysqli_query($db, $sql);
+                    $candidate = mysqli_fetch_array($result);
+                    $quoteline2 = $candidate['quote'];
+                    if($quoteline2 != ''){
+                      $invalid = false;
+                    }
+                    $index = mt_rand(1,$lastID['id']);
+                  }
+                }
+            }
 
-  <br><br>
+            if($punctuation['value'] == 'FALSE'){
+              $regex = '/[^a-z\s]/i';
+              $quoteline2 = preg_replace($regex, '', $quoteline2);
+            }
 
+            FloatDropMaker($quoteline, $quoteline2, $columnCount['value']);
+          }
+          break;
 
-  <!-- Height dropdown selector, default value is 10 -->
-  <label for="height">Grid Height:</label>
-  <select name="height" id="height" autocomplete="off">
+        case 'CATCH':
+          echo'<h2>Catch a Phrase</h2>';
+          ?>
+          <script src="phrase_scripts.js"></script>
+          <!-- input form for phrase and filler values -->
+          <form action="javascript:" method="get" onsubmit="event.preventDefault(); gen(false)">
+            <!-- phrase values, each character should be separated by commas -->
+            <label for="phrase" id="phraseLabel">Phrase</label>
 
-    <?php
-    $sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_HEIGHT'";
-    $result = $db->query($sql);
-    $row = $result->fetch_assoc();
-    $height = $row["VALUE"];
-    $arr = array("10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25");
+            <?php
+            $arr = str_split_unicode($quoteline);
+            $phrase = "";
+            foreach ($arr as $ch) {
+              if ($ch == " ") {
+                continue;
+              }
+              if ($phrase == "") {
+                $phrase = $ch;
+              } else {
+                $phrase = $phrase . "," . $ch;
+              }
+            }
+            echo '<input type="text" class="inputBox" name="phrase" id="phrase" value="' . $phrase . '"
+                  title="characters should be separated by commas, e.g.: a,bc, d"
+                  spellcheck="false" autocomplete="off" required>';
+            ?>
+            <br><br>
 
-    foreach ($arr as $val) {
-      if ($val == $height) {
-        echo '<option value="' . $val . '" selected>' . $val . '</option>';
-      } else {
-        echo '<option value="' . $val . '">' . $val . '</option>';
-      }
-    }
-    ?>
-  </select>
-  <br><br>
+            <?php
+            $myfile = fopen("fillers.txt", "r") or die("Unable to open file!");
+            $filler = fread($myfile, filesize("fillers.txt"));
+            fclose($myfile);
 
-  <!-- Width dropdown selector, default value is 10 -->
-  <label for="width">Grid Width:</label>
-  <select name="width" id="width" autocomplete="off">
+            echo '<label for="fillers" id="fillersLabel">Fillers</label>
+                  <textarea name="fillers" class="inputBox" id="fillers"
+                  title="characters should be separated by commas, e.g.: a,bc, d"
+                  spellcheck="false" autocomplete="off" required> ' . $filler . '</textarea>';
+            ?>
+            <br><br>
 
-    <?php
-    $sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_WIDTH'";
-    $result = $db->query($sql);
-    $row = $result->fetch_assoc();
-    $width = $row["VALUE"];
-    $arr = array("10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25");
-    foreach ($arr as $val) {
-      if ($val == $width) {
-        echo '<option value="' . $val . '" selected>' . $val . '</option>';
-      } else {
-        echo '<option value="' . $val . '">' . $val . '</option>';
-      }
-    }
-    ?>
+            <!-- Height dropdown selector, default value is 10 -->
+            <label for="height">Grid Height:</label>
+            <select name="height" id="height" autocomplete="off">
 
-  </select>
-  <br><br>
+              <?php
+              $sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_HEIGHT'";
+              $result = $db->query($sql);
+              $row = $result->fetch_assoc();
+              $height = $row["VALUE"];
+              $arr = array("10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25");
 
-  <input type="submit" name="generate" id="generate" value="Generate" id="generate">
-  <br><br>
+              foreach ($arr as $val) {
+                if ($val == $height) {
+                  echo '<option value="' . $val . '" selected>' . $val . '</option>';
+                } else {
+                  echo '<option value="' . $val . '">' . $val . '</option>';
+                }
+              }
+              ?>
+            </select>
+            <br><br>
 
-  <!-- show grids on startup -->
-  <script>
-    gen(true);
-  </script>
+            <!-- Width dropdown selector, default value is 10 -->
+            <label for="width">Grid Width:</label>
+            <select name="width" id="width" autocomplete="off">
 
-</form>
+              <?php
+              $sql = "SELECT VALUE FROM preferences WHERE  NAME = 'GRID_WIDTH'";
+              $result = $db->query($sql);
+              $row = $result->fetch_assoc();
+              $width = $row["VALUE"];
+              $arr = array("10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25");
+              foreach ($arr as $val) {
+                if ($val == $width) {
+                  echo '<option value="' . $val . '" selected>' . $val . '</option>';
+                } else {
+                  echo '<option value="' . $val . '">' . $val . '</option>';
+                }
+              }
+              ?>
 
-</body>
+            </select>
+            <br><br>
+            <input type="submit" name="generate" id="generate" value="Generate" id="generate">
+            <br><br>
 
+            <!-- show grids on startup -->
+            <script>
+              gen(true);
+            </script>
+          </form>
+            <?php
+          break;
+        }
+        ?>
+        <br><br>
+      </div>
+
+    </body>
 </html>

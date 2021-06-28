@@ -82,31 +82,31 @@ include("nav.php");
             foreach ($quotes as $quote) {
               ?>
               <tr>
-                <td class="filled"><a href="FeelingLucky.php?type=drop_quote&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=drop_quote&id=<?php echo $quote['id']; ?>">
                   <img src="./images/drop_quote.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="FeelingLucky.php?type=float_quote&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=float_quote&id=<?php echo $quote['id']; ?>">
                   <img src="./images/float_quote.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="FeelingLucky.php?type=drop_float&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=drop_float&id=<?php echo $quote['id']; ?>">
                 <img src="./images/drop_float.png" height="50" width="50">
                 <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="FeelingLucky.php?type=scrambler&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=scrambler&id=<?php echo $quote['id']; ?>">
                 <img src="./images/scrambler.png" height="50" width="50">
                 <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a></td>
 
-                <td class="filled"><a href="FeelingLucky.php?type=splitter&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=splitter&id=<?php echo $quote['id']; ?>">
                   <img src="./images/splitter.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="FeelingLucky.php?type=slider16&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=slider16&id=<?php echo $quote['id']; ?>">
                   <img src="./images/slider16.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>

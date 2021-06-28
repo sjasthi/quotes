@@ -26,7 +26,7 @@ include("./nav.php");
   if (!$touched) {
     echo "You need to select an entry.";
   ?>
-    <button><a class="btn btn-sm" href="list.php">Go back</a></button>
+    <button><a class="btn btn-sm" href="admin.php">Go back</a></button>
   <?php
 
 

@@ -24,7 +24,7 @@ if ($_POST['no_of_quotes_to_display'] != "") {
 }
 
 if ($_POST['feeling_lucky_mode'] != "") {
-    $update = strtoupper($_POST[feeling_lucky_mode]);
+    $update = strtoupper($_POST['feeling_lucky_mode']);
     if(!($update == 'FIRST' || $update == 'LAST')){
       $update = 'RANDOM';
     }
@@ -32,7 +32,12 @@ if ($_POST['feeling_lucky_mode'] != "") {
 }
 
 if ($_POST['feeling_lucky_type'] != "") {
-    update_preference('FEELING_LUCKY_TYPE', $_POST['feeling_lucky_type']);
+  $update = strtoupper($_POST['feeling_lucky_type']);
+  if(!($update == "DROPQUOTE" || $update == "FLOATQUOTE" || $update == 'DROPFLOAT' || $update == 'SCRAMBLE'
+    || $update == 'SLIDER16' || $update == 'SPLIT' || $update == 'CATCH')){
+      $update = 'DROPQUOTE';
+    }
+  update_preference('FEELING_LUCKY_TYPE', $update);
 }
 
 if ($_POST['grid_height'] != "") {

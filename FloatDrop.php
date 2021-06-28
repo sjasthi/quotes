@@ -28,7 +28,7 @@ if (!$touched || !$touched2) {
 	echo 'You need to select an entry. Go back and try again. <br>';
 
 ?>
-	<button><a class="btn btn-sm" href="list.php">Go back</a></button>
+	<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 <?php
 } else {
 	$id = $_POST['first'];
@@ -47,10 +47,38 @@ if (!$result = $db->query($sql)) {
 echo '<h2 id="title">Double Puzzle</h2><br>';
 $norows = 16;
 $uninpo = 1;
-$sqx = "SELECT * FROM pref WHERE id = '$uninpo'";
+
+$punctuation=TRUE;
+  $sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+  $resultPunct = mysqli_query($db,$sqx);
+  
+  while ($rowPunct =mysqli_fetch_array($resultPunct))
+  { 
+  	$punctuation=$rowPunct["value"];	
+  }
+
+
+$nochars=3;
+	$sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+	$result2 = mysqli_query($db,$sqx);
+	
+	while ($row2 =mysqli_fetch_array($result2))
+	{ 
+		$nochars=$row2["value"];
+	}
 $result2 = mysqli_query($db, $sqx);
 while ($row2 = mysqli_fetch_array($result2)) {
 	$norows = $row2["value"];
+}
+
+
+if ($result->num_rows > 0) {
+	while ($row = $result->fetch_assoc()) {
+		$quoteline = $row["quote"];
+	}
+}
+if (isset($quoteline) == false){
+	exit(0);
 }
 
 if ($result->num_rows > 0) {
