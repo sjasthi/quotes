@@ -281,8 +281,14 @@
 		}
 
 		function viewSolution() {
-			document.getElementById("solution").style.display = "table";
-			document.getElementById("solution2").style.display = "table";
+			var displayMode = document.getElementById("solution").style.display;
+
+			if(displayMode == "none"){
+				document.getElementById("solution").style.display = "table";
+			}else if (displayMode == "table"){
+				document.getElementById("solution").style.display = "none";
+			}
+
 		}
 
 		function clicked(index, col, box_number, isFloatDrop) {
@@ -654,12 +660,7 @@
 			<br> ";
 			}
 
-			function DropM($quote, $col, $touched)
-			{
-				if (!$touched) {
-					return;
-				}
-
+			function DropMaker($quote, $col) {
 				$quote = str_replace("\n", " ", $quote);
 				$t = parseToCodePoints($quote);
 				$noletters = Count($t);
@@ -697,7 +698,6 @@
 					shuffle($wheeloffortune[$r]);
 				} ?>
 
-
 				<br>
 				<input type="hidden" id="original_quote" value="<?php echo $quote; ?>">
 				<button id="submitSolution" onclick="checkSolution()">Submit</button>
@@ -730,7 +730,6 @@
 												echo "<tr id='$y'>";
 											}
 
-
 											if ($box_number > 15) {
 												$box_number = 1;
 											}
@@ -750,10 +749,6 @@
 											$i++;
 										}
 
-
-										?>
-
-										<?php
 										$i = 0;
 
 										$box_number = 1;
@@ -780,7 +775,7 @@
 											}
 											$i++;
 										}
-										echo "<tbody> 
+										echo "<tbody>
 										</table>
 										</body> <br> <h1>";
 										echo "</h1>";
@@ -871,8 +866,8 @@
 												?>
 												<br>
 
-												<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
-												<table id="solution" border="1" style="width:100%">
+												<button id="btnSolution" onclick="viewSolution()">Show Solution</button><br>
+												<table id="solution" border="1" style="width:100%; display: none">
 											</div>
 										</div>
 							</div>
@@ -902,11 +897,7 @@
 					}
 				}
 
-				function FloatM($quote, $col, $touched)
-				{
-					if (!$touched) {
-						return;
-					}
+				function FloatMaker($quote, $col) {
 
 					$quote = str_replace("\n", " ", $quote);
 					$t = parseToCodePoints($quote);
@@ -920,7 +911,6 @@
 					}
 					$nohope = $noletters;
 					$noletters = $noletters + $fodder;
-
 
 					$sample = array();
 					$wheeloffortune = array_fill(0, $col, $sample);
@@ -1029,7 +1019,7 @@
 												$i++;
 											}
 
-											echo "</tbody> 
+											echo "</tbody>
 									</table>
 									</body> <br> <h1>";
 											echo "</h1>";
@@ -1121,7 +1111,7 @@
 													<br>
 
 													<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
-													<table id="solution" border="1" style="width:100%">
+													<table id="solution" border="1" style="width:100%; display:none">
 												</div>
 											</div>
 								</div>
@@ -1151,13 +1141,7 @@
 					}
 				}
 
-				function FloatDrop($quote, $quote2, $col, $touched)
-				{
-
-					if (!$touched) {
-
-						return;
-					}
+				function FloatDropMaker($quote, $quote2, $col)	{
 
 					$quote = str_replace("\n", " ", $quote);
 					$quote2 = str_replace("\n", " ", $quote2);
@@ -1371,7 +1355,7 @@
 
 												$i++;
 											}
-											echo "<tbody> 
+											echo "<tbody>
 								</table>
 								</body> <br> <h1>";
 											echo "</h1>";
@@ -1464,7 +1448,7 @@
 													?>
 													<br>
 													<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
-													<table id="solution" border="1" style="border-collapse:collapse; width:100%">
+													<table id="solution" border="1" style="width:100%; display:none">
 												</div>
 											</div>
 								</div>
