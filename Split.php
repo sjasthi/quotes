@@ -1,10 +1,10 @@
 <?php $page_title = ' Quote Split'; ?>
-<?php 
+<?php
   $nav_selected = "LIST";
   $left_buttons = "NO";
   $left_selected = "";
-  require 'db_credentials.php'; 
-    include("./nav.php");
+  require 'db_credentials.php';
+  include("./nav.php");
 	//error_reporting(0);
 	include ("puzzlemaker.php");
 ?>
@@ -74,5 +74,17 @@ $nochars=3;
 }
 ?>
 
+  if($result3->num_rows > 0){
+    $row = mysqli_fetch_array($result3);
+  }
 
+  if(isset($quoteline)){
+    //Check whether punctuations marks should be kept or discarded
+    if($row['value'] == "FALSE"){
+      $regex = '/[^a-z\s]/i';
+      $quoteline = preg_replace($regex, '', $quoteline);
+    };
 
+    SplitMaker($quoteline,$nochars);
+  }
+?>

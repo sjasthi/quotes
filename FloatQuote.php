@@ -84,6 +84,8 @@ $norows = 16;
 		exit(0);
 	}
 	include("puzzlemaker.php");
-	FloatM($quoteline, $norows, $touched);
+	if(isset($quoteline)){
+		FloatM($quoteline, $norows, $touched);
+	}
 	?>
 </div>

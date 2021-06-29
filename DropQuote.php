@@ -66,6 +66,12 @@ if (!(isset($_POST['ident']))) {
 	$result2 = mysqli_query($db, $punctuationSQL);
 	$punctuation = mysqli_fetch_array($result2);
 
+$uninpo = 1;
+$sqx = "SELECT * FROM preferences WHERE id = '$uninpo'";
+$result2 = mysqli_query($db, $sqx);
+while ($row2 = mysqli_fetch_array($result2)) {
+	$nocol = $row2["value"];
+}
 	if(isset($quoteline)){
 
 		if($punctuation['value'] == 'FALSE'){
