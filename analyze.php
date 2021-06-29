@@ -1,8 +1,8 @@
 ﻿<?php
-require("indic-wp.php");
+require("word_processor.php");
 
 
-if(count($_POST["to_parse"]) > 0) {
+if(count($_POST["to_parse"] > 0)) {
 	analyze_essay($_POST["to_parse"], $_POST["to_language"]);
 }
 

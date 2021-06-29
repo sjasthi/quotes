@@ -555,6 +555,8 @@
 <body>
 
 	<?php
+
+	include("telugu_parser.php");
 	include("usefultool.php");
 
 	function ScrambleMaker($quote)
@@ -630,7 +632,7 @@
 
 
 	?>
-		<button id="captureTable" onclick="takeshot()">Generate</button>
+		<button id="captureTable" onclick="takeshot">Generate</button>
 		<div id="output"></div>
 		<script type="text/javascript" src="js/html2canvas.js"></script>
 
