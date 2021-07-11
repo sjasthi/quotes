@@ -17,6 +17,7 @@ include("puzzlemaker.php");
 <?php
 
 include_once 'db_credentials.php';
+include("./colorScheme.php");
 
 $flagged = true;
 $db->set_charset("utf8");
@@ -58,6 +59,43 @@ if (!(isset($_POST['ident']))) {
 				<option value="13">13</option>
 			</select>
 	<?php
+	
+	$sqColor= 'BLUE';
+    $sqx = "SELECT * FROM preferences WHERE name = 'SQUARE_COLOR_PREFERENCE'";
+    $resultSq = mysqli_query($db,$sqx);
+
+    while ($rowSq =mysqli_fetch_array($resultSq))
+    { 
+        $sqColor=$rowSq["value"];
+    }
+
+    $letterColor= 'BLUE';
+    $sqx = "SELECT * FROM preferences WHERE name = 'LETTER_COLOR_PREFERENCE'";
+    $resultLetter = mysqli_query($db,$sqx);
+
+    while ($rowLetter =mysqli_fetch_array($resultLetter))
+    { 
+        $letterColor=$rowLetter["value"];
+    }
+
+    $fillColor= 'BLUE';
+    $sqx = "SELECT * FROM preferences WHERE name = 'FILL_COLOR_PREFERENCE'";
+    $resultFill = mysqli_query($db,$sqx);
+
+    while ($rowFill =mysqli_fetch_array($resultFill))
+    { 
+        $fillColor=$rowFill["value"];
+    }
+
+    $lineColor= 'BLUE';
+    $sqx = "SELECT * FROM preferences WHERE name = 'LINE_COLOR_PREFERENCE'";
+    $resultLine = mysqli_query($db,$sqx);
+
+    while ($rowLine =mysqli_fetch_array($resultLine))
+    { 
+        $lineColor=$rowLine["value"];
+    }
+	
 	$columnCountSQL = "SELECT * FROM preferences WHERE name = 'DEFAULT_COLUMN_COUNT'";
 	$result2 = mysqli_query($db, $columnCountSQL);
 	$columnCount = mysqli_fetch_array($result2);

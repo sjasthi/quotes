@@ -82,7 +82,7 @@ include("nav.php");
             foreach ($quotes as $quote) {
               ?>
               <tr>
-                <td class="filled"><a href="feelingLucky.php?type=drop_quote&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="FeelingLucky.php?type=DropQuote&id=<?php echo $quote['id']; ?>">
                   <img src="./images/drop_quote.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>

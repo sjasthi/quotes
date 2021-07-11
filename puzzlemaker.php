@@ -68,6 +68,14 @@
 		#solution2 {
 			display: none;
 		}
+		.black-box {
+            background-color: <?php echo $GLOBALS["fillColor1"] ?> ;
+        }
+        #convert {
+            background-color: <?php echo $GLOBALS["sqColor1"] ?>  ;
+            color: <?php echo $GLOBALS["letterColor1"] ?> ;
+            border-color: <?php echo $GLOBALS["lineColor1"] ?> ;
+        }
 	</style>
 	<script>
 		function rearrangeForDropQuote(box_number) {
