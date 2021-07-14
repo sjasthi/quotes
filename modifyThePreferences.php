@@ -55,4 +55,23 @@ if ($_POST['keep_punctuation_marks'] != ""){
   }
 }
 
+if ($_POST['square_color_preference'] != "") {
+    update_preference('SQUARE_COLOR_PREFERENCE', $_POST['square_color_preference']);
+}
+if ($_POST['line_color_preference'] != "") {
+    $lineColor1 = $_POST['line_color_preference'];
+
+    update_preference('LINE_COLOR_PREFERENCE', $_POST['line_color_preference']);
+}
+if ($_POST['letter_color_preference'] != "") {
+    $letterColor1 = $_POST['letter_color_preference'];
+
+    update_preference('LETTER_COLOR_PREFERENCE', $_POST['letter_color_preference']);
+}
+if ($_POST['fill_color_preference'] != "") {
+    $fillColor1 = $_POST['fill_color_preference'];
+
+    update_preference('FILL_COLOR_PREFERENCE', $_POST['fill_color_preference']);
+}
+
 header('location: preferences.php?preferencesUpdated=Success');

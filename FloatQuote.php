@@ -45,6 +45,33 @@ $norows = 16;
 <script type="text/javascript" src="js/main.js"></script>
 
 <div id="convert-to-image">
+	<form id="columnnumber_form" method="post">
+
+	<input type="submit" name="generate" id="generate" value="Generate" id="generate">
+	<!-- Width dropdown selector, default value is 10 -->
+	<label for="width">Columns:</label>
+	    <select name="width" id="width" autocomplete="off">
+	        <?php
+	        if (isset($_POST['width'])) {
+	            $width = $_POST['width'];
+	        } else {
+	            $width = get_preference('DEFAULT_COLUMN_COUNT');
+	            if (is_null($width)) {
+	                // if no datbase preference for width exists, default value is 16
+	                $width = "12";
+	            }
+	        }
+	        for ($i = 8; $i <= 13; $i++) {
+	            echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
+	        }
+	        ?>
+	    </select>
+
+	        <?php
+						echo '<input name="ident" value="'.$_POST["ident"].'" style="visibility:hidden"> ';
+	        ?>
+
+	</form>
 	<?php
 
 	echo '<h2 id="title">Float Quote</h2><br>';
@@ -52,27 +79,10 @@ $norows = 16;
 	$punctuation=TRUE;
 	$sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
 	$resultPunct = mysqli_query($db,$sqx);
-	
-	while ($rowPunct =mysqli_fetch_array($resultPunct))
-	{ 
-		$punctuation=$rowPunct["value"];	
-	}
-  
-  
-  $nochars=3;
-	  $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
-	  $result2 = mysqli_query($db,$sqx);
-	  
-	  while ($row2 =mysqli_fetch_array($result2))
-	  { 
-		  $nochars=$row2["value"];
-	  }
-	$result2 = mysqli_query($db, $sqx);
-	while ($row2 = mysqli_fetch_array($result2)) {
-		$norows = $row2["value"];
-	}
 
-
+	if($rowPunct =mysqli_fetch_array($resultPunct)){
+		$punctuation=$rowPunct["value"];
+	}
 
 	if ($result->num_rows > 0) {
 		while ($row = $result->fetch_assoc()) {
@@ -84,8 +94,6 @@ $norows = 16;
 		exit(0);
 	}
 	include("puzzlemaker.php");
-	if(isset($quoteline)){
-		FloatM($quoteline, $norows, $touched);
-	}
+	FloatMaker($quoteline, $width);
 	?>
 </div>

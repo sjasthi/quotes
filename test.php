@@ -1,6 +1,5 @@
 <?php 
-
-require("word_processor.php");
+require("indic-wp.php");
 
 $language = "Telugu";
 $x = "అహింసకు మించిన ఆయుధం లేదు.";

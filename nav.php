@@ -1,5 +1,6 @@
 <?php
 require_once './initialize.php';
+require_once './indic-wp.php';
 ?>
 
 <!DOCTYPE html>

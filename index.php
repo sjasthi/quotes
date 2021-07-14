@@ -122,10 +122,10 @@ include("nav.php");
       </div>
     </div>
   </div>
-  <!-- Process the mysqli_result now
+  <!-- Process the mysqli_result now 
 Based on the count of word_sets received (it will be = $puzzles_to_show or all puzzles),
 display the puzzle icons on the home page as follows.
-Show $puzzles_per_row per row.
+Show $puzzles_per_row per row. 
 So, by default, users will see the last 100 puzzles with latest one showing up first.
 
 Based on the "type", we can identify the ICON.

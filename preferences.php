@@ -131,6 +131,35 @@ foreach ($preferences as $preference) {
 					<td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['KEEP_PUNCTUATION_MARKS']; ?>" title="Current value"></td>
 					<td><input required type="text"  maxlength="10" size="15" name="keep_punctuation_marks" title="Enter TRUE OR FALSE" value="<?php echo $preference_array['KEEP_PUNCTUATION_MARKS']; ?>"></td>
 				</tr>
+				
+				<tr>
+                    
+                    <td style="width:200px">Square Color: </td>
+                    <td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['SQUARE_COLOR_PREFERENCE']; ?>" title="Current value"></td>
+                    <td><input required type="text"  maxlength="10" size="15" name="square_color_preference" title="Enter Valid HTML Color for Squares " value="<?php echo $preference_array['SQUARE_COLOR_PREFERENCE']; ?>"></td>
+                </tr>
+
+                <tr>
+                    
+                    <td style="width:200px">Line Color: </td>
+                    <td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['LINE_COLOR_PREFERENCE']; ?>" title="Current value"></td>
+                    <td><input required type="text"  maxlength="10" size="15" name="line_color_preference" title="Enter Valid HTML Color for Lines " value="<?php echo $preference_array['LINE_COLOR_PREFERENCE']; ?>"></td>
+                </tr>
+
+                <tr>
+                    
+                    <td style="width:200px">Fill Color: </td>
+                    <td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['FILL_COLOR_PREFERENCE']; ?>" title="Current value"></td>
+                    <td><input required type="text"  maxlength="10" size="15" name="fill_color_preference" title="Enter Valid HTML Color for Fill " value="<?php echo $preference_array['FILL_COLOR_PREFERENCE']; ?>"></td>
+                </tr>
+
+                <tr>
+                    
+                    <td style="width:200px">Letter Color: </td>
+                    <td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['LETTER_COLOR_PREFERENCE']; ?>" title="Current value"></td>
+                    <td><input required type="text"  maxlength="10" size="15" name="letter_color_preference" title="Enter Valid HTML Color for Letter " value="<?php echo $preference_array['LETTER_COLOR_PREFERENCE']; ?>"></td>
+                </tr>
+				
 				</table>
 
 				

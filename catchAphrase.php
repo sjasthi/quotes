@@ -2,7 +2,6 @@
 $nav_selected = "ADMIN";
 $left_buttons = false;
 include "./nav.php";
-include "./telugu_parser.php";
 
 if (isset($_POST["phrase"])) {
 	// get phrase from posted value
@@ -14,6 +13,8 @@ if (isset($_POST["phrase"])) {
 	// use default phrase
 	$phrase = "తెలుగు పజిల్స్";
 }
+
+$language = "Telugu";
 
 // parse quote into characters separated by commas
 $arr = parseToCodePoints($phrase);
