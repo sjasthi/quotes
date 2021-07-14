@@ -5,120 +5,155 @@ $nav_selected = "LIST";
 $left_buttons = "NO";
 $left_selected = "";
 require 'db_credentials.php';
-include("./nav.php");
-include("puzzlemaker.php");
-//error_reporting(0);
+
+ include("./nav.php");
+ # Move after DB read: 
+//include("puzzlemaker.php");
+
+//error_reporting(0) tweak;jkfsj
 ?>
 
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 
 
+<form id="columnnumber_form" method="post">
+
+<input type="submit" name="generate" id="generate" value="Generate" id="generate">
+<!-- Width dropdown selector, default value is 10 -->
+<label for="width">Columns:</label>
+    <select name="width" id="width" autocomplete="off">
+        <?php
+        if (isset($_POST['width'])) {
+            $width = $_POST['width'];
+        } else {
+            $width = get_preference('DEFAULT_COLUMN_COUNT');
+            if (is_null($width)) {
+                // if no datbase preference for width exists, default value is 16
+                $width = "12";
+            }
+        }
+        for ($i = 8; $i <= 13; $i++) {
+            echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
+        }
+        ?>
+    </select>
+
+        <?php
+                    echo '<input type="hidden" name="ident" value="'.$_POST["ident"].'"> ';
+        ?>
+
+</form>
+
 <?php
 
 include_once 'db_credentials.php';
 include("./colorScheme.php");
 
+$spaces = array();
+$sql = "SELECT * FROM quote_table
+			WHERE id = '-1'";
 $flagged = true;
+$touched = isset($_POST['ident']);
+if (!$touched) {
+	//if (isset($_GET['ident']) {
+$id = $_POST['ident'];
+//	}
+}
+
+// $colorSchemeIsSet = isset($_GET['colorScheme']);
+
+
 $db->set_charset("utf8");
 
-$nocol = 12;
-
-//if (!$columncount) {
-    //fetch the default column count from the database
-    //} else{
-        //get the column count from $POST
-//}
-
-//change default 16 to variable
-
-$nocol = 12;
-
-if (!(isset($_POST['ident']))) {
-	echo 'No entry selected. Go back and try again. <br>';
+if (!$touched) {
+	echo 'You need to select an entry. Go back and try again. <br>';
 ?>
-	<button style="background:rgb(15,155,205)"><a style="color:white" class="btn btn-sm" href="admin.php">Go Back</a></button><br>
+	<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
 <?php
 } else {
-	$sql = "SELECT * FROM quote_table WHERE id = ".$_POST['ident'];
-	$result = mysqli_query($db, $sql);
-	$quoteline = mysqli_fetch_array($result);
-
-	echo '<h2 id="title">Drop Quote</h2> ';
-	?>
-	<label for="columncount"> </label>
-	<select id="columncount" name="columncount">
-				<option value="blank">Column Size:</option>
-					 <option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-				<option value="13">13</option>
-			</select>
-	<?php
-	
-	$sqColor= 'BLUE';
-    $sqx = "SELECT * FROM preferences WHERE name = 'SQUARE_COLOR_PREFERENCE'";
-    $resultSq = mysqli_query($db,$sqx);
-
-    while ($rowSq =mysqli_fetch_array($resultSq))
-    { 
-        $sqColor=$rowSq["value"];
-    }
-
-    $letterColor= 'BLUE';
-    $sqx = "SELECT * FROM preferences WHERE name = 'LETTER_COLOR_PREFERENCE'";
-    $resultLetter = mysqli_query($db,$sqx);
-
-    while ($rowLetter =mysqli_fetch_array($resultLetter))
-    { 
-        $letterColor=$rowLetter["value"];
-    }
-
-    $fillColor= 'BLUE';
-    $sqx = "SELECT * FROM preferences WHERE name = 'FILL_COLOR_PREFERENCE'";
-    $resultFill = mysqli_query($db,$sqx);
-
-    while ($rowFill =mysqli_fetch_array($resultFill))
-    { 
-        $fillColor=$rowFill["value"];
-    }
-
-    $lineColor= 'BLUE';
-    $sqx = "SELECT * FROM preferences WHERE name = 'LINE_COLOR_PREFERENCE'";
-    $resultLine = mysqli_query($db,$sqx);
-
-    while ($rowLine =mysqli_fetch_array($resultLine))
-    { 
-        $lineColor=$rowLine["value"];
-    }
-	
-	$columnCountSQL = "SELECT * FROM preferences WHERE name = 'DEFAULT_COLUMN_COUNT'";
-	$result2 = mysqli_query($db, $columnCountSQL);
-	$columnCount = mysqli_fetch_array($result2);
-
-	$punctuationSQL = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
-	$result2 = mysqli_query($db, $punctuationSQL);
-	$punctuation = mysqli_fetch_array($result2);
-
-$uninpo = 1;
-$sqx = "SELECT * FROM preferences WHERE id = '$uninpo'";
-$result2 = mysqli_query($db, $sqx);
-while ($row2 = mysqli_fetch_array($result2)) {
-	$nocol = $row2["value"];
+	 $id = $_POST['ident'];
+	$sql = "SELECT * FROM quote_table
+				WHERE id = '$id'";
 }
-	if(isset($quoteline)){
 
-		if($punctuation['value'] == 'FALSE'){
-			$regex = '/[^a-z\s]/i';
-			$quoteline = preg_replace($regex, '', $quoteline);
-		}
+if (!$result = $db->query($sql)) {
+	die('There was an error running query[' . $connection->error . ']');
+}
 
-		DropMaker($quoteline['quote'], $columnCount['value']);
+$nocol = $width;
+echo '<h2 id="title">Drop Quote</h2><br>';
+
+
+
+
+
+$punctuation=TRUE;
+  $sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+  $resultPunct = mysqli_query($db,$sqx);
+  
+  while ($rowPunct =mysqli_fetch_array($resultPunct))
+  { 
+  	$punctuation=$rowPunct["value"];	
+  }
+
+include("puzzlemaker.php");
+
+$nochars=3;
+	$sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+	$result2 = mysqli_query($db,$sqx);
+	
+	while ($row2 =mysqli_fetch_array($result2))
+	{ 
+		$nochars=$row2["value"];
 	}
 
+	//added in 
+	$sqColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'SQUARE_COLOR_PREFERENCE'";
+	$resultSq = mysqli_query($db,$sqx);
+	
+	while ($rowSq =mysqli_fetch_array($resultSq))
+	{ 
+		$sqColor=$rowSq["value"];
+	}
+
+	$letterColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'LETTER_COLOR_PREFERENCE'";
+	$resultLetter = mysqli_query($db,$sqx);
+	
+	while ($rowLetter =mysqli_fetch_array($resultLetter))
+	{ 
+		$letterColor=$rowLetter["value"];
+	}
+
+	$fillColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'FILL_COLOR_PREFERENCE'";
+	$resultFill = mysqli_query($db,$sqx);
+	
+	while ($rowFill =mysqli_fetch_array($resultFill))
+	{ 
+		$fillColor=$rowFill["value"];
+	}
+
+	$lineColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'LINE_COLOR_PREFERENCE'";
+	$resultLine = mysqli_query($db,$sqx);
+	
+	while ($rowLine =mysqli_fetch_array($resultLine))
+	{ 
+		$lineColor=$rowLine["value"];
+	}
+	//added in
+
+if ($result->num_rows > 0) {
+	while ($row = $result->fetch_assoc()) {
+		$quoteline = $row["quote"];
+	}
 }
+if (isset($quoteline) == false){
+	exit(0);
+}
+
+DropM($quoteline, $nocol, $touched);
 ?>

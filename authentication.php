@@ -12,17 +12,17 @@ Usage:
 - To see what the site looks like when not logged in, set $logged_in to false.
 */
 // set this to true to manually change logged in/admin status
-$development_environment = true;
+$development_environment = false;
 // set this to true to test what the app looks like when logged in, and false to test not logged in
-$logged_in = true;
+$logged_in = false;
 // set this to true to test what the app looks like for admins (note: if super_admin is true, that will take priority)
-$admin = true;
+$admin = false;
 // set this to true to test what the app looks like for super_admins
-$super_admin = true;
+$super_admin = false;
 // set this to true to test what the app looks like for authors
-$author = true;
+$author = false;
 // set this to true to test what the app looks like for sponsors
-$sponsor = true;
+$sponsor = false;
 
 // this sets the role string, do not edit
 if ($super_admin) {

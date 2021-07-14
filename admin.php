@@ -37,7 +37,7 @@ $quotes = get_quotes();
         if (isset($_GET['create'])) {
             if ($_GET["create"] == "Success") {
                 echo '<br><h3>Success! Your quote has been added!</h3>';
-            } 
+            }
         }
 
         if (isset($_GET['deleted'])) {
@@ -60,7 +60,7 @@ it is NOT required to have a action attribute on the form -->
 
         <form method="POST">
             <h2 id="title">Quotelist</h2><br>
-            <button type="submit" formaction="importQuotes.php">Import</button>
+            <button type="submit" formaction="import.php">Import</button>
             <button type="submit" formaction="createQuote.php">Create</button>
             <button type="submit" formaction="modifyQuote.php">Modify</button>
             <button type="submit" formaction="deleteQuote.php">Delete</button>
