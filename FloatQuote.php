@@ -37,6 +37,8 @@ if (!$touched) {
 if (!$result = $db->query($sql)) {
 	die('There was an error running query[' . $connection->error . ']');
 }
+$nocol = $width;
+
 
 $norows = 16;
 ?>

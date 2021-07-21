@@ -74,4 +74,57 @@ if ($_POST['fill_color_preference'] != "") {
     update_preference('FILL_COLOR_PREFERENCE', $_POST['fill_color_preference']);
 }
 
+////
+if ($_POST['square_color_1'] != "") {
+  $pref1squareColor1 = $_POST['square_color_1'];
+  update_preference('SQUARE_COLOR_1', $_POST['square_color_1']);
+}
+if ($_POST['letter_color_1'] != "") {
+  $pref1letterColor1 = $_POST['letter_color_1'];
+  update_preference('LETTER_COLOR_1', $_POST['letter_color_1']);
+}
+if ($_POST['line_color_1'] != "") {
+  $pref1lineColor1 = $_POST['line_color_1'];
+  update_preference('LINE_COLOR_1', $_POST['line_color_1']);
+}
+if ($_POST['fill_color_1'] != "") {
+  $pref1fillColor1 = $_POST['fill_color_1'];
+  update_preference('FILL_COLOR_1', $_POST['fill_color_1']);
+}
+
+if ($_POST['square_color_2'] != "") {
+  $pref2squareColor2 = $_POST['square_color_2'];
+  update_preference('SQUARE_COLOR_2', $_POST['square_color_2']);
+}
+if ($_POST['letter_color_2'] != "") {
+  $pref2letterColor2 = $_POST['letter_color_2'];
+  update_preference('LETTER_COLOR_2', $_POST['letter_color_2']);
+}
+if ($_POST['line_color_2'] != "") {
+  $pref2lineColor2 = $_POST['line_color_2'];
+  update_preference('LINE_COLOR_2', $_POST['line_color_2']);
+}
+if ($_POST['fill_color_2'] != "") {
+  $pref2fillColor2 = $_POST['fill_color_2'];
+  update_preference('FILL_COLOR_2', $_POST['fill_color_2']);
+}
+
+if ($_POST['square_color_3'] != "") {
+  $pref3squareColor3 = $_POST['square_color_3'];
+  update_preference('SQUARE_COLOR_3', $_POST['square_color_3']);
+}
+if ($_POST['letter_color_3'] != "") {
+  $pref3letterColor3 = $_POST['letter_color_3'];
+  update_preference('LETTER_COLOR_3', $_POST['letter_color_3']);
+}
+if ($_POST['line_color_3'] != "") {
+  $pref3lineColor3 = $_POST['line_color_3'];
+  update_preference('LINE_COLOR_3', $_POST['line_color_3']);
+}
+if ($_POST['fill_color_3'] != "") {
+  $pref3fillColor3 = $_POST['fill_color_3'];
+  update_preference('FILL_COLOR_3', $_POST['fill_color_3']);
+}
+////
+
 header('location: preferences.php?preferencesUpdated=Success');

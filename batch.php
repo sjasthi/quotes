@@ -1,4 +1,106 @@
 <?php
+/* Cited from https://github.com/PHPOffice/PHPPresentation#requirements
+
+// with your own install
+require_once 'src/PhpPresentation/Autoloader.php';
+\PhpOffice\PhpPresentation\Autoloader::register();
+//require_once 'src/Common/Autoloader.php';
+//\PhpOffice\Common\Autoloader::register();
+
+// with Composer
+/*require_once 'vendor/autoload.php';
+
+
+use PhpOffice\PhpPresentation\PhpPresentation;
+use PhpOffice\PhpPresentation\IOFactory;
+use PhpOffice\PhpPresentation\Style\Color;
+use PhpOffice\PhpPresentation\Style\Alignment;
+
+
+$objPHPPowerPoint = new PhpPresentation();
+
+// Create slide
+$currentSlide = $objPHPPowerPoint->getActiveSlide();
+
+// Create a shape (drawing)
+$shape = $currentSlide->createDrawingShape();
+$shape->setName('PHPPresentation logo')
+      ->setDescription('PHPPresentation logo')
+      ->setPath('./resources/phppowerpoint_logo.gif')
+      ->setHeight(36)
+      ->setOffsetX(10)
+      ->setOffsetY(10);
+$shape->getShadow()->setVisible(true)
+                   ->setDirection(45)
+                   ->setDistance(10);
+
+// Create a shape (text)
+$shape = $currentSlide->createRichTextShape()
+      ->setHeight(300)
+      ->setWidth(600)
+      ->setOffsetX(170)
+      ->setOffsetY(180);
+$shape->getActiveParagraph()->getAlignment()->setHorizontal( Alignment::HORIZONTAL_CENTER );
+$textRun = $shape->createTextRun('Thank you for using PHPPresentation!');
+$textRun->getFont()->setBold(true)
+                   ->setSize(60)
+                   ->setColor( new Color( 'FFE06B20' ) );
+
+$oWriterPPTX = IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
+$oWriterPPTX->save(__DIR__ . "/sample.pptx");
+$oWriterODP = IOFactory::createWriter($objPHPPowerPoint, 'ODPresentation');
+$oWriterODP->save(__DIR__ . "/sample.odp");
+//From the github 
+
+
+
+//compilation of powerpoint creations
+include_once '/path/to/Classes/PHPPowerPoint.php';
+$phpPowerPoint = new PHPPowerPoint();
+$phpPowerPoint = new PHPPowerPoint();
+$properties = $phpPowerPoint->getProperties();
+$properties->setTitle('My presentation');
+$slide = $phpPowerPoint->createSlide();
+$shape = $slide->createRichTextShape();
+$richtext = $slide->createRichTextShape()
+    ->setHeight(300)
+    ->setWidth(600)
+    ->setOffsetX(170)
+    ->setOffsetY(180);
+$richtext = $slide->createRichTextShape()
+    ->setWrap(PHPPowerPoint_Shape_RichText::WRAP_SQUARE)
+    ->setBottomInset(600);    
+
+$line = $slide->createLineShape($fromX, $fromY, $toX, $toY);
+$chart = $slide->createChartShape();
+$drawing = $slide->createDrawingShape();
+$drawing->setName('Unique name')
+    ->setDescription('Description of the drawing')
+    ->setPath('/path/to/drawing.filename');
+$table = $slide->createTableShape($columns);
+$shape->getFill()
+    ->setFillType(PHPPowerPoint_Style_Fill::FILL_GRADIENT_LINEAR)
+    ->setRotation(270)
+    ->setStartColor(new PHPPowerPoint_Style_Color('FFCCCCCC'))
+    ->setEndColor(new PHPPowerPoint_Style_Color('FFFFFFFF'));
+$shape->getBorder()
+    ->setLineStyle(PHPPowerPoint_Style_Border::LINE_SINGLE)
+    ->setLineWidth(4)
+    ->getColor()->setARGB('FFC00000');
+$shape->getShadow()
+    ->setVisible(true)
+    ->setDirection(45)
+    ->setDistance(10);
+$textRun = $shape->createTextRun('Text');
+$textRun->getFont()->setColor(new PHPPowerPoint_Style_Color('C00000'));
+$writer = PHPPowerPoint_IOFactory::createWriter($phpPowerPoint, $writerName);
+$writer->save('/path/to/result.document');
+$writer = PHPPowerPoint_IOFactory::createWriter($phpPowerPoint, 'PowerPoint2007');
+$writer->save('/path/to/result.pptx');
+$writer = PHPPowerPoint_IOFactory::createWriter($phpPowerPoint, 'ODPresentation');
+$writer->save('/path/to/result.odp');
+
+*/
   $nav_selected = "LIST";
   $left_buttons = "NO";
   $left_selected = "";
@@ -27,9 +129,9 @@
 
 <link rel="stylesheet" href="batch.css">
 <div id="wrap">
-    <div id="colorScheme">
+    <div id="PowerPoint Generation">
     
-   <input type="button" id="cs1" value="PowerPoint Generate" onclick="setScheme(this)"></input>
+   <input type="button" id="cp" value="Generate Powerpoint" onclick="createPowerpoint(this)"></input>
 
 
     </div>

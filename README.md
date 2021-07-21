@@ -1,27 +1,49 @@
-# Quotes Manager
-Quotes Manager (QM)
+# ![PHPPowerPoint](https://github.com/PHPOffice/PHPPowerPoint/raw/master/Documentation/assets/PHPPowerPointLogo.png "PHPPowerPoint")
 
-## Login on Localhost Instructions
+[![Build Status](https://travis-ci.org/PHPOffice/PHPPowerPoint.svg?branch=master)](https://travis-ci.org/PHPOffice/PHPPowerPoint)
 
-Use the following instructions to log in to this app for development purposes on localhost.
-1. Open file 'authentication.php'
-2. Set $development_environment = true;
-3. Adjust other variables to see what Quotes looks like when logged in or not logged in.
-   - To see what the app looks like when not logged in:
-     - $logged_in = false;
-   - To see what the app looks like when logged in as a regular user:
-     - $logged_in = true;
-     - $admin, $super_admin, $author, $sponsor = false;
-   - To see what the app looks like when logged in as an admin:
-     - $logged_in, $admin = true;
-     - $super_admin = false;
-   - To see what the app looks like when logged in as a super-admin:
-     - $logged_in, $super_admin = true;
-   - To see what the app looks like when logged in as an author:
-     - $logged_in, $author = true;
-     - $admin, $super_admin, $sponsor = false;
-   - To see what the app looks like when logged in as a sponsor:
-     - $logged_in, $sponsor = true;
-     - $admin, $super_admin, $author = false;
 
-Note: Do _not_ upload 'authentication.php' to the live hosted website with $development_environment set to true.
+PHPPowerPoint is a library written in pure PHP that provides a set of classes to write to different presentation file formats, i.e. OpenXML (.pptx) and OpenDocument (.odp). PHPPowerPoint is an open source project licensed under [LGPL](LICENSE.md).
+
+### Features
+
+- Create an in-memory presentation representation
+- Set presentation meta data (author, title, description, etc)
+- Add slides from scratch or from existing one
+- Supports different fonts and font styles
+- Supports different formatting, styles, fills, gradients
+- Supports hyperlinks and rich-text strings
+- Add images with different styles (positioning, rotation, shadow)
+- Set printing options (header, footer, page margins, paper size, orientation)
+- Output to different file formats: PowerPoint 2007 (.pptx), OpenDocument Presentation (.odp), Serialized Spreadsheet)
+- ... and lots of other things!
+
+### Requirements
+
+The following requirements should be met prior to using PHPPowerPoint:
+
+- PHP version 5.2 or higher
+- PHP extension php_zip enabled
+- PHP extension php_xml enabled
+
+### Installation
+
+To install and use PHPPowerPoint, copy the contents of the `Classes` folder and include `PHPPowerPoint.php` somewhere in your code like below.
+
+```php
+include_once '/path/to/Classes/PHPPowerPoint.php';
+```
+
+After that, you can use the library by creating a new instance of the class.
+
+```php
+$phpPowerPoint = new PHPPowerPoint();
+```
+
+### Want to learn more?
+
+[Read the manual](Documentation/PHPPowerPointDocumentation.md).
+
+### Want to contribute?
+
+[Fork us on GitHub](https://github.com/PHPOffice/PHPPowerPoint)!

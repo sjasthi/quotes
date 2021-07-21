@@ -13,17 +13,49 @@ error_reporting(0);
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 
-<?php
+<form id="columnnumber_form" method="post">
+
+<input type="submit" name="generate" id="generate" value="Generate" id="generate">
+<!-- Width dropdown selector, default value is 10 -->
+<label for="width">Columns:</label>
+    <select name="width" id="width" autocomplete="off">
+        <?php
+        if (isset($_POST['width'])) {
+            $width = $_POST['width'];
+        } else {
+            $width = get_preference('DEFAULT_COLUMN_COUNT');
+            if (is_null($width)) {
+                // if no datbase preference for width exists, default value is 16
+                $width = "12";
+            }
+        }
+        for ($i = 8; $i <= 13; $i++) {
+            echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
+        }
+        ?>
+    </select>
+
+        <?php
+                    echo '<input type="hidden" name="ident" value="'.$_POST["ident"].'"> ';
+        ?>
+  <?php
+                    echo '<input type="hidden" name="first" value="'.$_POST["first"].'"> ';
+
 
 include_once 'db_credentials.php';
+include("./colorScheme.php");
+$spaces = array();
+
 $sql = "SELECT * FROM quote_table
 			WHERE id = '-1'";
-$db->set_charset("utf8");
-
 $flagged = true;
-$spaces = array();
+
+
 $touched = isset($_POST['ident']);
 $touched2 = isset($_POST['first']);
+
+$db->set_charset("utf8");
+
 if (!$touched || !$touched2) {
 	echo 'You need to select an entry. Go back and try again. <br>';
 
@@ -34,8 +66,8 @@ if (!$touched || !$touched2) {
 	$id = $_POST['first'];
 	$sql = "SELECT * FROM quote_table
             	WHERE id = '$id'";
+	
 	$id2 = $_POST['ident'];
-
 	$sql2 = "SELECT * FROM quote_table
             	WHERE id = '$id2'";
 }
@@ -46,7 +78,6 @@ if (!$result = $db->query($sql)) {
 
 echo '<h2 id="title">Double Puzzle</h2><br>';
 $norows = 16;
-$uninpo = 1;
 
 $punctuation=TRUE;
   $sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
@@ -58,7 +89,7 @@ $punctuation=TRUE;
   }
 
 
-$nochars=3;
+$nochars=4;
 	$sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
 	$result2 = mysqli_query($db,$sqx);
 	
@@ -68,7 +99,7 @@ $nochars=3;
 	}
 $result2 = mysqli_query($db, $sqx);
 while ($row2 = mysqli_fetch_array($result2)) {
-	$norows = $row2["value"];
+	$nocol = $row2["value"];
 }
 
 
@@ -90,5 +121,5 @@ if ($result->num_rows > 0) {
 		}
 	}
 
-	FloatDrop($quoteline, $quoteline2, $norows, $touched2);
+	FloatDrop($quoteline, $quoteline2, $nocol, $touched2);
 }
