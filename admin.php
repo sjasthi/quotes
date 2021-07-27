@@ -37,7 +37,7 @@ $quotes = get_quotes();
         if (isset($_GET['create'])) {
             if ($_GET["create"] == "Success") {
                 echo '<br><h3>Success! Your quote has been added!</h3>';
-            } 
+            }
         }
 
         if (isset($_GET['deleted'])) {

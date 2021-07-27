@@ -1,9 +1,9 @@
 <head>
 
-	<link rel="stylesheet" type="text/css" href="../css/spectrum.css">
+	<link rel="stylesheet" type="text/css" href="../quotes/css/spectrum.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-	<script type="text/javascript" src="../js/spectrum.js"></script>
+	<script type="text/javascript" src="../quotes/js/spectrum.js"></script>
 
 	<style>
 		.title {
@@ -281,14 +281,8 @@
 		}
 
 		function viewSolution() {
-			var displayMode = document.getElementById("solution").style.display;
-
-			if(displayMode == "none"){
-				document.getElementById("solution").style.display = "table";
-			}else if (displayMode == "table"){
-				document.getElementById("solution").style.display = "none";
-			}
-
+			document.getElementById("solution").style.display = "table";
+			document.getElementById("solution2").style.display = "table";
 		}
 
 		function clicked(index, col, box_number, isFloatDrop) {
@@ -555,8 +549,6 @@
 <body>
 
 	<?php
-
-	include("telugu_parser.php");
 	include("usefultool.php");
 
 	function ScrambleMaker($quote)
@@ -632,7 +624,7 @@
 
 
 	?>
-		<button id="captureTable" onclick="takeshot">Generate</button>
+		<button id="captureTable" onclick="takeshot()">Generate</button>
 		<div id="output"></div>
 		<script type="text/javascript" src="js/html2canvas.js"></script>
 
@@ -662,7 +654,10 @@
 			<br> ";
 			}
 
-			function DropMaker($quote, $col) {
+			function DropM($quote, $col)
+			{
+
+
 				$quote = str_replace("\n", " ", $quote);
 				$t = parseToCodePoints($quote);
 				$noletters = Count($t);
@@ -700,10 +695,10 @@
 					shuffle($wheeloffortune[$r]);
 				} ?>
 
+
 				<br>
 				<input type="hidden" id="original_quote" value="<?php echo $quote; ?>">
 				<button id="submitSolution" onclick="checkSolution()">Submit</button>
-				<button id="captureTable" onclick="takeshot()">Generate </button>
 				<div id="output"></div>
 				<script type="text/javascript" src="js/html2canvas.js"></script>
 				<div class="panel" id="capture">
@@ -732,6 +727,7 @@
 												echo "<tr id='$y'>";
 											}
 
+
 											if ($box_number > 15) {
 												$box_number = 1;
 											}
@@ -751,6 +747,10 @@
 											$i++;
 										}
 
+
+										?>
+
+										<?php
 										$i = 0;
 
 										$box_number = 1;
@@ -777,7 +777,7 @@
 											}
 											$i++;
 										}
-										echo "<tbody>
+										echo "<tbody> 
 										</table>
 										</body> <br> <h1>";
 										echo "</h1>";
@@ -868,8 +868,8 @@
 												?>
 												<br>
 
-												<button id="btnSolution" onclick="viewSolution()">Show Solution</button><br>
-												<table id="solution" border="1" style="width:100%; display: none">
+												<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
+												<table id="solution" border="1" style="width:100%">
 											</div>
 										</div>
 							</div>
@@ -917,7 +917,9 @@
 					$sample = array();
 					$wheeloffortune = array_fill(0, $col, $sample);
 					$x = 0;
+
 					$quote_array = array();
+
 					foreach ($t as $axe) {
 
 						$tested = parseToCharacter($axe);
@@ -936,7 +938,6 @@
 					for ($r = 0; $r < $col; $r++) {
 						shuffle($wheeloffortune[$r]);
 					}
-
 					?>
 
 					<br>
@@ -989,9 +990,6 @@
 												$i++;
 											}
 
-											?>
-
-											<?php
 											$i = 0;
 
 											$box_number = 1;
@@ -1023,7 +1021,7 @@
 
 											echo "</tbody>
 									</table>
-									</body> <br> <h1>";
+								<br> <h1>";
 											echo "</h1>";
 											?>
 											<div class="panel panel-primary body">
@@ -1105,13 +1103,11 @@
 														</div>
 													</div>
 												</div>
-
 												<div class="panel-body">
 													<?php
 													echo $quote;
 													?>
 													<br>
-
 													<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
 													<table id="solution" border="1" style="width:100%; display:none">
 												</div>
@@ -1141,9 +1137,16 @@
 							echo "</tr>";
 						}
 					}
+
 				}
 
-				function FloatDropMaker($quote, $quote2, $col)	{
+				function FloatDrop($quote, $quote2, $col, $touched)
+				{
+
+					if (!$touched) {
+
+						return;
+					}
 
 					$quote = str_replace("\n", " ", $quote);
 					$quote2 = str_replace("\n", " ", $quote2);
@@ -1357,7 +1360,7 @@
 
 												$i++;
 											}
-											echo "<tbody>
+											echo "<tbody> 
 								</table>
 								</body> <br> <h1>";
 											echo "</h1>";
@@ -1450,7 +1453,7 @@
 													?>
 													<br>
 													<button id="btnSolution" onclick="viewSolution()">Solution</button><br>
-													<table id="solution" border="1" style="width:100%; display:none">
+													<table id="solution" border="1" style="border-collapse:collapse; width:100%">
 												</div>
 											</div>
 								</div>

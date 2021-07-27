@@ -79,8 +79,8 @@
   }else{
     //Puzzle generation dependant on feeling_lucky_mode when no id is given
     $modeType = "SELECT * FROM preferences WHERE name = 'FEELING_LUCKY_MODE'";
-    $result = mysqli_query($db, $modeType);
-    $mode = mysqli_fetch_array($result);
+    $moderesult = mysqli_query($db, $modeType);
+    $mode = mysqli_fetch_array($moderesult);
 
     if($mode['value'] == 'FIRST'){
       $sql = "SELECT * FROM quote_table limit 1";
@@ -141,7 +141,7 @@
 
     case 'DROPQUOTE':
       echo '<h2 id="title">Drop Quote</h2><br>';
-      DropMaker($quoteline, $columnCount['value']);
+      DropM($quoteline, $columnCount['value']);
         break;
 
     case 'FLOATQUOTE':
