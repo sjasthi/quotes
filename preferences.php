@@ -159,6 +159,11 @@ foreach ($preferences as $preference) {
                     <td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['LETTER_COLOR_PREFERENCE']; ?>" title="Current value"></td>
                     <td><input required type="text"  maxlength="10" size="15" name="letter_color_preference" title="Enter Valid HTML Color for Letter " value="<?php echo $preference_array['LETTER_COLOR_PREFERENCE']; ?>"></td>
                 </tr>
+				
+
+
+
+
 
 				<tr>
                     
@@ -242,10 +247,10 @@ foreach ($preferences as $preference) {
                     <td><input disabled type="text" maxlength="10" size="15" value="<?php echo $preference_array['LETTER_COLOR_3']; ?>" title="Current value"></td>
                     <td><input required type="text"  maxlength="10" size="15" name="letter_color_3" title="Enter Valid HTML Color for Letter preset 3 " value="<?php echo $preference_array['LETTER_COLOR_3']; ?>"></td>
                 </tr>
-				
-				</table>
 
-				
+
+
+				</table>
 
 				
 

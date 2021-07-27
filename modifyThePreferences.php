@@ -127,4 +127,6 @@ if ($_POST['fill_color_3'] != "") {
 }
 ////
 
+
+
 header('location: preferences.php?preferencesUpdated=Success');

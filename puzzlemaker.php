@@ -1,9 +1,9 @@
 <head>
 
-	<link rel="stylesheet" type="text/css" href="../css/spectrum.css">
+	<link rel="stylesheet" type="text/css" href="../quotes/css/spectrum.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-	<script type="text/javascript" src="../js/spectrum.js"></script>
+	<script type="text/javascript" src="../quotes/js/spectrum.js"></script>
 
 	<style>
 		.title {
