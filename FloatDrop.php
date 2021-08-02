@@ -68,6 +68,47 @@ $nochars=3;
 	{ 
 		$nochars=$row2["value"];
 	}
+	//added in 
+	$sqColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'SQUARE_COLOR_PREFERENCE'";
+	$resultSq = mysqli_query($db,$sqx);
+	
+	while ($rowSq =mysqli_fetch_array($resultSq))
+	{ 
+		$sqColor=$rowSq["value"];
+	}
+
+	$letterColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'LETTER_COLOR_PREFERENCE'";
+	$resultLetter = mysqli_query($db,$sqx);
+	
+	while ($rowLetter =mysqli_fetch_array($resultLetter))
+	{ 
+		$letterColor=$rowLetter["value"];
+	}
+
+	$fillColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'FILL_COLOR_PREFERENCE'";
+	$resultFill = mysqli_query($db,$sqx);
+	
+	while ($rowFill =mysqli_fetch_array($resultFill))
+	{ 
+		$fillColor=$rowFill["value"];
+	}
+
+	$lineColor= 'BLUE';
+	$sqx = "SELECT * FROM preferences WHERE name = 'LINE_COLOR_PREFERENCE'";
+	$resultLine = mysqli_query($db,$sqx);
+	
+	while ($rowLine =mysqli_fetch_array($resultLine))
+	{ 
+		$lineColor=$rowLine["value"];
+	}
+	//added in
+
+
+
+
 $result2 = mysqli_query($db, $sqx);
 while ($row2 = mysqli_fetch_array($result2)) {
 	$norows = $row2["value"];
