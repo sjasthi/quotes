@@ -12,6 +12,8 @@
 <script type="text/javascript" src="js/main.js"></script>
 <?php
 include_once 'db_credentials.php'; 
+include("./colorScheme.php");
+
 
 
   $sql = "SELECT * FROM quote_table
@@ -73,6 +75,3 @@ $nochars=3;
 	}
 }
 ?>
-
-
-

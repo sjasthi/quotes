@@ -144,14 +144,32 @@ include './nav.php';
   if (!$result = $db->query($sql)) {
     die('There was an error running query[' . $connection->error . ']');
   }
-
+  
+  $punctuation=TRUE;
+  echo '<h2 id="title">Split Quote</h2><br>';
+	  $sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+	  $resultPunct = mysqli_query($db,$sqx);
+	  
+	  while ($rowPunct =mysqli_fetch_array($resultPunct))
+	  { 
+		$punctuation=$rowPunct["value"];	
+	  }
 
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
       $quoteline = $row["quote"];
     }
   }
-
+  
+  if (isset($quoteline) == false){
+	exit(0);
+	}
+else {
+	if ($punctuation == "FALSE"){
+		$quoteline = str_replace(['?', '!', "'", '.', '-', ';', ':', '[', ']',
+		 ',', '/','{', '}', ')', '('], '', $quoteline);
+	}
+}
 
   //..
   $arr = parseToCodePoints($quoteline);

@@ -7,7 +7,6 @@ const slider16Quote = "Slider-16";
 const catchAPhraseQuote  = "Catch-A-Phrase";
 const puzzles = [dropQuote, floatQuote, dropFloatQuote, scrambleQuote, splitQuote, slider16Quote, catchAPhraseQuote];
 
-
 window.onload = function(){
   createDropdownOption();
 }

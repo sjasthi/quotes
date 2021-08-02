@@ -154,6 +154,12 @@ if ($result->num_rows > 0) {
 if (isset($quoteline) == false){
 	exit(0);
 }
+else {
+	if ($punctuation == "FALSE"){
+			$quoteline = str_replace(['?', '!', "'", '.', '-', ';', ':', '[', ']',
+			 ',', '/','{', '}', ')', '('], '', $quoteline);
+		}
 
-DropM($quoteline, $nocol, $touched);
+	DropM($quoteline, $nocol, $touched);
+}
 ?>
