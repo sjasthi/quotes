@@ -187,6 +187,27 @@ if ($touched) {
 
   echo '<h2 id="title">Scramble Quote</h2><br>';
 
+  $page_title = ' Quote Scramble'; 
+
+
+  $sql = "SELECT * FROM quote_table
+        WHERE id = '-1'";
+
+  $db->set_charset("utf8");
+
+  $touched = isset($_GET['id']);
+
+  if ($touched) {
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM quote_table
+              WHERE id = '$id'";
+  }
+
+  if (!$result = $db->query($sql)) {
+    die('There was an error running query[' . $connection->error . ']');
+  }
+  
+
   $sql = "SELECT * FROM quote_table
         WHERE id = '-1'";
 

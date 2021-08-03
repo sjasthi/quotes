@@ -7,6 +7,8 @@
   include('nav.php');
   include('puzzlemaker.php');
   include_once 'db_credentials.php';
+  include("./colorScheme.php");
+
 ?>
 
 <script type="text/javascript" src="js/main.js"></script>
@@ -103,6 +105,7 @@
 
         $count = 1;
         for ($i = parseInt( $_POST['startID'] ); $i <= parseInt( $_POST['endID'] ); $i++ ){
+          
           //Begin generating puzzles
           $quoteSQL = "SELECT * FROM quote_table WHERE id = ".$i;
           $quoteResult = mysqli_query($db, $quoteSQL);
@@ -205,7 +208,67 @@
           color:white; margin: auto; border-radius: 5px;'>Invalid puzzle ID: ".$_POST["startID"]."</div>";
           echo "<br><a href='batch.php'><input type='submit' value='return'/></a></div>";
         }
+        
       }//end of for loop
+
+      $punctuation=TRUE;
+      $sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+      $resultPunct = mysqli_query($db,$sqx);
+      
+      while ($rowPunct =mysqli_fetch_array($resultPunct))
+      { 
+        $punctuation=$rowPunct["value"];	
+      }
+    
+    //include("puzzlemaker.php");
+    
+    $nochars=3;
+      $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+      $result2 = mysqli_query($db,$sqx);
+      
+      while ($row2 =mysqli_fetch_array($result2))
+      { 
+        $nochars=$row2["value"];
+      }
+    
+      //added in 
+      $sqColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'SQUARE_COLOR_PREFERENCE'";
+      $resultSq = mysqli_query($db,$sqx);
+      
+      while ($rowSq =mysqli_fetch_array($resultSq))
+      { 
+        $sqColor=$rowSq["value"];
+      }
+    
+      $letterColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'LETTER_COLOR_PREFERENCE'";
+      $resultLetter = mysqli_query($db,$sqx);
+      
+      while ($rowLetter =mysqli_fetch_array($resultLetter))
+      { 
+        $letterColor=$rowLetter["value"];
+      }
+    
+      $fillColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'FILL_COLOR_PREFERENCE'";
+      $resultFill = mysqli_query($db,$sqx);
+      
+      while ($rowFill =mysqli_fetch_array($resultFill))
+      { 
+        $fillColor=$rowFill["value"];
+      }
+    
+      $lineColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'LINE_COLOR_PREFERENCE'";
+      $resultLine = mysqli_query($db,$sqx);
+      
+      while ($rowLine =mysqli_fetch_array($resultLine))
+      { 
+        $lineColor=$rowLine["value"];
+      }
+      //added in
+  
       ?>
       </div>
       <?php
