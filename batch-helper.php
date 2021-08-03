@@ -1,9 +1,11 @@
+<link rel="stylesheet" href="batch.css">
+
 <?php
 
   function checkQuoteIDInput($start, $end){
     if($start < 0 || $end < 0){
       return false;
-    }elseif ($start < $end){
+    }elseif ($start <= $end){
       return true;
     }
     return false;
@@ -27,7 +29,7 @@
     return false;
   }
 
-  function DropPrint($quote, $col) {
+  function DropPrint($quote, $col, $gentype) {
     $quote = str_replace("\n", " ", $quote);
     $t = parseToCodePoints($quote);
     $noletters = Count($t);
@@ -58,33 +60,37 @@
     for ($x = $nohope; $x < $noletters; $x++) {
       array_push($spaces, $x);
     }
-
+    $solutionTable = $wheeloffortune;
     for ($r = 0; $r < $col; $r++) {
       shuffle($wheeloffortune[$r]);
     }
     ?>
 
-    <table id="convert" class="puzzle" border="1" style="width:100%">
-    <tbody>
+    <div style='border:1px solid black; border-radius: 5px;'>
+      <div style='background-color:rgb(55,95,145); color: white; border-bottom: 1px solid black'>
+        <h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 40px'>Puzzle</h2>
+      </div><br>
+      <table id="convert" class="puzzle" border="1" style="width:100%">
+        <tbody>
 
-    <?php
-    $i = 0;
-    for ($y = $noletters - 1; $y > -1; $y--) {
-      if ($y % $col == $col - 1) {
-        echo "<tr id='$y'>";
-      }
+        <?php
+        $i = 0;
+        for ($y = $noletters - 1; $y > -1; $y--) {
+          if ($y % $col == $col - 1) {
+            echo "<tr id='$y'>";
+          }
 
-      if (isset($wheeloffortune[$col - 1 - $y % $col][$y / $col])) {
-        $alpha = $wheeloffortune[$col - 1 - $y % $col][$y / $col];
-        echo "<td><div>$alpha</div></td>";
-      } else {
-        echo "<td>&#160</td>";
-      }
-      if ($y % $col == 0) {
-        echo "</tr>";
-      }
-      $i++;
-    }
+          if (isset($wheeloffortune[$col - 1 - $y % $col][$y / $col])) {
+            $alpha = $wheeloffortune[$col - 1 - $y % $col][$y / $col];
+            echo "<td><div>$alpha</div></td>";
+          } else {
+            echo "<td>&#160</td>";
+          }
+          if ($y % $col == 0) {
+            echo "</tr>";
+          }
+          $i++;
+        }
 
     $i = 0;
 
@@ -104,9 +110,43 @@
     }
     echo "</tbody>
       </table>";
+    if($gentype == 'B' || $gentype == 'C'){
+      echo "<br><br><div>
+            <div style='background-color:rgb(55,155,95); color: white; border-top: 1px solid black; border-bottom: 1px solid black'>
+              <br><br>
+              <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:-40px; height: 40px'>Solution</h2></div>
+              <br><br>";
+      echo "<div><table id='convert' class='puzzle' border='1' style='width:100%'>";
+      for ($y = $noletters - 1; $y > -1; $y--) {
+        if ($y % $col == $col - 1) {
+          echo "<tr id='$y'>";
+        }
+
+        if (isset($solutionTable[$col - 1 - $y % $col][$y / $col])) {
+          $alpha = $solutionTable[$col - 1 - $y % $col][$y / $col];
+          echo "<td><div>$alpha</div></td>";
+        } else {
+          echo "<td>&#160</td>";
+        }
+
+        if ($y % $col == 0) {
+          echo "</tr>";
+        }
+      }
+      echo "</table></div>";
+      }
+      if($gentype == 'C'){
+        echo "<br><br><div>
+              <div style='background-color:rgb(185,125,0); color:white; border-top: 1px solid black; border-bottom: 1px solid black;'>
+                <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:0px; height: 40px'>Original Quote</h2>
+              </div><br>
+            <div>".$quote."</div>
+           </div>";
+      }
+      echo "</div></div>";
   }
 
-  function FloatPrint($quote, $col) {
+  function FloatPrint($quote, $col, $gentype) {
 
     $quote = str_replace("\n", " ", $quote);
     $t = parseToCodePoints($quote);
@@ -142,39 +182,37 @@
       $x++;
     }
 
+    $solutionTable = $wheeloffortune;
     for ($r = 0; $r < $col; $r++) {
       shuffle($wheeloffortune[$r]);
     }
     ?>
 
-    <script type="text/javascript" src="js/html2canvas.js"></script>
-    <div class="panel" id="capture">
-      <div class="panel-group">
-          <br>
-          <div id="">
-            <table id="convert" class="puzzle" border="1" style="width:100%">
-              <tbody>
-                <?php
-                $i = 0;
-
-                for ($y = 0; $y < $noletters; $y++) {
-                  if ($y % $col == 0) {
-                    echo "<tr>";
-                  }
-
-                  $alpha = $wheeloffortune[$y % $col][$y / $col];
-                  if (in_array($y, $spaces) == false) {
-                    echo "<td id='td$i'></td>";
-                  } else {
-                    echo "<td class='black-box' id='td$i' style=\"background-color:#000000;\"> &#160 </td>";
-                  }
-
-                  if ($y % $col == $col - 1) {
-                    echo "</tr>";
-                  }
-                  $i++;
+    <div style='border:1px solid black; border-radius: 5px;'>
+      <div style='background-color:rgb(55,95,145); color: white; border-bottom: 1px solid black'>
+        <h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 40px'>Puzzle</h2>
+      </div><br>
+      <table id="convert" class="puzzle" border="1" style="width:100%">
+        <tbody>
+            <?php
+              $i = 0;
+              for ($y = 0; $y < $noletters; $y++) {
+                if ($y % $col == 0) {
+                  echo "<tr>";
                 }
-                $i = 0;
+
+                $alpha = $wheeloffortune[$y % $col][$y / $col];
+                if (in_array($y, $spaces) == false) {
+                  echo "<td id='td$i'></td>";
+                } else {
+                  echo "<td class='black-box' id='td$i' style=\"background-color:#000000;\"> &#160 </td>";
+                }
+
+                if ($y % $col == $col - 1) {
+                  echo "</tr>";
+                }
+                $i++;
+              }
 
                 for ($y = 0; $y < $noletters; $y++) {
                   if ($y % $col == 0) {
@@ -191,20 +229,53 @@
                   if ($y % $col == $col - 1) {
                     echo "</tr>";
                   }
-                  $i++;
                 }
 
-                echo "</tbody>
-                    </table> ";
-                ?>
-                  </div>
-                </div>
-              <br>
+            echo "</tbody>
+                </table> ";
+
+              if($gentype == 'B' || $gentype == 'C'){
+                echo "<br><br>
+                  <div>
+                    <div style='background-color:rgb(55,155,95); color: white; border-top: 1px solid black; border-bottom: 1px solid black'>
+                      <br><br>
+                      <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:-40px; height: 40px'>Solution</h2>
+                    </div>
+                    <br><br>";
+                echo "<div><table id='convert' class='puzzle' border='1' style='width:100%'>";
+                for ($y = $noletters - 1; $y > -1; $y--) {
+                  if ($y % $col == $col - 1) {
+                    echo "<tr id='$y'>";
+                  }
+
+                  if (isset($solutionTable[$col - 1 - $y % $col][$y / $col])) {
+                    $alpha = $solutionTable[$col - 1 - $y % $col][$y / $col];
+                    echo "<td><div>$alpha</div></td>";
+                  } else {
+                    echo "<td>&#160</td>";
+                  }
+
+                  if ($y % $col == 0) {
+                    echo "</tr>";
+                  }
+                }
+                echo "</table></div>";
+                }
+                if($gentype == 'C'){
+                  echo "<br><br><div>
+                        <div style='background-color:rgb(185,125,0); color:white; border-top: 1px solid black; border-bottom: 1px solid black;'>
+                          <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:0px; height: 40px'>Original Quote</h2>
+                        </div><br>
+                      <div>".$quote."</div>
+                     </div></div></div>";
+                }
+               ?>
           </div>
+        </div>
     <?php
   }
 
-  function FloatDropPrint($quote, $quote2, $col){
+  function FloatDropPrint($quote, $quote2, $col, $gentype){
     $quote = str_replace("\n", " ", $quote);
     $quote2 = str_replace("\n", " ", $quote2);
     $t = parseToCodePoints($quote);
@@ -265,6 +336,8 @@
       $x++;
     }
 
+    $solutionTable1 = $wheeloffortune;
+    $solutionTable2 = $wheeloffortune2;
     for ($r = 0; $r < $col; $r++) {
       shuffle($wheeloffortune[$r]);
       shuffle($wheeloffortune2[$r]);
@@ -274,6 +347,10 @@
 
     <div id="output"></div>
     <script type="text/javascript" src="js/html2canvas.js"></script>
+    <div id="container" style="border: 1px solid black;; border-radius: 5px;">
+      <div style='background-color:rgb(55,95,145); color: white; border-bottom: 1px solid black'>
+        <h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 40px'>Puzzle</h2>
+      </div><br>
       <div class="panel-group">
           <br>
             <table id="convert" class="puzzle" border="1" style="border-collapse:collapse;width:100%;">
@@ -368,9 +445,127 @@
       echo "</tbody>
           </table>
         </div>";
+
+if($gentype == 'B' || $gentype == 'C'){
+      echo "<br><br>
+        <div>
+          <div style='background-color:rgb(55,155,95); color: white; border-top: 1px solid black; border-bottom: 1px solid black'>
+            <br><br>
+            <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:-40px; height: 40px'>Solution</h2>
+          </div>
+            <br><br>";
+      ?>
+      <br>
+      <table id="convert" class="puzzle" border="1" style="border-collapse:collapse;width:100%;">
+        <tbody>
+
+      <?php
+      $i = 0;
+
+      for ($y = $noletters - 1; $y > -1; $y--) {
+        if ($y % $col == $col - 1) {
+          echo "<tr>";
+        }
+
+        if (isset($solutionTable1[$col - 1 - $y % $col][$y / $col])) {
+          $alpha = $solutionTable1[$col - 1 - $y % $col][$y / $col];
+          echo "<td><div>$alpha</div></td>";
+        } else {
+          echo "<td>&#160</td>";
+          if ($y % $col == 0) {
+            echo "</tr>";
+          }
+        }
+        $i++;
+      }
+      echo "</tbody>";
+      ?>
+        <tbody style="border-top: 4px solid black;">
+      <?php
+        $i = 0;
+
+        for ($y = 0; $y < $noletters; $y++) {
+          if ($y % $col == 0) {
+            echo "<tr>";
+          }
+
+          $alpha = $solutionTable1[$y % $col][$y / $col];
+          if (in_array($y, $spaces) == false) {
+            echo "<td></td>";
+          } else {
+            echo "<td id='td_a$i' class='black-box' style=\"background-color:#000000;\"> &#160</td>";
+          }
+          if ($y % $col == $col - 1) {
+            echo "</tr>";
+          }
+          $i++;
+        }
+        echo "</tbody>";
+        ?>
+
+        <tbody style="border-top: 4px solid black;">
+
+        <?php
+        $i = 0;
+
+        for ($y = 0; $y < $noletters2; $y++) {
+          if ($y % $col == 0) {
+            echo "<tr>";
+          }
+          if (in_array($y, $spaces2) == false) {
+            echo "<td></td>";
+          } else {
+            echo "<td id='td_b$i' class='black-box' style=\"background-color:#000000;\"> &#160</td>";
+          }
+          if ($y % $col == $col - 1) {
+            echo "</tr>";
+          }
+          $i++;
+        }
+        echo "</tbody>";
+        ?>
+
+        <tbody style="border-top: 4px solid black;">
+
+        <?php
+          $i = 0;
+
+          for ($y = 0; $y < $noletters2; $y++) {
+            if ($y % $col == 0) {
+              echo "<tr>";
+            }
+            if (isset($solutionTable2[$y % $col][$y / $col])) {
+              $alpha = $solutionTable2[$y % $col][$y / $col];
+              echo "<td><div>$alpha</div></td>";
+            } else {
+              echo "<td>&#160</td>";
+            }
+            if ($y % $col == $col - 1) {
+              echo "</tr>";
+            }
+            $i++;
+          }
+          echo "</tbody>
+        </table>
+      </div>";
+    }
+    //Section C:
+    if($gentype == 'C'){
+      echo "<br><br><div>
+              <div style='background-color:rgb(185,125,0); color:white; border-top: 1px solid black; border-bottom: 1px solid black;'>
+              <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:0px; height: 40px'>Original Quote</h2>
+              </div><br>
+              <div style='text-align:left; padding-left: 20px;'><p style='color:rgb(185,125,0)'>Drop Quote: </p>".$quote."</div><br>
+              <div style='text-align:left; padding-left: 20px;'><p style='color:rgb(185,125,0)'>Float Quote: </p>".$quote2."</div><br>
+          </div></div></div>";
+}
+
+ ?>
+</div></div></div>
+      <?php
     }
 
-  function SplitPrint($quote, $chunks){
+  function SplitPrint($quote, $chunks, $gentype){
     $quote = str_replace("\n", " ", $quote);
     $t2 = parseToCodePoints($quote);
     $t = array();
@@ -387,16 +582,23 @@
 
     $fodder2 = ($noletters / $chunks) + $fodder;
   	$sample = array();
+    $solutionTable= array_fill(0, $fodder2, $sample);
   	$wheeloffortune = array_fill(0, $fodder2, $sample);
     for ($x = 0; $x < $noletters; $x++) {
       $tested = parseToCharacter($t[$x]);
       array_push($wheeloffortune[$x / $chunks], $tested);
     }
+    $solutionTable = $wheeloffortune;
     shuffle($wheeloffortune);
     ?>
 
-    <table border="1" style="width:100%">
-    <tbody>
+    <div id="container" style="border: 1px solid black;; border-radius: 5px;">
+      <div style='background-color:rgb(55,95,145); color: white; border-bottom: 1px solid black'>
+        <h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 40px'>Puzzle</h2>
+      </div><br>
+      <div class="panel-group">
+      <table border="1" style="width:100%">
+        <tbody>
 
     <?php
       $counter = 0;
@@ -414,33 +616,79 @@
         }
         $counter++;
       }
-      echo "  </tbody></table><br> ";
+      echo "  </tbody>
+      </table>
+      </div><div>";
+
+      if($gentype == 'B' || $gentype == 'C'){
+        ?>
+        <br><br>
+        <div>
+          <div style='background-color:rgb(55,155,95); color: white; border-top: 1px solid black; border-bottom: 1px solid black'>
+          <br><br>
+            <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:-40px; height: 40px'>Solution</h2>
+          </div>
+          <br><br>
+          <table border="1" style="width:100%">
+            <tbody>
+
+        <?php
+          $counter = 0;
+          foreach ($solutionTable as $value) {
+            if ($counter % 5 == 0) {
+              echo "<tr>";
+            }
+            echo "<td style='border:1px solid black;'>";
+            foreach ($value as $value2) {
+              echo $value2;
+            }
+            echo "</td>";
+            if ($counter % 5 == 4) {
+              echo "</tr>";
+            }
+            $counter++;
+          }
+          echo " </tbody></table></div></div>";
+      }
+      if($gentype == 'C'){
+        echo "<br><br><div>
+                <div style='background-color:rgb(185,125,0); color:white; border-top: 1px solid black; border-bottom: 1px solid black;'>
+                <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:0px; height: 40px'>Original Quote</h2>
+                </div><br>
+                <div>".$quote."</div>
+            </div></div>";
+          }
+        echo "</div></div>";
+      }
+
+  //Helper function used by ScramblePrint
+  function createSolutionArrayScramble($str){
+    $words = explode(" ", $str);
+    $str = implode("", $words);
+    $t = parseToCodePoints($str);
+    $arr = array();
+    foreach ($t as $ch) {
+      array_push($arr, parseToCharacter($ch));
+    }
+    return join("", $arr);
   }
 
-  function ScramblePrint($quote){
+  function ScramblePrint($quote, $gentype){
     $quoteClean = str_replace("\n", " ", $quote);
     $words  = ScrambleMaker($quote);
     $arrQuote = parseToCodePoints($quoteClean);
     $arrWord = parseToCodePoints($words);
+    $solutionArr = parseToCodePoints(createSolutionArrayScramble($quoteClean));
 
     if ($words == '') die;
     ?>
     <script src="scramble.js"></script>
-    <script>
-      function drag_scramble(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-      }
 
-      function drop_scramble(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-      }
-
-      function allowDrop_scramble(ev) {
-        ev.preventDefault();
-      }
-    </script>
+    <div style='border:1px solid black; border-radius: 5px;'>
+      <div style='background-color:rgb(55,95,145); color: white; border-bottom: 1px solid black'>
+        <h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 40px'>Puzzle</h2>
+      </div>
+    <br><br>
     <div id="cardPile">
     <?php
       $x = 0;
@@ -467,7 +715,7 @@
         foreach ($arrQuote as $key => $val) {
           $val = parseToCharacter($val);
           if ($val == ' ') {
-            echo '<div style="border: 1px solid #fff;"></div>';
+            echo '<div style=" border: 1px solid #fff; "></div>';
           } else {
       ?>
       <div></div>
@@ -477,47 +725,291 @@
       ?>
       </div>
       <?php
+      if($gentype == 'B' || $gentype == 'C'){
+       ?>
+        <div>
+          <div style='background-color:rgb(55,155,95); color: white; border-top: 1px solid black; border-bottom: 1px solid black'>
+          <br><br>
+            <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:-40px; height: 40px'>Solution</h2>
+          </div>
+          <br><br>
+          <div id="cardPile">
+          <?php
+            $x = 0;
+            foreach ($arrQuote as $key => $val) {
+              $val = parseToCharacter($val);
+              if ($val == ' ') {
+                echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
+              } else {
+                $val2 = parseToCharacter($solutionArr[$x]);
+                $x++;
+          ?>
+          <div class="blank-box">
+            <div id="card">
+              <span><?php echo $val2; ?></span>
+            </div>
+          </div>
+          <?php
+              }
+            }
+          ?>
+          </div>
+          <br><br>
+        </div>
+      <?php
+    }
+      if($gentype == 'C'){
+        echo "<div>
+                <div style='background-color:rgb(185,125,0); color:white; border-top: 1px solid black; border-bottom: 1px solid black;'>
+                  <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:0px; height: 40px'>Original Quote</h2>
+                </div><br>
+                <div>".$quote."</div><br>
+              </div>";
+      }
+      ?>
+    </div>
+      <?php
   }
 
-  function slider16Print($quote, $width, $height){
+  //Helper method used by Slider16() that creates the "board" to be displayed for
+  //Slider16 Puzzle
+  function createSolutionArraySlider($quote, $type, $solutionID){
     $quote = str_replace("\n", " ", $quote);
-    $arr = parseToCodePoints($quote);
-    $minCharCount = $width * $height;
-    $charCount = strlen($quote);
-    $displayArr;
+    $charTotal = strlen($quote);
+    $displayArr = array("","","","","","","","","","","","","","","","");
+    $charsPerTile = number_format($charTotal/15);
+    $quoteIndex = 0;
 
-    if($charCount < $minCharCount){
-      //Case: slider size exceeds the number of available characters
-      //Slider will be generated in a 4*4 slider by default
-      $tileLength = number_format($charCount/15);
-      echo "<div id='gameBoard' style='width:400px; height:400px; border:1px solid black; color:green'>".$charCount." ".$tileLength;
-      $i=0;
-      for($i = 0;$i<$charCount; $i++){
-        if($i == 0){
-          echo '<div style="display:block"><div style="border: 1px solid black; width:25px; height:25px; fontWeight:6px; display:inline"">'.$quote[$i]." ".$quote[($i+1)]." ".$quote[($i+2)].'</div></div>';
-        }else if(($i-2)>0){
-          if(($i)%3 == 0){
-            echo '<div style="display:block; background-color:black;">';
-            if(($i+2)==$charCount || ($i + 2)>$charCount){
-              if(($i + 1)==$charCount || ($i+1)>$charCount){
-                //End of quote
-                echo '<div style="border: 1px solid black; background-color:black; width:25px; height:25px; fontWeight:6px; ">'.$quote[$i].'</div></div>';
-              }else{
-                echo '<div style="border: 1px solid black; width:25px; height:25px; fontWeight:6px; "">'.$quote[$i]." ".$quote[($i+1)].'</div></div>';
-              }
-            }else{
-              echo '<div style="border: 1px solid black; width:25px; height:25px; fontWeight:6px; "">'.$quote[$i]." ".$quote[($i+1)]." ".$quote[($i+2)].'</div></div>';
-            }
+    //Begin to fill the game array with characters from the quote
+    for($i=1;$i<16;$i++){
+      for($j=0;$j<$charsPerTile;$j++){
+        if($quoteIndex<$charTotal){
+          $displayArr[$i] .= $quote[$quoteIndex++];
+        }
+      }
+    }
+
+    //Check whether there is at least 1 character each tile. Characters will be redistributed in the event
+    //there is an empty tile or there are characters remaining that have not been "assigned" a tile
+
+    //Condition: Characters left after initial loop
+    if($quoteIndex < $charTotal){
+      $remaining = ($charTotal - $quoteIndex) + strlen($displayArr[12]) + strlen($displayArr[13])
+      + strlen($displayArr[14]) + strlen($displayArr[15]);
+      $charsToDivide = $displayArr[12]."".$displayArr[13]."".$displayArr[14]."".$displayArr[15];
+      $charsPerTile = number_format($remaining/4);
+      while($quoteIndex < $charTotal){
+        $charsToDivide .= $quote[$quoteIndex++];
+      }
+      $quoteIndex = 0;
+      $displayArr[12] = '';
+      $displayArr[13] = '';
+      $displayArr[14] = '';
+      $displayArr[15] = '';
+      for($i=12;$i<16;$i++){
+        for($j=0;$j<$charsPerTile;$j++){
+          if($quoteIndex<$remaining){
+            $displayArr[$i] .= $charsToDivide[$quoteIndex++];
           }
         }
-
-
+      }
     }
-
-
+    //Condition: Last 2 tiles are empty
+    if($displayArr[14] == ''){
+      $quoteIndex = 0;
+      $remaining = strlen($displayArr[12]) + strlen($displayArr[13]);
+      $charsToDivide = $displayArr[12]."".$displayArr[13];
+      $charsPerTile = number_format($remaining/4);
+      $displayArr[12] = '';
+      $displayArr[13] = '';
+      $check = $remaining;
+      for($i=12;$i<16;$i++){
+        for($j=0;$j<$charsPerTile;$j++){
+          if($quoteIndex<$remaining){
+            $displayArr[$i] .= $charsToDivide[$quoteIndex++];
+            if($check % 4 >= 0 && $check > 4){
+              $displayArr[$i] .= $charsToDivide[$quoteIndex++];
+            }
+          $check--;
+          }
+        }
+      }
+    //Condition: last tile is empty
+    }else if($displayArr[15] == ''){
+      $quoteIndex = 0;
+      $remaining = strlen($displayArr[13]) + strlen($displayArr[14]);
+      $charsToDivide = $displayArr[13]."".$displayArr[14];
+      $charsPerTile = number_format($remaining/3);
+      $displayArr[13] = '';
+      $displayArr[14] = '';
+      $check = $remaining;
+      for($i=13;$i<16;$i++){
+        for($j=0;$j<$charsPerTile;$j++){
+          if($quoteIndex<$remaining){
+            $displayArr[$i] .= $charsToDivide[$quoteIndex++];
+            if($check % 3 >= 0 && $check > 3){
+              $displayArr[$i] .= $charsToDivide[$quoteIndex++];
+            }
+          $check--;
+          }
+        }
+      }
     }
-
+    return $displayArr;
   }
+
+  function slider16Print($quote, $type, $solutionID){
+    $displayArr = createSolutionArraySlider($quote, $type, $solutionID);
+    echo "<div style='border:1px solid black; border-radius: 5px;'><div style='background-color:rgb(55,95,145); color: white; border-bottom: 1px solid black'><h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 35px'>Puzzle</h2></div>";
+    echo "<br><table style='width:300px; margin-left:auto;margin-right:auto;margin-bottom:10px; background-color:white'><tbody>";
+    echo '<tr><td>'.$displayArr[0].'</td><td style="border:1px solid black;">'.$displayArr[2].'</td><td style="border:1px solid black;">'.$displayArr[1].'</td><td style="border:1px solid black;">'.$displayArr[3].'</td></tr>';
+    //Section A
+    for($i=4;$i<sizeof($displayArr);$i+=4){
+      echo '<tr><td style="border:1px solid black;">'.$displayArr[$i+1].'</td><td style="border:1px solid black;">'.$displayArr[$i+3].'</td><td style="border:1px solid black;">'.$displayArr[$i].'</td><td style="border:1px solid black;">'.$displayArr[$i+2].'</td></tr>';
+    }
+    echo"</tbody></table><br>";
+    if($type == "B" || $type == "C"){
+      //Section B
+      echo "<div><div style='background-color:rgb(55,155,95); color: white;
+      border-top: 1px solid black; border-bottom: 1px solid black'><h2 style='text-align:left;
+      margin-left:20px; margin-top:auto; margin-bottom:auto; height: 35px'>Solution</h2></div>";
+      $id = "solution-table-".$solutionID;
+      echo "<br><table id='".$id."' style='width:300px; margin-left:auto;margin-right:auto;background-color:white;'><tbody>";
+      echo '<tr><td>'.$displayArr[0].'</td><td style="border:1px solid black;">'.$displayArr[1].'</td><td style="border:1px solid black;">'.$displayArr[2].'</td><td style="border:1px solid black;">'.$displayArr[3].'</td></tr>';
+      for($i=4;$i<sizeof($displayArr);$i+=4){
+            echo '<tr><td style="border:1px solid black;">'.$displayArr[$i].'</td><td style="border:1px solid black;">'.$displayArr[$i+1].'</td><td style="border:1px solid black;">'.$displayArr[$i+2].'</td><td style="border:1px solid black;">'.$displayArr[$i+3].'</td></tr>';
+      }
+      echo"</tbody></table></div><br>";
+      if($type == "C"){
+        //Section C
+        echo "<div><div style='background-color:rgb(185,125,0); color:white; border-top: 1px solid black; border-bottom: 1px solid black;'><h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 35px'>Original Quote</h2></div><br>";
+        for($i =0;$i<sizeof($displayArr);$i++){
+          echo $displayArr[$i];
+        }
+        echo "</div><br>";
+      }
+    }
+    echo"</div>";
+}
+
+function phrasePrint($quote, $width, $height, $tableID ,$gentype){
+  $myfile = fopen("fillers.txt", "r") or die("Unable to open file!");
+  $filler = fread($myfile, filesize("fillers.txt"));
+  fclose($myfile);
+
+  if($width > 26 || $width < 0){
+    //Max column width is set to the number of letters in the English alphabet
+    $tablesize = 27 * 30;
+  }else {
+    $tablesize = $width * 30;
+  }
+
+  $quote = str_replace(" ", "", $quote);
+  $filler = str_replace(",", "", $filler);
+  $arrFiller =  parseToCodePoints($filler);
+  $arrQuote = parseToCodePoints($quote);
+  $tableID = "game".$tableID;
+  $cellID = 1;
+  $index = 0;
+  $columnHeader = 'A';
+  $solutionArr = array();
+  $solArr = array();
+  echo "<div id='phraseContainer'>";
+    echo "<div style='border:1px solid black; border-radius: 5px;'><div style='background-color:rgb(55,95,145); color: white; border-bottom: 1px solid black'>
+    <h2 style='text-align:left; margin-left:20px; margin-top:auto; margin-bottom:auto; height: 35px'>Puzzle</h2></div>
+          <div><br>
+            <table id='".$tableID."' style='margin:auto;'><tr><td style='width:50px'> </td>";
+            array_push($solArr, " ");
+            for($i = 0;$i<$width;$i++){
+              echo "<td style='width:50px; border:1px solid black;'> ".$columnHeader." </td>";
+              array_push($solArr, $columnHeader++);
+            }
+            echo "</tr>";
+            for($i = 0;$i<$height;$i++){
+              echo "<tr>";
+              echo "<td style='width:50px; border-left:1px solid black;
+              border-right:1px solid black; border-bottom:1px solid black;";
+              if($i == 0){
+                echo "border-top: 1px solid black;";
+              }
+              echo "'>".($i+1)."</td>";
+              array_push($solArr,$i+1);
+              for($j=0;$j<$width;$j++){
+                $random = mt_rand(0, strlen($quote));
+                if($random%3 == 0 && $index < sizeof($arrQuote)){
+                  $char = parseToCharacter($arrQuote[$index++]);
+                  echo "<td class='solutionCell' style='width:50px; border-left:1px solid black;
+                  border-right:1px solid black; border-bottom:1px solid black;
+                  '> ".$char. "</td>";
+                  $celldata = "-".$char;
+                  array_push($solutionArr, $celldata);
+                  array_push($solArr, $celldata);
+                }else{
+                  $char = parseToCharacter($arrFiller[mt_rand(0,(sizeof($arrFiller) - 1))]);
+                  echo "<td id='".$cellID++."' style='width:50px; border-left:1px solid black;
+                  border-right:1px solid black; border-bottom:1px solid black;
+                  '> ".$char. "</td>";
+                  array_push($solutionArr, $char);
+                  array_push($solArr, $char);
+                }
+              }
+              echo "</tr>";
+            }
+  echo "</table></div>";
+
+  if($gentype == "B" || $gentype == "C"){
+    echo "<br><br><div><div style='background-color:rgb(55,155,95); color: white;
+    border-top: 1px solid black; border-bottom: 1px solid black'><h2 style='text-align:left;
+    margin-left:20px; margin-top:auto; margin-bottom:auto; height: 35px'>Solution</h2></div>
+    <br>";
+    echo " <table style='margin:auto;'>";
+            $arrSol = parseToCodePoints(implode("",$solArr));
+            $index = 0;
+            $markSolution = false;
+            for ($i=0; $i < sizeof($solArr); $i++) {
+              echo "<tr>";
+                for($j=0; $j<=$width;$j++){
+                  if($index < sizeof($arrSol)){
+                    if(parseToCharacter($arrSol[$index]) == "-"){
+                      $markSolution=true;
+                      $index++;
+                      $j--;
+                    }else if($markSolution){
+                      $char = parseToCharacter($arrSol[$index++]);
+                      echo '<td style="border:1px solid black; width:50px;
+                      background-color:green;">'.$char.'</td>';
+                      $markSolution=false;
+                    }else if(is_integer(getIntegerEquiv(parseToCharacter($arrSol[$index])))
+                      && is_integer(getIntegerEquiv(parseToCharacter($arrSol[$index+1])))) {
+                      $char = parseToCharacter($arrSol[$index++]);
+                      $char2 = parseToCharacter($arrSol[$index++]);
+                      echo '<td style="border:1px solid black; width:50px;">'.$char.''.$char2.'</td>';
+                    }else{
+                      $char = parseToCharacter($arrSol[$index++]);
+                      if($char == "\\"){
+                        $j--;
+                      }else{
+                        echo '<td style="border:1px solid black; width:50px;">'.$char.'</td>';
+                      }
+                    }
+                  }
+                }
+              echo "</tr>";
+            }
+            echo "</table>
+                </div>";
+      }
+      if($gentype == 'C'){
+        echo "<br><br><div>
+                <div style='background-color:rgb(185,125,0); color:white; border-top: 1px solid black; border-bottom: 1px solid black;'>
+                  <h2 style='text-align:left; margin-left:20px; margin-bottom:auto; margin-top:0px; height: 40px'>Original Quote</h2>
+                </div><br>
+                <div>".$quote."</div><br>
+              </div>";
+      }
+  echo "</div>";
+//END OF PHRASEPRINT
+}
 
 function getIntegerEquiv($char){
   switch($char){
@@ -541,6 +1033,8 @@ function getIntegerEquiv($char){
         return 9;
       case '0':
         return 0;
+      default:
+        return " ";
     }
   }
 
@@ -560,14 +1054,19 @@ function getIntegerEquiv($char){
         break;
       case 6:
         $number *= 100000;
+        break;
       case 7:
         $number *= 1000000;
+        break;
       case 8:
         $number *= 10000000;
+        break;
       case 9:
         $number *= 100000000;
+        break;
       case 10:
         $number *= 1000000000;
+        break;
       default:
         break;
     }
@@ -575,20 +1074,24 @@ function getIntegerEquiv($char){
   }
 
 function parseInt($string){
+  //todo: validate string input
   $chars = str_split($string);
   $tensPlace = strlen($string);
-  $integer = 0;
-  $number = 0;
+  $INTEGER = 0;
+  $add = 0;
   for($i = 0; $i<strlen($string); $i++){
-      $number = getIntegerEquiv($chars[$i]);
-      if($number == 0){
-        $tensPlace--;
-      }else {
-        $number = toTensPlace($number, $tensPlace);
-        $integer += $number;
-        $tensPlace--;
+      $add = getIntegerEquiv($chars[$i]);
+      if(is_integer($add)){
+        if($add == 0){
+          $tensPlace--;
+        }else {
+          $add = toTensPlace($add, $tensPlace);
+          $INTEGER += $add;
+          $tensPlace--;
+        }
       }
   }
-  return $integer;
+  return $INTEGER;
+
 }
 ?>

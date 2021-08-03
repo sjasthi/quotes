@@ -1,4 +1,4 @@
-<?php $page_title = ' Quote Drop'; ?>
+<?php $page_title = ' Quote Float'; ?>
 
 <?php
 $nav_selected = "LIST";
@@ -6,8 +6,9 @@ $left_buttons = "NO";
 $left_selected = "";
 require 'db_credentials.php';
 include("./nav.php");
+include("puzzlemaker.php");
+include("rebuild-puzzle-form.php");
 ?>
-
 
 <?php
 error_reporting(0);
@@ -22,7 +23,6 @@ $db->set_charset("utf8");
 
 if (!$touched) {
 	echo 'You need to select an entry. Go back and try again. <br>';
-
 ?>
 
 	<button><a class="btn btn-sm" href="admin.php">Go back</a></button>
@@ -44,34 +44,37 @@ $norows = 16;
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 
+<form id="columnnumber_form" method="post">
+
+<input type="submit" name="generate" id="generate" value="Generate" id="generate">
+<!-- Width dropdown selector, default value is 10 -->
+<label for="width">Columns:</label>
+    <select name="width" id="width" autocomplete="off">
+        <?php
+        if (isset($_POST['width'])) {
+            $width = $_POST['width'];
+        } else {
+            $width = get_preference('DEFAULT_COLUMN_COUNT');
+            if (is_null($width)) {
+                // if no datbase preference for width exists, default value is 16
+                $width = "12";
+            }
+        }
+        for ($i = 8; $i <= 13; $i++) {
+            echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
+        }
+        ?>
+    </select>
+
+        <?php
+                    echo '<input type="hidden" name="ident" value="'.$_POST["ident"].'"> ';
+        ?>
+
+</form>
+
+
+
 <div id="convert-to-image">
-	<form id="columnnumber_form" method="post">
-
-	<input type="submit" name="generate" id="generate" value="Generate" id="generate">
-	<!-- Width dropdown selector, default value is 10 -->
-	<label for="width">Columns:</label>
-	    <select name="width" id="width" autocomplete="off">
-	        <?php
-	        if (isset($_POST['width'])) {
-	            $width = $_POST['width'];
-	        } else {
-	            $width = get_preference('DEFAULT_COLUMN_COUNT');
-	            if (is_null($width)) {
-	                // if no datbase preference for width exists, default value is 16
-	                $width = "12";
-	            }
-	        }
-	        for ($i = 8; $i <= 13; $i++) {
-	            echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
-	        }
-	        ?>
-	    </select>
-
-	        <?php
-						echo '<input name="ident" value="'.$_POST["ident"].'" style="visibility:hidden"> ';
-	        ?>
-
-	</form>
 	<?php
 
 	echo '<h2 id="title">Float Quote</h2><br>';
@@ -80,8 +83,18 @@ $norows = 16;
 	$sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
 	$resultPunct = mysqli_query($db,$sqx);
 
-	if($rowPunct =mysqli_fetch_array($resultPunct)){
+	while ($rowPunct =mysqli_fetch_array($resultPunct)){
 		$punctuation=$rowPunct["value"];
+	}
+
+	if (isset($_POST['width'])) {
+			$width = $_POST['width'];
+	} else {
+			$width = get_preference('DEFAULT_COLUMN_COUNT');
+			if (is_null($width)) {
+					// if no datbase preference for width exists, default value is 16
+					$width = "12";
+			}
 	}
 
 	if ($result->num_rows > 0) {
@@ -93,7 +106,12 @@ $norows = 16;
 	if (isset($quoteline) == false){
 		exit(0);
 	}
-	include("puzzlemaker.php");
-	FloatMaker($quoteline, $width);
+	else {
+		if ($punctuation == "FALSE"){
+			$quoteline = str_replace(['?', '!', "'", '.', '-', ';', ':', '[', ']',
+			 ',', '/','{', '}', ')', '('], '', $quoteline);
+		}
+		FloatMaker($quoteline, $width);
+	}
 	?>
 </div>

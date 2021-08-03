@@ -10,8 +10,41 @@
 ?>
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+
+<form id="columnnumber_form" method="post">
+
+<input type="submit" name="generate" id="generate" value="Generate" id="generate">
+<!-- Width dropdown selector, default value is 10 -->
+<label for="width">Columns:</label>
+    <select name="width" id="width" autocomplete="off">
+        <?php
+        if (isset($_POST['width'])) {
+            $width = $_POST['width'];
+        } else {
+            $width = get_preference('DEFAULT_COLUMN_COUNT');
+            if (is_null($width)) {
+                // if no datbase preference for width exists, default value is 16
+                $width = "12";
+            }
+        }
+        for ($i = 8; $i <= 13; $i++) {
+            echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
+        }
+        ?>
+    </select>
+
+        <?php
+                    echo '<input type="hidden" name="ident" value="'.$_POST["ident"].'"> ';
+        ?>
+
+</form>
+
+
+
 <?php
 include_once 'db_credentials.php'; 
+include("./colorScheme.php");
+
 
 
   $sql = "SELECT * FROM quote_table
@@ -55,6 +88,44 @@ $nochars=3;
 		$nochars=$row2["value"];
 	}
 
+		//added in 
+		$sqColor= 'BLUE';
+		$sqx = "SELECT * FROM preferences WHERE name = 'SQUARE_COLOR_PREFERENCE'";
+		$resultSq = mysqli_query($db,$sqx);
+		
+		while ($rowSq =mysqli_fetch_array($resultSq))
+		{ 
+			$sqColor=$rowSq["value"];
+		}
+	
+		$letterColor= 'BLUE';
+		$sqx = "SELECT * FROM preferences WHERE name = 'LETTER_COLOR_PREFERENCE'";
+		$resultLetter = mysqli_query($db,$sqx);
+		
+		while ($rowLetter =mysqli_fetch_array($resultLetter))
+		{ 
+			$letterColor=$rowLetter["value"];
+		}
+	
+		$fillColor= 'BLUE';
+		$sqx = "SELECT * FROM preferences WHERE name = 'FILL_COLOR_PREFERENCE'";
+		$resultFill = mysqli_query($db,$sqx);
+		
+		while ($rowFill =mysqli_fetch_array($resultFill))
+		{ 
+			$fillColor=$rowFill["value"];
+		}
+	
+		$lineColor= 'BLUE';
+		$sqx = "SELECT * FROM preferences WHERE name = 'LINE_COLOR_PREFERENCE'";
+		$resultLine = mysqli_query($db,$sqx);
+		
+		while ($rowLine =mysqli_fetch_array($resultLine))
+		{ 
+			$lineColor=$rowLine["value"];
+		}
+		//added in
+
 	if ($resultQuote->num_rows > 0) {
 	while($row = $resultQuote->fetch_assoc()){
 	
@@ -73,6 +144,3 @@ $nochars=3;
 	}
 }
 ?>
-
-
-

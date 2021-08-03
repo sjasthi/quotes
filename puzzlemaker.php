@@ -943,7 +943,6 @@
 					<br>
 					<input type="hidden" id="original_quote" value="<?php echo $quote; ?>">
 					<button id="submitSolution" onclick="checkSolution()">Submit</button>
-					<button id="captureTable" onclick="takeshot()">Generate</button>
 					<div id="output"></div>
 					<script type="text/javascript" src="js/html2canvas.js"></script>
 					<div class="panel" id="capture">

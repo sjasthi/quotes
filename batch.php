@@ -6,9 +6,9 @@
   include('batch-helper.php');
   include('nav.php');
   include('puzzlemaker.php');
- // include('grabzit/lib/GrabzItClient.php');
- // include('grabzit/lib/GrabzItPDFOptions.php');
   include_once 'db_credentials.php';
+  include("./colorScheme.php");
+
 ?>
 
 <script type="text/javascript" src="js/main.js"></script>
@@ -26,18 +26,15 @@
 </style>
 
 <link rel="stylesheet" href="batch.css">
-<div id="wrap">
-    <div id="colorScheme">
-    
-   <input type="button" id="cs1" value="PowerPoint Generate" onclick="setScheme(this)"></input>
-
-
-    </div>
 
 <?php
   $removeForm = false;
-  if(isset($_POST['remove'])){
-    $removeForm = true;
+  if(isset($_POST['remove']) && isset($_POST['selectedPuzzle'])
+  && (isset($_POST['startID']) && $_POST['startID'] != '')
+  && (isset($_POST['endID']) && $_POST['endID'] != '')) {
+    if(validResponse($_POST['selectedPuzzle'], $_POST['startID'], $_POST['endID']) == '1'){
+      $removeForm = true;
+    }
   }
 
   if($removeForm == true){
@@ -66,20 +63,21 @@
     <input name="endID" type="textarea" placeholder="Enter quote id" id="end" style="border-radius:4px;"
      onkeypress="return isNumberKey(event)"><br>
 
-    <input name="remove" style="visibility: hidden"><br>
+    <input name="remove" type="hidden"><br>
     <input type="submit" value="Generate">
   </form>
 </div>
 
 <div id="PuzzleContainer">
   <?php
-  if((isset($_POST['startID'])) && (isset($_POST['endID']))){
-    if($_POST['startID'] !== '' && $_POST['endID'] !== ''){
-      if(validResponse($_POST['selectedPuzzle'], $_POST['startID'], $_POST['endID']) == '1'){
+      if($removeForm){
+        echo '<div id="colorScheme" style="display:inline-block;">
+                  <input type="button" id="cs1" value="Export to Powerpoint" onclick="setScheme(this)"></input>
+                  <button class="genButton" onclick="generatePDF()">Export to PDF</button>
+              </div>';
+
         $flagged = true;
         $db->set_charset("utf8");
-
-        echo '<button class="genButton" onclick="generatePDF()">Export to PDF</button>';
 
         $modeType = "SELECT * FROM preferences WHERE name = 'FEELING_LUCKY_MODE'";
         $modeResult = mysqli_query($db, $modeType);
@@ -105,34 +103,36 @@
         $widthResult = mysqli_query($db, $gridWidthSQL);
         $width = mysqli_fetch_array($widthResult);
 
-        $count = 0;
+        $count = 1;
         for ($i = parseInt( $_POST['startID'] ); $i <= parseInt( $_POST['endID'] ); $i++ ){
+          
           //Begin generating puzzles
           $quoteSQL = "SELECT * FROM quote_table WHERE id = ".$i;
           $quoteResult = mysqli_query($db, $quoteSQL);
-          $count++;
           if($quoteResult->num_rows > 0){
+
             $quoteline = mysqli_fetch_array($quoteResult);
             $quote = $quoteline['quote'];
 
             if($punctuation['value'] == 'FALSE'){
-              $regex = '/[^a-z\s]/i';
-              $quote = preg_replace($regex, '', $quote);
+              $regex = array('?', '!', "'", '.', '-', ';', ':', '[', ']',
+        			 ',', '/','{', '}', ')', '(');
+              $quote = str_replace($regex, '', $quote);
             }
 
             switch($_POST['selectedPuzzle']){
               case 'Drop':
-                echo '<h2 class="puzzleHeader" id="title">Drop Puzzle: '.$count.'</h2><br>';
-                DropPrint($quote, $columnCount['value']);
+                echo '<h2 class="puzzleHeader" id="title">Drop Puzzle: '.$count++.'</h2><br>';
+                DropPrint($quote, $columnCount['value'],  $_POST['printType']);
                 break;
               case 'Float':
-                echo '<h2 class="puzzleHeader" id="title">Float Puzzle: '.$count.'</h2><br>';
+                echo '<h2 class="puzzleHeader" id="title">Float Puzzle: '.$count++.'</h2><br>';
                 error_reporting(1);
-                FloatPrint($quote, $columnCount['value']);
+                FloatPrint($quote, $columnCount['value'], $_POST['printType']);
                 break;
               case 'Drop-Float':
                 error_reporting(0);
-                echo'<h2 class="puzzleHeader">Drop-Float: '.$count.'</h2>';
+                echo'<h2 class="puzzleHeader">Drop-Float: '.$count++.'</h2>';
 
                 if($mode != null){
                   $quoteline2 = '';
@@ -182,164 +182,95 @@
                           $index = mt_rand(1,$lastID['id']);
                         }
                       }
-
                   }
-                  FloatDropPrint($quote, $quoteline2, $columnCount['value']);
                 }
+                FloatDropPrint($quote, $quoteline2, $columnCount['value'], $_POST['printType']);
                 break;
               case 'Scramble':
-                echo '<h2 class="puzzleHeader" id="title">Scramble Puzzle: '.$count.'</h2><br>';
-                ScramblePrint($quote);
+                echo '<h2 class="puzzleHeader" id="title">Scramble Puzzle: '.$count++.'</h2><br>';
+                ScramblePrint($quote, $_POST['printType']);
                 break;
               case 'Split':
-                echo '<h2 class="puzzleHeader" id="title">Split Puzzle: '.$count.'</h2><br>';
-                SplitPrint($quote, $chunkSize['value']);
+                echo '<h2 class="puzzleHeader" id="title">Split Puzzle: '.$count++.'</h2><br>';
+                SplitPrint($quote, $chunkSize['value'], $_POST['printType']);
                 break;
               case 'Slider-16':
-                echo'<h2 id="title">Slider 16</h2><br ';
-                slider16Print($quote, $width["value"], $height["value"]);
-
+                echo'<h2 class="puzzleHeader" id="title">Slider-16 Puzzle: '.$count.'</h2><br>';
+                slider16Print($quote, $_POST['printType'], $count++);
                 break;
               case 'Catch-A-Phrase':
-                echo'<h2>Catch a Phrase</h2>';
-                $nav_selected = "ADMIN";
-                $left_buttons = false;
-                $phrase;
-
-                if (isset($_POST["phrase"])) {
-                	// get phrase from posted value
-                	$phrase = $_POST["phrase"];
-                }else {
-                	// use default phrase
-                	$phrase = $quote;
-                }
-
-                $language = "Telugu";
-
-                // parse quote into characters separated by commas
-                $arr = parseToCodePoints($phrase);
-                $processed_phrase = "";
-                foreach ($arr as $ch) {
-                	$ch = parseToCharacter($ch);
-                	if ($ch == " " || ctype_punct($ch) || $ch == "") {
-                		// skip over spaces, blanks, and punctuation
-                		continue;
-                	}
-                	if ($processed_phrase == "") {
-                		$processed_phrase = $ch;
-                	} else {
-                		$processed_phrase = $processed_phrase . "," . $ch;
-                	}
-                }
-
-                // get filler values
-                $myfile = fopen("fillers.txt", "r") or die("Unable to open file!");
-                $filler = fread($myfile, filesize("fillers.txt"));
-                fclose($myfile);
-                ?>
-                <script src="phrase_scripts.js"></script>
-
-                <!-- input form for phrase and filler values -->
-                <form id="catch_a_phrase_form" method="post">
-                	<!-- phrase -->
-                	<label for="phrase" id="phraseLabel">Phrase</label>
-                	<input type="text" class="inputBox" name="phrase" id="phrase" value="<?php echo $phrase; ?>"
-                		title="type in your phrase here"
-                		spellcheck="false" autocomplete="off" required>
-                	<br><br>
-
-                	<!-- phrase values, each character should be separated by commas -->
-                	<label for="processedPhrase" id="processedPhraseLabel">Processed<br>Phrase</label>
-                	<input type="text" class="inputBox" name="processedPhrase" id="processedPhrase" value="<?php echo $processed_phrase; ?>"
-                		title="characters should be separated by commas, e.g.: a,b,c,d"
-                		spellcheck="false" autocomplete="off" required>
-                	<br><br>
-
-                  	<label for="fillers" id="fillersLabel">Fillers</label>
-                  	<textarea name="fillers" class="inputBox" id="fillers" title="characters should be separated by commas, e.g.: a,bc, d"
-                  	spellcheck="false" autocomplete="off" required><?php echo $filler; ?></textarea>
-                  	<br><br>
-
-                  	<!-- Height dropdown selector, default value retrieved from database -->
-                  	<label for="height">Grid Height:</label>
-                  	<select name="height" id="height" autocomplete="off">
-                  		<?php
-                  		if (isset($_POST['height'])) {
-                  			$height = $_POST['height'];
-                  		} else {
-                  			$height = get_preference('GRID_HEIGHT');
-                  			if (is_null($height)) {
-                  				// if no datbase preference for height exists, default value is 12
-                  				$height = "12";
-                  			}
-                  		}
-                  		for ($i = 10; $i <= 25; $i++) {
-                              echo '<option value="' . $i . '"' . (($i == $height) ? ' selected' : '' ) .'>' . $i . '</option>';
-                          }
-                  		?>
-                  	</select>
-                  	<br><br>
-
-                  	<!-- Width dropdown selector, default value is 10 -->
-                  	<label for="width">Grid Width:</label>
-                  	<select name="width" id="width" autocomplete="off">
-                  		<?php
-                  		if (isset($_POST['width'])) {
-                  			$width = $_POST['width'];
-                  		} else {
-                  			$width = get_preference('GRID_WIDTH');
-                  			if (is_null($width)) {
-                  				// if no datbase preference for width exists, default value is 16
-                  				$width = "16";
-                  			}
-                  		}
-                  		for ($i = 10; $i <= 25; $i++) {
-                              echo '<option value="' . $i . '"' . (($i == $width) ? ' selected' : '' ) .'>' . $i . '</option>';
-                          }
-                  		?>
-                  	</select>
-                  	<br><br>
-
-                  	<label for="show_solution">Hide Solution on Generate:</label>
-                  	<input type="checkbox" id='hide_solution' name="hide_solution" value="true" <?php if (isset($_POST['hide_solution']) && $_POST['hide_solution'] == 'true') echo "checked"; ?>>
-                  	<br><br>
-
-
-                	<input type="submit" name="generate" id="generate" value="Generate" id="generate">
-                	<br><br><br>
-
-                	<table id="game"></table>
-                	<br>
-                	<table id="solution"></table>
-                	<br>
-                	<button type="button" id="toggleSolution" name="toggleSolution">Show Solution</button>
-
-                	<!-- show grids on startup -->
-                	<script>
-                		gen(<?php echo ((isset($_POST['hide_solution']) && $_POST['hide_solution'] == 'true') ? "true" : "false"); ?>);
-                		document.getElementById("toggleSolution").addEventListener("click", function() { toggleSolution(false); });
-                	
-                  function createPowerpoint (src) {
-                    try {
-
-                    }
-
-                    catch (e) {
-
-                    }
-                  }
-                  </script>
-                </form>
-                <link type="text/css" media="all" href="phrase_style.css" rel="stylesheet">
-                <?php
+                echo'<h2 class="puzzleHeader" id="title">Catch a Phrase: '.$count.'</h2>';
+                phrasePrint($quote, $width['value'], $height['value'], $count++, $_POST['printType']);
                 break;
           }
+        } else {
+          echo "<br><br><div><div style='width:200px; height: 25px; background-color: rgb(205,55,25);
+          color:white; margin: auto; border-radius: 5px;'>Invalid puzzle ID: ".$_POST["startID"]."</div>";
+          echo "<br><a href='batch.php'><input type='submit' value='return'/></a></div>";
         }
+        
       }//end of for loop
+
+      $punctuation=TRUE;
+      $sqx = "SELECT * FROM preferences WHERE name = 'KEEP_PUNCTUATION_MARKS'";
+      $resultPunct = mysqli_query($db,$sqx);
+      
+      while ($rowPunct =mysqli_fetch_array($resultPunct))
+      { 
+        $punctuation=$rowPunct["value"];	
+      }
+    
+    //include("puzzlemaker.php");
+    
+    $nochars=3;
+      $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
+      $result2 = mysqli_query($db,$sqx);
+      
+      while ($row2 =mysqli_fetch_array($result2))
+      { 
+        $nochars=$row2["value"];
+      }
+    
+      //added in 
+      $sqColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'SQUARE_COLOR_PREFERENCE'";
+      $resultSq = mysqli_query($db,$sqx);
+      
+      while ($rowSq =mysqli_fetch_array($resultSq))
+      { 
+        $sqColor=$rowSq["value"];
+      }
+    
+      $letterColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'LETTER_COLOR_PREFERENCE'";
+      $resultLetter = mysqli_query($db,$sqx);
+      
+      while ($rowLetter =mysqli_fetch_array($resultLetter))
+      { 
+        $letterColor=$rowLetter["value"];
+      }
+    
+      $fillColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'FILL_COLOR_PREFERENCE'";
+      $resultFill = mysqli_query($db,$sqx);
+      
+      while ($rowFill =mysqli_fetch_array($resultFill))
+      { 
+        $fillColor=$rowFill["value"];
+      }
+    
+      $lineColor= 'BLUE';
+      $sqx = "SELECT * FROM preferences WHERE name = 'LINE_COLOR_PREFERENCE'";
+      $resultLine = mysqli_query($db,$sqx);
+      
+      while ($rowLine =mysqli_fetch_array($resultLine))
+      { 
+        $lineColor=$rowLine["value"];
+      }
+      //added in
+  
       ?>
       </div>
       <?php
     }
-  }
-}
   ?>
