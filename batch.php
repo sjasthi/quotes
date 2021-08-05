@@ -15,7 +15,12 @@
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="batch-service.js"></script>
 <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+
+
 <style>
+
+
 
 .puzzleHeader{
   background-color: rgb(55,95,145);
