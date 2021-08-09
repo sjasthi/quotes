@@ -1,4 +1,5 @@
 <?php
+//LIBRARY FROM https://github.com/PHPOffice/PHPPresentation/tree/develop/src/PhpPresentation
   $nav_selected = "LIST";
   $left_buttons = "NO";
   $left_selected = "";
