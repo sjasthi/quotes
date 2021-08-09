@@ -8,6 +8,16 @@
   include('puzzlemaker.php');
   include_once 'db_credentials.php';
   include("./colorScheme.php");
+/*  include('./PhpPresentation-develop/src/PhpPresentation.php');
+  include('./CommonX/src/Common/Autoloader.php');
+
+  
+  // powerpoint functionality
+  require_once 'PhpPresentation-develop\src\PhpPresentation\Autoloader.php';
+  \PhpPresentation-develop\src\PhpPresentation\Autoloader::register();
+  require_once 'CommonX\src\Common\Autoloader.php';
+  \CommonX\src\Common\Autoloader::register();
+  */
 
 ?>
 
@@ -120,9 +130,9 @@
             $quote = $quoteline['quote'];
 
             if($punctuation['value'] == 'FALSE'){
-              $regex = array('?', '!', "'", '.', '-', ';', ':', '[', ']',
-        			 ',', '/','{', '}', ')', '(');
-              $quote = str_replace($regex, '', $quote);
+              $quote = str_replace(['?', '!', "'", '.', '-', ';', ':', '[', ']',
+                     ',', '/','{', '}', ')', '(', '^', '@', '#', '$', '%', '&', '+', '', '=',
+                 '\\', '*'], '', $quote);
             }
 
             switch($_POST['selectedPuzzle']){
@@ -273,6 +283,44 @@
         $lineColor=$rowLine["value"];
       }
       //added in
+
+
+    //powerpoint functionality  
+
+    $objPHPPowerPoint = new PhpPresentation();
+
+    // Create slide
+    $currentSlide = $objPHPPowerPoint->getActiveSlide();
+
+    // Create a shape (drawing)
+    $shape = $currentSlide->createDrawingShape();
+    $shape->setName('PHPPresentation logo')
+          ->setDescription('PHPPresentation logo')
+          ->setPath('./resources/phppowerpoint_logo.gif')
+          ->setHeight(36)
+          ->setOffsetX(10)
+          ->setOffsetY(10);
+    $shape->getShadow()->setVisible(true)
+                      ->setDirection(45)
+                      ->setDistance(10);
+
+    // Create a shape (text)
+    $shape = $currentSlide->createRichTextShape()
+          ->setHeight(300)
+          ->setWidth(600)
+          ->setOffsetX(170) 
+          ->setOffsetY(180);
+    $shape->getActiveParagraph()->getAlignment()->setHorizontal( Alignment::HORIZONTAL_CENTER );
+    $textRun = $shape->createTextRun('Thank you for using PHPPresentation!');
+    $textRun->getFont()->setBold(true)
+                      ->setSize(60)
+                      ->setColor( new Color( 'FFE06B20' ) );
+
+    $oWriterPPTX = IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
+    $oWriterPPTX->save(__DIR__ . "/sample.pptx");
+    $oWriterODP = IOFactory::createWriter($objPHPPowerPoint, 'ODPresentation');
+    $oWriterODP->save(__DIR__ . "/sample.odp"); 
+
   
       ?>
       </div>
