@@ -13,11 +13,12 @@ function drop(event) {
 }
 
 function checkStats() {
+  
   if (checkIfWinner()) {
-    alert("Congratulation! ");
+    alert("Congratulations!  Well Played!");
   }
   else {
-    alert('Try again');
+    alert('Incorrect Answer! Please try again!');
 
   }
 }
