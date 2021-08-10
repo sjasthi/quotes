@@ -1,0 +1,174 @@
+.jumbotron {
+	background-image: url("silcHeader.png");
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-o-background-size: 100% 100%;
+	background-size: 100% 100%;
+	height: 179px;
+}
+
+table.dabble tr td {
+	width: 48px;
+	height: 48px;
+	font-size: 1.875em;
+	text-align: center;
+}
+
+table.letters tr td.filled {
+	width: 48px;
+	height: 48px;
+	font-size: 20px;
+	text-align: center;
+	border: 2px solid #000000;
+	background-color: #EEEEEE;
+}
+
+table.letters tr td.empty {
+	width: 48px;
+	height: 48px;
+	font-size: 20px;
+	text-align: center;
+	border: 2px solid #FFFFFF;
+	background-color: #FFFFFF;
+}
+
+table.puzzle tr td.filled {
+	width: 48px;
+	height: 48px;
+	font-size: 20px;
+	text-align: center;
+	border: 2px solid #000000;
+}
+
+table.puzzle tr td.empty {
+	width: 48px;
+	height: 48px;
+	font-size: 20px;
+	text-align: center;
+	border: 0px solid #000000;
+	
+}
+
+#offset{
+	width: 50px !important;
+}
+
+.words{
+	border: 2px solid #000000; 
+	overflow:auto;
+}
+
+.testtable{
+	display: table;
+}
+
+.testrow{
+	display: table-row;
+}
+
+.testrowoffset{
+	display: table-row;
+	left:24px;
+}
+
+.testcell{
+	display: table-cell;
+	width: 48px;
+	height: 48px;
+	font-size: 20px;
+	border: 2px solid #000000;
+	background-color: #EEEEEE;
+}
+
+.pyramid {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.pyramid .row {
+	font-size: 0px;
+	text-align: center;
+}
+
+.pyramid .row * {
+	font-size: 20px;
+}
+
+.pyramid .row {
+	font-size: 0px;
+	text-align: center;
+}
+
+.pyramid .row * {
+	font-size: 20px;
+}
+
+.pyramid .inside {
+	text-align: center;
+	display: inline-block;
+	width: 48px;
+	height: 48px; 
+	border-style: solid;
+	border-color: #000000;
+	border-width: 2px 2px 2px 2px;
+}
+
+.pyramid .left{
+	text-align: center;
+	display: inline-block;
+	width: 48px;
+	height: 48px; 
+	border-style: solid;
+	border-color: #000000;
+	border-width: 2px 2px 2px 2px;
+}
+
+.pyramid .right{
+	text-align: center;
+	display: inline-block;
+	width: 48px;
+	height: 48px; 
+	border-style: solid;
+	border-color: #000000;
+	border-width: 2px 2px 2px 2px;
+}
+
+.pyramid .top{
+	text-align: center;
+	display: inline-block;
+	width: 48px;
+	height: 48px; 
+	border-style: solid;
+	border-color: #000000;
+	border-width: 2px 2px 2px 2px;
+}
+
+.pyramid .topRight{
+	text-align: center;
+	display: inline-block;
+	width: 48px;
+	height: 48px; 
+	border-style: solid;
+	border-color: #000000;
+	border-width: 2px 2px 2px 2px;
+}
+
+.pyramid .bottom{
+	text-align: center;
+	display: inline-block;
+	width: 48px;
+	height: 48px; 
+	border-style: solid;
+	border-color: #000000;
+	border-width: 2px 2px 2px 2px;
+}
+
+.pyramid .bottomRight{
+	text-align: center;
+	display: inline-block;
+	width: 48px;
+	height: 48px; 
+	border-style: solid;
+	border-color: #000000;
+	border-width: 2px 2px 2px 2px;
+}

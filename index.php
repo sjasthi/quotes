@@ -82,31 +82,31 @@ include("nav.php");
             foreach ($quotes as $quote) {
               ?>
               <tr>
-                <td class="filled"><a href="feelingLucky.php?type=drop_quote&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=DROPQUOTE&id=<?php echo $quote['id']; ?>">
                   <img src="./images/drop_quote.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="feelingLucky.php?type=float_quote&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=FLOATQUOTE&id=<?php echo $quote['id']; ?>">
                   <img src="./images/float_quote.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="feelingLucky.php?type=drop_float&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=DROPFLOAT&id=<?php echo $quote['id']; ?>">
                 <img src="./images/drop_float.png" height="50" width="50">
                 <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="feelingLucky.php?type=scrambler&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=SCRAMBLE&id=<?php echo $quote['id']; ?>">
                 <img src="./images/scrambler.png" height="50" width="50">
                 <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a></td>
 
-                <td class="filled"><a href="feelingLucky.php?type=splitter&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=SPLIT&id=<?php echo $quote['id']; ?>">
                   <img src="./images/splitter.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
 
-                <td class="filled"><a href="feelingLucky.php?type=slider16&id=<?php echo $quote['id']; ?>">
+                <td class="filled"><a href="feelingLucky.php?type=SLIDER16&id=<?php echo $quote['id']; ?>">
                   <img src="./images/slider16.png" height="50" width="50">
                   <br><?php echo $quote['topic']; ?><br><?php echo $quote['author']; ?></a>
                 </td>
@@ -122,10 +122,10 @@ include("nav.php");
       </div>
     </div>
   </div>
-  <!-- Process the mysqli_result now 
+  <!-- Process the mysqli_result now
 Based on the count of word_sets received (it will be = $puzzles_to_show or all puzzles),
 display the puzzle icons on the home page as follows.
-Show $puzzles_per_row per row. 
+Show $puzzles_per_row per row.
 So, by default, users will see the last 100 puzzles with latest one showing up first.
 
 Based on the "type", we can identify the ICON.
