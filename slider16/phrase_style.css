@@ -1,0 +1,83 @@
+/*
+ * Class: ICS 325 Section 01 Summer 2019
+ * Name: Samara Garrett
+ * Assignment: Assignment 2
+ */
+
+/* all input boxes */
+.inputBox {
+    width: 400px;
+    box-sizing: border-box;
+}
+
+/* phrase input box */
+#phrase, #processedPhrase {
+    padding: 5px;
+    border: 1px solid;
+    border-color: black;
+    border-radius: 5px;
+    line-height: 2em;
+}
+
+/* input box for fillers */
+#fillers {
+    height: 10em;
+    border: 1px solid;
+    border-color: black;
+    border-radius: 20px;
+    resize: none;
+    padding: 10px;
+}
+
+/* all labels */
+label {
+    display: inline-block;
+    min-width: 6em;
+}
+
+/* label for phrase input box */
+#phraseLabel, #processedPhraseLabel {
+    vertical-align: middle;
+}
+
+/* label for fillers input box */
+#fillersLabel {
+    vertical-align: top;
+}
+
+/* generate button */
+#generate, #toggleSolution {
+    font-size: medium;
+    background-color: lightskyblue;
+    padding: 5px;
+    border: 3px solid;
+    border-color: black;
+    border-radius: 5px;
+}
+
+/* table formatting */
+#game table, tr, td, #solution table, tr, td {
+    padding: 5px;
+}
+
+/* table cell formatting */
+#game td, #solution td {
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    margin: 0px;
+    padding: 5px;
+    border: 1px solid;
+    border-color: black;
+    text-align: center;
+}
+
+#game, #solution {
+    display: block;
+    margin: 0 auto;
+}
+
+#emptyCell {
+    border-top: 0 !important;
+    border-left: 0 !important;
+}
