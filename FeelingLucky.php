@@ -66,289 +66,19 @@
 <link type="text/css" media="all" href="phrase_style.css" rel="stylesheet" />
 <script type="text/javascript" src="js/html2canvas.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
-<button class="backButton"><a class="btn btn-sm" href="index.php" style="color:white;">Return</a></button>
+<button class="backButton"><a class="btn btn-sm" href="admin.php" style="color:white;">Return</a></button>
+
 <?php
-$spaces = array();
-$sql = "SELECT * FROM quote_table
-      WHERE id = '-1'";
-$flagged = true;
-$touched = isset($_GET['id']);
-$db->set_charset("utf8");
-if ($touched) {
-  if ($touched) {
-    $id = $_GET['id'];
-    $type = $_GET['type'];
 
-    $sql = "SELECT * FROM quote_table
-          WHERE id = '$id'";
-  }
-  if ($type == "drop") {
-
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-
-  $nocol = $norows =  16; //later i'll update this to take from preferences
-  echo '<h2 id="title">Drop Quote</h2><br>';
-
-  $uninpo = 1;
-  $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
-
-
-    $result2 = mysqli_query($db, $sqx);
-    while ($row2 = mysqli_fetch_array($result2)) {
-      $nocol = $row2["value"];
-    }
-
-
-
-    if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-        $quoteline = $row["quote"];
-      }
-      if (isset($quoteline) == false){
-        exit(0);
-      }
-      else {
-        DropM($quoteline, $nocol, $touched);	
-      }
-    }
-  }
-  ?>
-  <hr />
-
-
-  <?php
-  if ($touched) {
-
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM quote_table
-              WHERE id = '$id'";
-  }
-
-  if ($type == "float_quote") {
-  $norows = 16;
-  $page_title = ' Quote Float'; 
-
-
-  $sql = "SELECT * FROM quote_table
-        WHERE id = '-1'";
-
-  $db->set_charset("utf8");
-
-  $touched = isset($_GET['id']);
-
-  if ($touched) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM quote_table
-              WHERE id = '$id'";
-  }
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-
-
-
-  $nochars = 3;
-  echo '<h2 id="title">Float Quote</h2><br>';
-  #$uninpo = 1;
-  $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
-  # $result2 = mysqli_query($db, $sqx);
-  if (!$result2 = $db->query($sqx)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-
-  while ($row2 = mysqli_fetch_array($result2)) {
-    $nochars = $row2["value"];
-  }
-
-
-
-
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-
-      $quoteline = $row["quote"];
-    }
-  }
-      FloatMaker($quoteline, $norows);
-    }
-    ?>
-  </div>
-
-
-  <hr />
-
-
-  <?php
-  if ($type == "scramble") {
-
-  echo '<h2 id="title">Scramble Quote</h2><br>';
-
-  $page_title = ' Quote Scramble'; 
-
-
-  $sql = "SELECT * FROM quote_table
-        WHERE id = '-1'";
-
-  $db->set_charset("utf8");
-
-  $touched = isset($_GET['id']);
-
-  if ($touched) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM quote_table
-              WHERE id = '$id'";
-  }
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-  
-
-  $sql = "SELECT * FROM quote_table
-        WHERE id = '-1'";
-
-  $db->set_charset("utf8");
-
-
-  $touched = isset($_GET['id']);
-
-  if ($touched) { 
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM quote_table
-          WHERE id = '$id'";
-  }
-
-  if (!$result = $db->query($sql)) {
-    die('There was an error running query[' . $connection->error . ']');
-  }
-
-
-    if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-        $quoteline = $row["quote"];
-      }
-    }
-
-    $words  = ScrambleMaker($quoteline);
-    $arrWord =  str_split_unicode($words);
-    //    $arrWord =  str_split($words);
-
-    if ($words == '') die;
-
-    
-    ?>
-
-    <input type="hidden" id="scrableValue" value="<?php echo $quoteline; ?>">
-
-    <div id="cardPile">
-      <?php
-      foreach ($arrWord as $key => $val) {
-        if ($val == ' ') {
-          echo '<div class="blank-box" style="border: 1px solid #fff;"></div>';
-        } else {
-      ?>
-          <div class="blank-box">
-            <div id="card<?php echo  $val; ?>" draggable="true" ondragstart="drag(event)">
-              <span><?php echo  $val; ?></span>
-            </div>
-          </div>
-      <?php
-        }
-      }
-
-    ?>
-
-  </div>
-
-
-  <div id="cardSlots">
-    <?php
-    foreach ($arrWord as $key => $val) {
-      if ($val == ' ') {
-        echo '<div style="border: 1px solid #fff;"></div>';
-      } else {
-    ?>
-        <div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-    <?php
-      }
-    }
-    ?>
-  </div>
-  <div>
-
-    <button id="submit-game" onclick="checkStats()">Submit</button>
-  </div>
-
-
-
-  <hr />
-  <?php
-  }
-    ?>
-
-
-  <?php 
-  if ($type == "splitter") {
-
-    $page_title = ' Quote Split'; 
-
-
-    $sql = "SELECT * FROM quote_table
-          WHERE id = '-1'";
-
-    $db->set_charset("utf8");
-
-    $touched = isset($_GET['id']);
-
-    if ($touched) {
-      $id = $_GET['id'];
-      $sql = "SELECT * FROM quote_table
-                WHERE id = '$id'";
-    }
-
-    if (!$result = $db->query($sql)) {
-      die('There was an error running query[' . $connection->error . ']');
-    }
-
-
-
-    $nochars = 3;
-    echo '<h2 id="title">Split Quote</h2><br>';
-    #$uninpo = 1;
-    $sqx = "SELECT * FROM preferences WHERE name = 'DEFAULT_CHUNK_SIZE'";
-    # $result2 = mysqli_query($db, $sqx);
-    if (!$result2 = $db->query($sqx)) {
-      die('There was an error running query[' . $connection->error . ']');
-    }
-
-    while ($row2 = mysqli_fetch_array($result2)) {
-      $nochars = $row2["value"];
-    }
-
-
-
-
-    if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-
-        $quoteline = $row["quote"];
-      }
-    }
-    SplitMaker($quoteline, $nochars);
-  }
-
-  
-
-}
+  $flagged = true;
   $db->set_charset("utf8");
 
   $mode;
-  if(isset($_POST['id'])){
+  $ptype;
+  if(isset($_GET['id'])&&isset($_GET['type'])){
+    $ptype = $_GET['type'];
+    $sql = "SELECT * FROM quote_table WHERE id =".$_GET['id'];
+  }else if(isset($_POST['id'])){
     $sql = "SELECT * FROM quote_table WHERE id =".$_POST['id'];
   }else{
     //Puzzle generation dependant on feeling_lucky_mode when no id is given
@@ -379,9 +109,12 @@ if ($touched) {
 
   //Retrieve the puzzle preferences to determine what type of puzzle to Generate
   //as well as how to generate it
-  $puzzleTypeSQL = 'SELECT * FROM preferences WHERE name = "FEELING_LUCKY_TYPE"';
-  $pTypeResult = mysqli_query($db, $puzzleTypeSQL);
-  $puzzleType = mysqli_fetch_array($pTypeResult);
+  if(!isset($_GET['type'])){
+    $puzzleTypeSQL = 'SELECT * FROM preferences WHERE name = "FEELING_LUCKY_TYPE"';
+    $pTypeResult = mysqli_query($db, $puzzleTypeSQL);
+    $puzzleType = mysqli_fetch_array($pTypeResult);
+    $ptype = $puzzleType['value'];
+  }
 
   $columnCountSQL = "SELECT * FROM preferences WHERE name = 'DEFAULT_COLUMN_COUNT'";
   $cCountResult = mysqli_query($db, $columnCountSQL);
@@ -406,12 +139,13 @@ if ($touched) {
 
   if(isset($quoteline)){
     if($punctuation['value'] == 'FALSE'){
-      $regex = '/[^a-z\s]/i';
-      $quoteline = preg_replace($regex, '', $quoteline);
+      $quoteline = str_replace(['?', '!', "'", '.', '-', ';', ':', '[', ']',
+			 ',', '/','{', '}', ')', '(', '^', '@', '#', '$', '%', '&', '+', '_', '=',
+		 '\\', '*'], '', $quoteline);
     }
   }
 
-  switch($puzzleType['value']){
+  switch($ptype){
 
     case 'DROPQUOTE':
       echo '<h2 id="title">Drop Quote</h2><br>';
@@ -545,57 +279,62 @@ if ($touched) {
           error_reporting(0);
           echo'<h2>Drop Float</h2>';
 
-          if($mode != null){
-            $quoteline2 = '';
-            $invalid = true;
+          if($mode == null){
+            $modeType = "SELECT * FROM preferences WHERE name = 'FEELING_LUCKY_MODE'";
+            $moderesult = mysqli_query($db, $modeType);
+            $mode = mysqli_fetch_array($moderesult);
+          }
 
-            if($mode['value'] == "FIRST"){
-              $index = 2;
-              while($invalid){
-                $sql = "SELECT * FROM quote_table WHERE id = ".$index;
-                $result = mysqli_query($db, $sql);
-                $candidate = mysqli_fetch_array($result);
-                $quoteline2 = $candidate['quote'];
-                if($quoteline2 != ''){
-                  $invalid = false;
-                }
-                $index++;
+          $quoteline2 = '';
+          $invalid = true;
+
+          if($mode['value'] == "FIRST"){
+            $index = 2;
+            while($invalid){
+              $sql = "SELECT * FROM quote_table WHERE id = ".$index;
+              $result = mysqli_query($db, $sql);
+              $candidate = mysqli_fetch_array($result);
+              $quoteline2 = $candidate['quote'];
+              if($quoteline2 != ''){
+                $invalid = false;
               }
-            } else{
-                $length = "SELECT * FROM quote_table order by id DESC limit 1";
-                $result = mysqli_query($db,$length);
-                $lastID = mysqli_fetch_array($result);
-
-                if($mode['value'] == "LAST"){
-                  $index = $lastID['id'] - 1;
-                  while($invalid){
-                    $sql = "SELECT * FROM quote_table WHERE id = ".$index;
-                    $result = mysqli_query($db, $sql);
-                    $candidate = mysqli_fetch_array($result);
-                    $quoteline2 = $candidate['quote'];
-                    if($quoteline2 != ''){
-                      $invalid = false;
-                    }
-                    $index--;
-                  }
-                } else if($mode['value'] == "RANDOM"){
-                  $index = mt_rand(1,$lastID['id']);
-                  while($invalid){
-                    $sql = "SELECT * FROM quote_table WHERE id = ".$index;
-                    $result = mysqli_query($db, $sql);
-                    $candidate = mysqli_fetch_array($result);
-                    $quoteline2 = $candidate['quote'];
-                    if($quoteline2 != ''){
-                      $invalid = false;
-                    }
-                    $index = mt_rand(1,$lastID['id']);
-                  }
-                }
+              $index++;
             }
+          } else{
+              $length = "SELECT * FROM quote_table order by id DESC limit 1";
+              $result = mysqli_query($db,$length);
+              $lastID = mysqli_fetch_array($result);
+              if($mode['value'] == "LAST"){
+                $index = $lastID['id'] - 1;
+                while($invalid){
+                  $sql = "SELECT * FROM quote_table WHERE id = ".$index;
+                  $result = mysqli_query($db, $sql);
+                  $candidate = mysqli_fetch_array($result);
+                  $quoteline2 = $candidate['quote'];
+                  if($quoteline2 != ''){
+                    $invalid = false;
+                  }
+                  $index--;
+                }
+              } else if($mode['value'] == "RANDOM"){
+                $index = mt_rand(1,$lastID['id']);
+                while($invalid){
+                  $sql = "SELECT * FROM quote_table WHERE id = ".$index;
+                  $result = mysqli_query($db, $sql);
+                  $candidate = mysqli_fetch_array($result);
+                  $quoteline2 = $candidate['quote'];
+                  if($quoteline2 != ''){
+                    $invalid = false;
+                  }
+                  $index = mt_rand(1,$lastID['id']);
+                }
+              }
+
 
             if($punctuation['value'] == 'FALSE'){
-              $regex = '/[^a-z\s]/i';
-              $quoteline2 = preg_replace($regex, '', $quoteline2);
+              $quoteline2 = str_replace(['?', '!', "'", '.', '-', ';', ':', '[', ']',
+        			 ',', '/','{', '}', ')', '(', '^', '@', '#', '$', '%', '&', '+', '_', '=',
+        		 '\\', '*'], '', $quoteline2);
             }
 
             FloatDropMaker($quoteline, $quoteline2, $columnCount['value']);
