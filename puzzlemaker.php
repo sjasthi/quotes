@@ -503,9 +503,9 @@
 			quote = quote.trim();
 
 			if (quote == ans) {
-				alert("Congratulations! You have solved it!");
+				alert("Congratulations! Well Played!");
 			} else {
-				alert("Sorry! It is not quite right!");
+				alert("Incorrect Answer! Please try again!");
 			}
 		}
 
@@ -538,9 +538,9 @@
 
 			console.log(quote2);
 			if (quote1 == ans1 && quote2 == ans2) {
-				alert("Congratulations! You have solved it!");
+				alert("Congratulations! Well Played!");
 			} else {
-				alert("Sorry! It is not quite right!");
+				alert("Incorrect Answer! Please try again!");
 			}
 		}
 	</script>
