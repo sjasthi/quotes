@@ -62,7 +62,9 @@ $quotes = get_quotes();
 See the difference between action and formaction.
 button formaction overrides form action attribute.
 Since we are having specific action for each of the buttons,
-it is NOT required to have a action attribute on the form -->
+it is NOT required to have a action attribute on the form.
+TO BO DONE: Add proper comments to the code
+-->
 
         <form method="POST">
             <h2 id="title">Quotelist</h2><br>

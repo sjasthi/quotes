@@ -1,5 +1,5 @@
 <?php
-
+// demo to Ben
 // set the current page; 
 $nav_selected = "ABOUT";
 
@@ -69,7 +69,6 @@ include("./nav.php");
          <li>First Last (first.last@metrostate.edu) </li>
       </ul>
    </p>
-
 
 </body>
 
